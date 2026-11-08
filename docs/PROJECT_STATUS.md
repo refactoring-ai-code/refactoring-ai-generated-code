@@ -234,3 +234,22 @@ rotation index 3. Its sole native prerequisite is the completed #1.
 [F02-CONTRACT acceptance](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/53) is already recorded. Its original
 merge and accepted PR head supply the handoff references. F01-ENV
 implementation begins under #10.
+
+## 2026-11-08 — F01-ENV implemented and verified locally
+
+[F01-ENV / #10](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/10)
+was implemented on `feature/10-f01-env` from main revision
+`9c50f649c2bcacfa700429b7ab7c97716b4d1475`. The implementation adds pinned
+Python 3.13.17 and Node.js 24.22.2 application scaffolds, reproducible Python
+and npm lockfiles, FastAPI liveness/readiness endpoints backed by bounded
+SQLite and Redis probes, a minimal React/Vite shell, a hardened local Compose
+stack, and hosted backend, frontend, and integration workflows.
+
+Local verification passed: the Python lock is current, Ruff is clean, all seven
+backend tests pass, the frontend test passes, and the production frontend build
+passes. Docker/Compose validation and hosted application CI remain pending
+because Docker is not installed on the development host and the branch has not
+yet been published. Issue #10 therefore remains open and the task state is
+**VERIFIED_LOCALLY / PENDING_PUBLICATION**, not accepted or release-ready. No
+untrusted uploaded code is executed by this scaffold, and it does not claim to
+provide the later sandbox execution subsystem.
