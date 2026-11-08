@@ -240,3 +240,28 @@ host. Hosted CI is also **NOT_RUN** until publication. Consequently this is an
 has yet been accepted, Issue #10 remains open, and release readiness is not
 claimed. The health scaffold does not execute uploaded code and is not a
 substitute for the later isolated sandbox runtime.
+
+### Local follow-up — 8 November 2026
+
+Initial commit `38edd57af17f1a480f7f075c7eb1b85225ac8ad7` was published to the
+feature branch. Its first PR creation attempt did not complete. The developer
+then requested local development before authorizing hosted validation of the
+follow-up changes.
+
+Regression tests reproduced four failures in the initial scaffold: a
+read-only SQLite database reported ready, an SQLite connection retained its
+Windows file handle, and stalled Redis ping/cleanup operations lacked total
+deadlines. The corrected probes pass all 13 backend tests. Storage probes roll
+back their write transactions and explicitly close connections; Redis uses a
+one-second operation deadline, a 0.2-second cleanup deadline and no retries.
+The readiness endpoint probes the two dependencies concurrently. Docker build
+inputs are restricted and the setup instructions now include explicit Windows
+and macOS commands. Local Docker and native macOS execution remain NOT_RUN.
+
+Follow-up verification: all 13 backend tests passed with Python resource
+warnings treated as errors; Ruff lint and formatting, the unchanged dependency
+lock, documentation and repository hygiene checks passed. All 55 contract
+tests and deterministic export checks passed. Frozen V0 source and fixed-test
+manifests still match their recorded hashes. The governance implementation was
+not changed or re-tested in this follow-up; the earlier Windows symlink
+privilege limitation still applies.

@@ -253,3 +253,15 @@ yet been published. Issue #10 therefore remains open and the task state is
 **VERIFIED_LOCALLY / PENDING_PUBLICATION**, not accepted or release-ready. No
 untrusted uploaded code is executed by this scaffold, and it does not claim to
 provide the later sandbox execution subsystem.
+
+### Local continuation — 8 November 2026
+
+The initial scaffold commit `38edd57af17f1a480f7f075c7eb1b85225ac8ad7` was
+pushed to `feature/10-f01-env`; its first PR creation attempt did not complete.
+Subsequent work fixes SQLite
+write-readiness and connection cleanup, bounds Redis ping and cleanup, runs
+the two readiness probes concurrently, and restricts Docker build inputs.
+Thirteen backend tests pass locally, including read-only/corrupt storage,
+preserved database contents, closed handles, and stalled Redis operations.
+Docker, hosted CI, and native macOS verification remain pending. Task
+acceptance and the next-task handoff require a reviewed and merged PR.

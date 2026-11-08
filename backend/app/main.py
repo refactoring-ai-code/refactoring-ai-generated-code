@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import asyncio
+
 from fastapi import FastAPI
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
@@ -24,8 +26,10 @@ async def readiness() -> JSONResponse:
     """Report bounded readiness for the required development services."""
 
     settings = Settings.from_environment()
-    storage = await run_in_threadpool(check_storage, settings.database_path)
-    redis = await check_redis(settings.redis_url)
+    storage, redis = await asyncio.gather(
+        run_in_threadpool(check_storage, settings.database_path),
+        check_redis(settings.redis_url),
+    )
     components: tuple[ComponentHealth, ...] = (storage, redis)
     ready = all(component.ready for component in components)
     return JSONResponse(

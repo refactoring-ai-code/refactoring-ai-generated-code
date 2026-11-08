@@ -5,7 +5,8 @@ WORKDIR /workspace/frontend
 COPY package.json package-lock.json ./
 RUN npm ci --ignore-scripts
 
-COPY . .
+COPY index.html tsconfig.json tsconfig.app.json tsconfig.node.json vite.config.ts ./
+COPY src ./src
 RUN npm run build && chown -R node:node /workspace/frontend
 
 USER node
