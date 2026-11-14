@@ -218,3 +218,50 @@ The audit does not activate untested protection, fabricate app checks, accept im
 Native graph update verified: [sync run 39870483114](https://github.com/caferkilinc/refactoring-ai-generated-code/actions/runs/39870483114) succeeded, and #21 blocked_by was read as #11 and #10. No task was closed.
 
 Hosted audit verification on code SHA `5af3b87469d02924c8f9a26a9593b6f119cb8de9`: [run 39870672707](https://github.com/caferkilinc/refactoring-ai-generated-code/actions/runs/39870672707) passed all four jobs; logs confirm 81 tests and 31 live issue/graph consistency checks. [Graph sync 39870672750](https://github.com/caferkilinc/refactoring-ai-generated-code/actions/runs/39870672750) also passed. The final document-only revision adds the verified historical academic-document drift finding (R19); inspect its latest PR CI separately.
+
+## 15. F01-ENV local implementation — 8 November 2026
+
+F01-ENV was implemented on `feature/10-f01-env` from canonical main revision
+`9c50f649c2bcacfa700429b7ab7c97716b4d1475`, after the native dependency for
+[Issue #10](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/10)
+was verified as the completed [Issue #1](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/1).
+The scaffold pins Python 3.13.17 and Node.js 24.22.2, commits `uv.lock` and
+`package-lock.json`, provides FastAPI/Redis/SQLite readiness checks, and adds
+backend, frontend, and application-stack workflows on GitHub-hosted runners.
+The Compose stack does not mount the Docker socket or source directories and
+uses read-only containers, non-root application images, and
+`no-new-privileges` where supported.
+
+Actual local results: `uv lock --check` passed; Ruff passed; seven backend tests
+passed; one frontend test passed; and the Vite production build passed. Local
+Docker/Compose execution is **NOT_RUN** because Docker is unavailable on this
+host. Hosted CI is also **NOT_RUN** until publication. Consequently this is an
+**IMPLEMENTED_LOCALLY / VERIFIED_LOCALLY / PENDING_PUBLICATION** record: no PR
+has yet been accepted, Issue #10 remains open, and release readiness is not
+claimed. The health scaffold does not execute uploaded code and is not a
+substitute for the later isolated sandbox runtime.
+
+### Local follow-up — 8 November 2026
+
+Initial commit `38edd57af17f1a480f7f075c7eb1b85225ac8ad7` was published to the
+feature branch. Its first PR creation attempt did not complete. The developer
+then requested local development before authorizing hosted validation of the
+follow-up changes.
+
+Regression tests reproduced four failures in the initial scaffold: a
+read-only SQLite database reported ready, an SQLite connection retained its
+Windows file handle, and stalled Redis ping/cleanup operations lacked total
+deadlines. The corrected probes pass all 13 backend tests. Storage probes roll
+back their write transactions and explicitly close connections; Redis uses a
+one-second operation deadline, a 0.2-second cleanup deadline and no retries.
+The readiness endpoint probes the two dependencies concurrently. Docker build
+inputs are restricted and the setup instructions now include explicit Windows
+and macOS commands. Local Docker and native macOS execution remain NOT_RUN.
+
+Follow-up verification: all 13 backend tests passed with Python resource
+warnings treated as errors; Ruff lint and formatting, the unchanged dependency
+lock, documentation and repository hygiene checks passed. All 55 contract
+tests and deterministic export checks passed. Frozen V0 source and fixed-test
+manifests still match their recorded hashes. The governance implementation was
+not changed or re-tested in this follow-up; the earlier Windows symlink
+privilege limitation still applies.

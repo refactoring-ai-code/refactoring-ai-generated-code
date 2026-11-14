@@ -1,0 +1,37 @@
+[project]
+name = "genesis-backend"
+version = "0.1.0"
+description = "Project Genesis FastAPI development environment"
+requires-python = ">=3.13,<3.14"
+dependencies = [
+  "fastapi==0.162.2",
+  "pydantic==2.11.7",
+  "redis==8.1.0",
+  "rfc8785==0.1.4",
+  "uvicorn==0.54.0",
+]
+
+[dependency-groups]
+dev = [
+  "httpx==0.28.1",
+  "pytest==9.2.0",
+  "pytest-asyncio==1.4.1.post1",
+  "ruff==0.17.4",
+]
+
+[tool.uv]
+package = false
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+pythonpath = [".."]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP"]
