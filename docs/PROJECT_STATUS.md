@@ -4,8 +4,8 @@
 > project snapshots. Always use the current GitHub main commit,
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
-> F00-PLAN, F00-V0, F02-CONTRACT and F01-GOV are accepted.
-> Ismail is assigned F01-ENV / #10. See the latest handoff below.
+> F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV and F01-ENV are accepted.
+> Taha is assigned F08-UI / #21. Implementation has not started; see the latest handoff below.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
 > verified. The Turkish and English SRS v0.4.0 were approved.
 > Historical statements below do not override newer verified
@@ -265,3 +265,52 @@ Thirteen backend tests pass locally, including read-only/corrupt storage,
 preserved database contents, closed handles, and stalled Redis operations.
 Docker, hosted CI, and native macOS verification remain pending. Task
 acceptance and the next-task handoff require a reviewed and merged PR.
+
+
+## 2026-11-14 — F01-ENV accepted and F08-UI assigned to Taha
+
+[F01-ENV / #10](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/10) is **VERIFIED_COMPLETE**.
+[PR #55](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/55), authored by Ismail,
+merged to main at [908a52849da0c9f8333c18da28b5f50edf110fd9](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/908a52849da0c9f8333c18da28b5f50edf110fd9).
+The accepted source head is `2d1af7a978d4e975bef90b2e29de43b4434e7997`; Issue #10 is closed as completed.
+The task's prerequisite F01-GOV / #1 was already accepted.
+
+GitHub Actions checks passed for the exact PR head and merge revision:
+governance-tests, documentation-checks, security-checks, backend-checks,
+frontend-checks, pilot-checks and application-stack-checks. In particular,
+the [PR stack run](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/42484953693)
+and [main stack run](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/43614665180)
+passed. The [setup report](SETUP_REPORT.md) records the toolchains, local
+verification and remaining platform limits. Native M3/macOS execution is not
+claimed verified; hosted Linux checks and the documented cross-platform
+commands are distinct evidence. No submitted formal GitHub review for PR #55
+was returned during this handoff inspection; successful checks and merge are
+not represented as an independent review.
+
+Authenticated developer `tahaugurtoyran` explicitly requested this formal
+acceptance and handoff in the task chat on 2026-11-14. The acceptance registry
+records #10 with its exact PR head, merge CI revision and evidence links.
+Rotation advances once from index 3 (Ismail) to index 4 (Taha), using continuity
+key `F01-ENV:2d1af7a978d4e975bef90b2e29de43b4434e7997`. Historical acceptances and all
+34 tasks / 69 dependency edges remain intact. This administrative maintenance
+does not consume another product turn.
+
+The selected active assignment is **Taha (@tahaugurtoyran), F08-UI / #21**:
+build the first approval UI against approved API fixtures. Issue #21 is open
+and assigned to Taha; its native prerequisites #11 / F02-CONTRACT and
+#10 / F01-ENV are both completed and accepted. The task remains **ASSIGNED**,
+with implementation **NOT_STARTED**, not completed or accepted.
+`handoff_confirmed=false` refers to this new task. The conditional next owner
+after F08-UI acceptance is Burkay (@cakarburkayy).
+
+Allowed scope remains `frontend/`, related `tests/` and related `docs/`.
+Required task checks remain governance-tests, documentation-checks,
+security-checks and frontend-checks, with applicable application-stack checks
+and native branch protection also required. The UI must use approved CIR 1.0.0
+and OpenAPI fixtures, correctly highlight file/source ranges including duplicate
+locations, permit only eligible QUALITY_REFACTOR selections, disable ineligible
+findings, clearly label fixture mode, and test normal, disabled, duplicate and
+error states. Backend/state-machine, analysis, sandbox and Local AI work are
+outside this task. SRS, architecture, contracts, immutable V0 and frozen inputs
+are unchanged. This handoff implements no UI; research is NOT_RUN and release
+remains NOT_READY.
