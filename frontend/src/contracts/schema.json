@@ -1,0 +1,3660 @@
+{
+  "$comment": "Structural constraints are necessary but not sufficient. Run validate_bundle for reference/safety invariants.",
+  "$defs": {
+    "AdapterRequest": {
+      "additionalProperties": false,
+      "description": "One explicitly routed, bounded operation; no parser-implies-test assumption.",
+      "properties": {
+        "adapter_capabilities_id": {
+          "description": "adaptercaps: reference to the language/component declaration used for routing.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Adapter Capabilities Id",
+          "type": "string"
+        },
+        "capability_id": {
+          "description": "capability: reference to the exact operation requested from the adapter.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Capability Id",
+          "type": "string"
+        },
+        "component_id": {
+          "description": "component: boundary for per-language routing and capability evidence.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Component Id",
+          "type": "string"
+        },
+        "input_artifact_id": {
+          "description": "artifact: input reference for a routed adapter operation; authorize access before execution.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Input Artifact Id",
+          "type": "string"
+        },
+        "language": {
+          "description": "One of JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, CSHARP, GO or CPP; no silent language routing.",
+          "enum": [
+            "JAVA",
+            "PYTHON",
+            "JAVASCRIPT",
+            "TYPESCRIPT",
+            "CSHARP",
+            "GO",
+            "CPP"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "operation": {
+          "description": "Adapter capability being requested, or the changed-file operation ADD/MODIFY/DELETE.",
+          "enum": [
+            "parse",
+            "symbol",
+            "quality",
+            "dependency",
+            "build",
+            "test",
+            "coverage",
+            "safe_patch",
+            "security"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported schema version; v1 readers reject unknown versions and fields.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Immutable project/version/analysis/run and baseline source binding."
+        },
+        "timeout_seconds": {
+          "description": "Bounded operation timeout in seconds; future sandbox/tool execution must enforce it.",
+          "maximum": 3600,
+          "minimum": 1,
+          "title": "Timeout Seconds",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "schema_version",
+        "scope",
+        "language",
+        "component_id",
+        "adapter_capabilities_id",
+        "capability_id",
+        "operation",
+        "input_artifact_id",
+        "timeout_seconds"
+      ],
+      "title": "AdapterRequest",
+      "type": "object"
+    },
+    "AdapterResult": {
+      "additionalProperties": false,
+      "description": "Execution status remains distinct from behavioral, quality and security evidence.",
+      "properties": {
+        "execution_status": {
+          "description": "COMPLETED, FAILED, NOT_RUN, UNAVAILABLE or INCOMPLETE; distinct from result dimensions.",
+          "enum": [
+            "COMPLETED",
+            "FAILED",
+            "NOT_RUN",
+            "UNAVAILABLE",
+            "INCOMPLETE"
+          ],
+          "title": "Execution Status",
+          "type": "string"
+        },
+        "operation": {
+          "description": "Adapter capability being requested, or the changed-file operation ADD/MODIFY/DELETE.",
+          "enum": [
+            "parse",
+            "symbol",
+            "quality",
+            "dependency",
+            "build",
+            "test",
+            "coverage",
+            "safe_patch",
+            "security"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "result": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ResultEnvelope"
+            },
+            {
+              "$ref": "#/$defs/ErrorEnvelope"
+            }
+          ],
+          "description": "Versioned success or safe error envelope produced by a future adapter operation.",
+          "title": "Result"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported schema version; v1 readers reject unknown versions and fields.",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "operation",
+        "execution_status",
+        "result"
+      ],
+      "title": "AdapterResult",
+      "type": "object"
+    },
+    "Artifact": {
+      "additionalProperties": false,
+      "description": "Content-addressed opaque artifact reference; no local path or raw secret content.",
+      "properties": {
+        "id": {
+          "description": "artifact: identifier resolved by the future authorized artifact service.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "media_type": {
+          "description": "Artifact MIME type.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Media Type",
+          "type": "string"
+        },
+        "redaction": {
+          "description": "Masking/review status; not a claim of scanner success.",
+          "enum": [
+            "MASKED",
+            "NO_SENSITIVE_CONTENT",
+            "UNREVIEWED",
+            "FAILED"
+          ],
+          "title": "Redaction",
+          "type": "string"
+        },
+        "sha256": {
+          "description": "SHA-256 of actual artifact bytes, distinct from a Git object ID.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sha256",
+        "media_type",
+        "redaction"
+      ],
+      "title": "Artifact",
+      "type": "object"
+    },
+    "Attempt": {
+      "additionalProperties": false,
+      "description": "Failure-inclusive denominator ledger; not a worker implementation.",
+      "properties": {
+        "artifact_ids": {
+          "description": "artifact: redacted failure/raw-rejection receipts; invalid proposals need not be admitted as valid PatchCandidates.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Artifact Ids",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "description": "evidence: references retaining the failure or actual attempt outcome.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "execution_status": {
+          "description": "Execution outcome, independent of behavioral and quality results.",
+          "enum": [
+            "COMPLETED",
+            "FAILED",
+            "NOT_RUN",
+            "UNAVAILABLE",
+            "INCOMPLETE"
+          ],
+          "title": "Execution Status",
+          "type": "string"
+        },
+        "failure_kind": {
+          "anyOf": [
+            {
+              "enum": [
+                "PROVIDER_ERROR",
+                "TIMEOUT",
+                "COMPILATION_FAILURE",
+                "TEST_FAILURE",
+                "SECURITY_REJECTION",
+                "CONFLICT_REJECTION",
+                "CANCELLED",
+                "ENVIRONMENT_BLOCKER",
+                "CONTRACT_REJECTION"
+              ],
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit failure category, or null for completed/not-yet-failed work.",
+          "title": "Failure Kind"
+        },
+        "id": {
+          "description": "attempt: identifier; never erased after failure.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "job_id": {
+          "description": "job: parent refactoring job.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Job Id",
+          "type": "string"
+        },
+        "number": {
+          "description": "One initial candidate plus at most two corrections.",
+          "maximum": 3,
+          "minimum": 1,
+          "title": "Number",
+          "type": "integer"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Failure/unavailable/not-run explanation, or null after completion.",
+          "title": "Reason"
+        },
+        "started": {
+          "description": "Whether this planned attempt actually started.",
+          "title": "Started",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "id",
+        "job_id",
+        "number",
+        "started",
+        "execution_status",
+        "reason",
+        "failure_kind",
+        "evidence_ids",
+        "artifact_ids"
+      ],
+      "title": "Attempt",
+      "type": "object"
+    },
+    "Capability": {
+      "additionalProperties": false,
+      "description": "One language/component capability; parser support implies no other support.",
+      "properties": {
+        "capability": {
+          "description": "One independently declared operation; support for another operation does not imply support for this one.",
+          "enum": [
+            "parse",
+            "symbol",
+            "quality",
+            "dependency",
+            "build",
+            "test",
+            "coverage",
+            "safe_patch",
+            "security"
+          ],
+          "title": "Capability",
+          "type": "string"
+        },
+        "component_id": {
+          "description": "component: boundary for per-language routing and capability evidence.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Component Id",
+          "type": "string"
+        },
+        "confidence": {
+          "$ref": "#/$defs/Confidence",
+          "description": "Producer-reported score in [0,1] or explicit unknown reason; not an automatically calibrated probability."
+        },
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "Capability",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "language": {
+          "description": "One of JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, CSHARP, GO or CPP; no silent language routing.",
+          "enum": [
+            "JAVA",
+            "PYTHON",
+            "JAVASCRIPT",
+            "TYPESCRIPT",
+            "CSHARP",
+            "GO",
+            "CPP"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "limitations": {
+          "description": "Explicit capability restrictions and unmeasured assumptions.",
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Limitations",
+          "type": "array"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "status": {
+          "description": "Context-specific exact state enum; never collapse execution, behavior, quality, security and evidence states.",
+          "enum": [
+            "SUPPORTED",
+            "UNSUPPORTED",
+            "UNAVAILABLE",
+            "UNRESOLVED",
+            "NOT_IMPLEMENTED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "tool": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ToolProvenance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed tool identity/version/config provenance, or null for an unavailable capability."
+        },
+        "toolchain": {
+          "description": "Required tools with observed availability/version; missing tools cannot imply support.",
+          "items": {
+            "$ref": "#/$defs/ToolchainRequirement"
+          },
+          "title": "Toolchain",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "language",
+        "component_id",
+        "capability",
+        "status",
+        "confidence",
+        "tool",
+        "toolchain",
+        "evidence_ids",
+        "limitations",
+        "reason"
+      ],
+      "title": "Capability",
+      "type": "object"
+    },
+    "ChangedFile": {
+      "additionalProperties": false,
+      "description": "One portable source file operation with explicit before/after integrity metadata.",
+      "properties": {
+        "after_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Resulting file-byte SHA-256; null only for deletion.",
+          "title": "After Sha256"
+        },
+        "before_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Original file-byte SHA-256; null only when adding a new file.",
+          "title": "Before Sha256"
+        },
+        "file_id": {
+          "description": "file: identity in the appropriate source-snapshot manifest.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "File Id",
+          "type": "string"
+        },
+        "operation": {
+          "description": "Adapter capability being requested, or the changed-file operation ADD/MODIFY/DELETE.",
+          "enum": [
+            "ADD",
+            "MODIFY",
+            "DELETE"
+          ],
+          "title": "Operation",
+          "type": "string"
+        },
+        "path": {
+          "description": "Canonical NFC repository-relative source path; absolute, traversal, encoded separators and reserved filenames are rejected.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "file_id",
+        "path",
+        "operation",
+        "before_sha256",
+        "after_sha256"
+      ],
+      "title": "ChangedFile",
+      "type": "object"
+    },
+    "ComparisonContext": {
+      "additionalProperties": false,
+      "description": "Explicit reproducibility inputs behind a metric comparison fingerprint.",
+      "properties": {
+        "environment_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the environment fingerprint is unknown; otherwise null.",
+          "title": "Environment Reason"
+        },
+        "environment_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed execution environment fingerprint, or null.",
+          "title": "Environment Sha256"
+        },
+        "measurement_scope_sha256": {
+          "description": "Fingerprint of the same target files/symbols/measurement definition, not their changing contents.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Measurement Scope Sha256",
+          "type": "string"
+        },
+        "rule_set_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the ruleset version is unknown; otherwise null.",
+          "title": "Rule Set Reason"
+        },
+        "rule_set_version": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed ruleset/metric definition version; null if unknown.",
+          "title": "Rule Set Version"
+        },
+        "test_suite_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Frozen suite fingerprint for test/coverage comparisons; null when not applicable or unknown.",
+          "title": "Test Suite Sha256"
+        },
+        "test_suite_state": {
+          "description": "Distinguishes an inapplicable suite from missing comparison context.",
+          "enum": [
+            "KNOWN",
+            "NOT_APPLICABLE",
+            "UNKNOWN"
+          ],
+          "title": "Test Suite State",
+          "type": "string"
+        },
+        "tool": {
+          "$ref": "#/$defs/ToolProvenance",
+          "description": "Observed tool identity/version/config provenance, or null for an unavailable capability."
+        }
+      },
+      "required": [
+        "tool",
+        "rule_set_version",
+        "rule_set_reason",
+        "measurement_scope_sha256",
+        "environment_sha256",
+        "environment_reason",
+        "test_suite_sha256",
+        "test_suite_state"
+      ],
+      "title": "ComparisonContext",
+      "type": "object"
+    },
+    "Confidence": {
+      "additionalProperties": false,
+      "description": "Producer-reported confidence, not an automatically calibrated probability.",
+      "properties": {
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Required when confidence is unknown; otherwise null.",
+          "title": "Reason"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "maximum": 1,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Normalized confidence or explicit null.",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "value",
+        "reason"
+      ],
+      "title": "Confidence",
+      "type": "object"
+    },
+    "ContextBudget": {
+      "additionalProperties": false,
+      "description": "Request-specific token bound and honest measured/unknown token usage.",
+      "properties": {
+        "max_tokens": {
+          "description": "Positive context budget supplied for this request; never silently expanded.",
+          "minimum": 1,
+          "title": "Max Tokens",
+          "type": "integer"
+        },
+        "measurement": {
+          "description": "Whether a value was actually MEASURED or remains explicitly UNKNOWN/UNAVAILABLE/NOT_APPLICABLE.",
+          "enum": [
+            "MEASURED",
+            "UNKNOWN"
+          ],
+          "title": "Measurement",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "used_tokens": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed token usage, or explicit null; never fabricate missing usage as zero.",
+          "title": "Used Tokens"
+        }
+      },
+      "required": [
+        "max_tokens",
+        "used_tokens",
+        "measurement",
+        "reason"
+      ],
+      "title": "ContextBudget",
+      "type": "object"
+    },
+    "ContextExclusion": {
+      "additionalProperties": false,
+      "description": "A deliberately excluded context reference and its reason.",
+      "properties": {
+        "reason": {
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Reason",
+          "type": "string"
+        },
+        "reference_id": {
+          "description": "Opaque context reference recorded as excluded with an explicit reason.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Reference Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference_id",
+        "reason"
+      ],
+      "title": "ContextExclusion",
+      "type": "object"
+    },
+    "ContextPackage": {
+      "additionalProperties": false,
+      "description": "Bounded reference-only context; sensitive raw source is not a contract field.",
+      "properties": {
+        "artifact_ids": {
+          "description": "artifact: references included in bounded context; complete context requires reviewed redaction states.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Artifact Ids",
+          "type": "array"
+        },
+        "budget": {
+          "$ref": "#/$defs/ContextBudget",
+          "description": "Explicit context token limit and observed usage or unknown-usage reason."
+        },
+        "callee_symbol_ids": {
+          "description": "symbol: callees of the target, supported by corresponding CALL edges in complete context.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Callee Symbol Ids",
+          "type": "array"
+        },
+        "caller_symbol_ids": {
+          "description": "symbol: callers of the target, supported by corresponding CALL edges in complete context.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Caller Symbol Ids",
+          "type": "array"
+        },
+        "completeness": {
+          "description": "COMPLETE only when critical references, side effects, redaction and budget are known; otherwise INCOMPLETE.",
+          "enum": [
+            "COMPLETE",
+            "INCOMPLETE"
+          ],
+          "title": "Completeness",
+          "type": "string"
+        },
+        "dependency_ids": {
+          "description": "dependency: relationships included in context; unresolved relationships prevent COMPLETE.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Dependency Ids",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "excluded": {
+          "description": "Explicitly excluded context references with reasons; never also listed as included.",
+          "items": {
+            "$ref": "#/$defs/ContextExclusion"
+          },
+          "title": "Excluded",
+          "type": "array"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "included_ids": {
+          "description": "Closed set of included context references; must contain every declared critical reference when COMPLETE.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Included Ids",
+          "type": "array"
+        },
+        "kind": {
+          "const": "ContextPackage",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "known_side_effects": {
+          "description": "Observed side-effect descriptions; empty means known none only when side_effect_status is KNOWN.",
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Known Side Effects",
+          "type": "array"
+        },
+        "missing_critical_ids": {
+          "description": "Critical context references that could not be supplied; nonempty forbids COMPLETE.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Missing Critical Ids",
+          "type": "array"
+        },
+        "public_api_symbol_ids": {
+          "description": "symbol: references whose public_api value is explicitly true in complete context.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Public Api Symbol Ids",
+          "type": "array"
+        },
+        "reasons": {
+          "description": "Human-readable rejection/incompleteness explanations; empty only when the relevant gate is satisfied.",
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "redaction": {
+          "description": "MASKED, NO_SENSITIVE_CONTENT, UNREVIEWED or FAILED; a declaration does not implement a redactor.",
+          "enum": [
+            "MASKED",
+            "NO_SENSITIVE_CONTENT",
+            "UNREVIEWED",
+            "FAILED"
+          ],
+          "title": "Redaction",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "selection_id": {
+          "description": "selection: reference to the immutable Gate 1 selection snapshot.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Selection Id",
+          "type": "string"
+        },
+        "side_effect_status": {
+          "description": "KNOWN or UNKNOWN; unknown effects prevent COMPLETE context.",
+          "enum": [
+            "KNOWN",
+            "UNKNOWN"
+          ],
+          "title": "Side Effect Status",
+          "type": "string"
+        },
+        "source_location_ids": {
+          "description": "location: ranges supplied as bounded source context.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Source Location Ids",
+          "type": "array"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "target_finding_id": {
+          "description": "finding: one target present in the approved source-bound selection.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Target Finding Id",
+          "type": "string"
+        },
+        "target_symbol_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "symbol: source-aligned target, or null for explicitly incomplete context.",
+          "title": "Target Symbol Id"
+        },
+        "test_result_ids": {
+          "description": "test: actual executions on the validated source snapshot, not merely passing baseline tests.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Test Result Ids",
+          "type": "array"
+        },
+        "unresolved_dependency_ids": {
+          "description": "Explicit unresolved relationships; nonempty forbids COMPLETE context.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Unresolved Dependency Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "selection_id",
+        "target_finding_id",
+        "target_symbol_id",
+        "source_location_ids",
+        "caller_symbol_ids",
+        "callee_symbol_ids",
+        "dependency_ids",
+        "test_result_ids",
+        "public_api_symbol_ids",
+        "known_side_effects",
+        "side_effect_status",
+        "budget",
+        "included_ids",
+        "excluded",
+        "missing_critical_ids",
+        "unresolved_dependency_ids",
+        "artifact_ids",
+        "redaction",
+        "evidence_ids",
+        "completeness",
+        "reasons"
+      ],
+      "title": "ContextPackage",
+      "type": "object"
+    },
+    "ContractBundle": {
+      "additionalProperties": false,
+      "description": "Closed reference graph for validation gates; standalone records validate only their shape.",
+      "properties": {
+        "artifacts": {
+          "description": "Opaque artifact inventory with actual content hashes and redaction metadata.",
+          "items": {
+            "$ref": "#/$defs/Artifact"
+          },
+          "title": "Artifacts",
+          "type": "array"
+        },
+        "attempts": {
+          "description": "Failure-inclusive attempt ledger; started and planned populations remain distinct.",
+          "items": {
+            "$ref": "#/$defs/Attempt"
+          },
+          "title": "Attempts",
+          "type": "array"
+        },
+        "files": {
+          "description": "Source file inventory by snapshot/path, including symlink, frozen and protected-test flags.",
+          "items": {
+            "$ref": "#/$defs/FileIdentity"
+          },
+          "title": "Files",
+          "type": "array"
+        },
+        "mode": {
+          "description": "FIXTURE examples do not claim real tool/model execution.",
+          "enum": [
+            "FIXTURE",
+            "INTERCHANGE"
+          ],
+          "title": "Mode",
+          "type": "string"
+        },
+        "records": {
+          "description": "Typed CIR records in a closed graph; duplicate or wrong-kind identifiers are rejected.",
+          "items": {
+            "discriminator": {
+              "mapping": {
+                "Capability": "#/$defs/Capability",
+                "ContextPackage": "#/$defs/ContextPackage",
+                "DependencyEdge": "#/$defs/DependencyEdge",
+                "Evidence": "#/$defs/Evidence",
+                "Finding": "#/$defs/Finding",
+                "IssueSelection": "#/$defs/IssueSelection",
+                "LanguageAdapterCapabilities": "#/$defs/LanguageAdapterCapabilities",
+                "Metric": "#/$defs/Metric",
+                "PatchCandidate": "#/$defs/PatchCandidate",
+                "SourceLocation": "#/$defs/SourceLocation",
+                "Symbol": "#/$defs/Symbol",
+                "TestResult": "#/$defs/TestResult",
+                "ValidationResult": "#/$defs/ValidationResult"
+              },
+              "propertyName": "kind"
+            },
+            "oneOf": [
+              {
+                "$ref": "#/$defs/SourceLocation"
+              },
+              {
+                "$ref": "#/$defs/Symbol"
+              },
+              {
+                "$ref": "#/$defs/DependencyEdge"
+              },
+              {
+                "$ref": "#/$defs/Evidence"
+              },
+              {
+                "$ref": "#/$defs/Finding"
+              },
+              {
+                "$ref": "#/$defs/Metric"
+              },
+              {
+                "$ref": "#/$defs/TestResult"
+              },
+              {
+                "$ref": "#/$defs/Capability"
+              },
+              {
+                "$ref": "#/$defs/LanguageAdapterCapabilities"
+              },
+              {
+                "$ref": "#/$defs/IssueSelection"
+              },
+              {
+                "$ref": "#/$defs/ContextPackage"
+              },
+              {
+                "$ref": "#/$defs/PatchCandidate"
+              },
+              {
+                "$ref": "#/$defs/ValidationResult"
+              }
+            ]
+          },
+          "minItems": 1,
+          "title": "Records",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported schema version; v1 readers reject unknown versions and fields.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Immutable project/version/analysis/run and baseline source binding."
+        },
+        "test_suites": {
+          "description": "Frozen suite inventory; does not claim the suite has been executed.",
+          "items": {
+            "$ref": "#/$defs/TestSuite"
+          },
+          "title": "Test Suites",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "mode",
+        "scope",
+        "files",
+        "artifacts",
+        "test_suites",
+        "attempts",
+        "records"
+      ],
+      "title": "ContractBundle",
+      "type": "object"
+    },
+    "DependencyEdge": {
+      "additionalProperties": false,
+      "description": "Observed or unresolved symbol relationship; unknown edges remain visible.",
+      "properties": {
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "from_symbol_id": {
+          "description": "symbol: source of the observed dependency relationship.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "From Symbol Id",
+          "type": "string"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "DependencyEdge",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "relationship": {
+          "description": "CALL, READ, WRITE, IMPORT, INHERIT or UNKNOWN; uncertain targets remain unresolved.",
+          "enum": [
+            "CALL",
+            "READ",
+            "WRITE",
+            "IMPORT",
+            "INHERIT",
+            "UNKNOWN"
+          ],
+          "title": "Relationship",
+          "type": "string"
+        },
+        "resolution": {
+          "description": "RESOLVED versus UNRESOLVED; coordinates or dependency targets cannot be fabricated to appear resolved.",
+          "enum": [
+            "RESOLVED",
+            "UNRESOLVED"
+          ],
+          "title": "Resolution",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "to_symbol_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "symbol: dependency target, or null with an unresolved reason.",
+          "title": "To Symbol Id"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "from_symbol_id",
+        "to_symbol_id",
+        "relationship",
+        "resolution",
+        "reason",
+        "evidence_ids"
+      ],
+      "title": "DependencyEdge",
+      "type": "object"
+    },
+    "ErrorDetail": {
+      "additionalProperties": false,
+      "description": "Safe structured failure metadata without reflecting raw inputs.",
+      "properties": {
+        "entity_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional type-prefixed entity reference; safe generated errors use null rather than reflecting untrusted input.",
+          "title": "Entity Id"
+        },
+        "field": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Safe field name identifying the contract failure without raw source content.",
+          "title": "Field"
+        }
+      },
+      "required": [
+        "entity_id",
+        "field"
+      ],
+      "title": "ErrorDetail",
+      "type": "object"
+    },
+    "ErrorEnvelope": {
+      "additionalProperties": false,
+      "description": "Safe API error without raw source, stack trace, credentials or host filesystem paths.",
+      "properties": {
+        "code": {
+          "description": "Stable machine-readable error code; clients must branch on this value rather than message text.",
+          "enum": [
+            "INVALID_CONTRACT",
+            "BROKEN_REFERENCE",
+            "SCOPE_MISMATCH",
+            "STALE_SELECTION",
+            "FORBIDDEN_SCOPE",
+            "UNAVAILABLE_CAPABILITY",
+            "INCOMPLETE_CONTEXT",
+            "VALIDATION_FAILED",
+            "INTERNAL_ERROR"
+          ],
+          "title": "Code",
+          "type": "string"
+        },
+        "component": {
+          "description": "Originating subsystem for an API error.",
+          "enum": [
+            "API",
+            "CONTRACT",
+            "ADAPTER",
+            "CONTEXT",
+            "VALIDATION"
+          ],
+          "title": "Component",
+          "type": "string"
+        },
+        "details": {
+          "description": "Safe structured entity/field error metadata; no raw input, stack trace, host path or credential.",
+          "items": {
+            "$ref": "#/$defs/ErrorDetail"
+          },
+          "title": "Details",
+          "type": "array"
+        },
+        "message": {
+          "description": "Static safe user message; never reflect raw validation input.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Message",
+          "type": "string"
+        },
+        "request_id": {
+          "description": "request: identifier for correlating a safe API result/error with its request.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "retryable": {
+          "description": "Whether retry after resolving the reported condition may succeed; not permission for unbounded retries.",
+          "title": "Retryable",
+          "type": "boolean"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported schema version; v1 readers reject unknown versions and fields.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "const": "ERROR",
+          "description": "Context-specific exact state enum; never collapse execution, behavior, quality, security and evidence states.",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "request_id",
+        "status",
+        "code",
+        "component",
+        "message",
+        "retryable",
+        "details"
+      ],
+      "title": "ErrorEnvelope",
+      "type": "object"
+    },
+    "Evidence": {
+      "additionalProperties": false,
+      "description": "Attributable evidence; an LLM claim is never independent verified evidence.",
+      "properties": {
+        "actor_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "actor: authenticated human reviewer identity for HUMAN evidence; otherwise null.",
+          "title": "Actor Id"
+        },
+        "artifact_id": {
+          "description": "artifact: opaque reference to the attributed evidence artifact, never a local absolute path.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Artifact Id",
+          "type": "string"
+        },
+        "confidence": {
+          "$ref": "#/$defs/Confidence",
+          "description": "Producer-reported score in [0,1] or explicit unknown reason; not an automatically calibrated probability."
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "Evidence",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "location_ids": {
+          "description": "location: source references; duplication findings require both source locations.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Location Ids",
+          "type": "array"
+        },
+        "model": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ModelProvenance"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Provider/model/revision/settings provenance, with explicit reasons for unknown values."
+        },
+        "producer_kind": {
+          "description": "DETERMINISTIC_TOOL, HUMAN or LLM; an LLM claim cannot independently be VERIFIED.",
+          "enum": [
+            "DETERMINISTIC_TOOL",
+            "HUMAN",
+            "LLM"
+          ],
+          "title": "Producer Kind",
+          "type": "string"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "redaction": {
+          "description": "MASKED, NO_SENSITIVE_CONTENT, UNREVIEWED or FAILED; a declaration does not implement a redactor.",
+          "enum": [
+            "MASKED",
+            "NO_SENSITIVE_CONTENT",
+            "UNREVIEWED",
+            "FAILED"
+          ],
+          "title": "Redaction",
+          "type": "string"
+        },
+        "rule_id": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Stable originating rule identity, or null where a producer has no applicable rule.",
+          "title": "Rule Id"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "symbol_ids": {
+          "description": "symbol: references supporting the attributed evidence.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Symbol Ids",
+          "type": "array"
+        },
+        "tool": {
+          "$ref": "#/$defs/ToolProvenance",
+          "description": "Observed tool identity/version/config provenance, or null for an unavailable capability."
+        },
+        "verification": {
+          "description": "VERIFIED, UNCONFIRMED, REJECTED or UNAVAILABLE evidence state.",
+          "enum": [
+            "VERIFIED",
+            "UNCONFIRMED",
+            "REJECTED",
+            "UNAVAILABLE"
+          ],
+          "title": "Verification",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "producer_kind",
+        "actor_id",
+        "tool",
+        "rule_id",
+        "model",
+        "artifact_id",
+        "location_ids",
+        "symbol_ids",
+        "verification",
+        "confidence",
+        "redaction"
+      ],
+      "title": "Evidence",
+      "type": "object"
+    },
+    "FileIdentity": {
+      "additionalProperties": false,
+      "description": "Trusted input manifest entry; candidate metadata cannot redefine this policy.",
+      "properties": {
+        "frozen": {
+          "description": "Trusted immutable/frozen artifact flag.",
+          "title": "Frozen",
+          "type": "boolean"
+        },
+        "id": {
+          "description": "file: identity of one source file in the snapshot.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "is_symlink": {
+          "description": "True for a linked entry; never eligible as a patch target.",
+          "title": "Is Symlink",
+          "type": "boolean"
+        },
+        "path": {
+          "description": "Canonical repository-relative path, with forward slashes.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Path",
+          "type": "string"
+        },
+        "protected_test": {
+          "description": "Trusted frozen or protected test flag.",
+          "title": "Protected Test",
+          "type": "boolean"
+        },
+        "sha256": {
+          "description": "SHA-256 of the original file bytes.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        },
+        "subject_sha256": {
+          "description": "Manifest snapshot that owns this file identity.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "path",
+        "sha256",
+        "subject_sha256",
+        "is_symlink",
+        "frozen",
+        "protected_test"
+      ],
+      "title": "FileIdentity",
+      "type": "object"
+    },
+    "Finding": {
+      "additionalProperties": false,
+      "description": "Normalized quality/security/baseline observation with stable rule and evidence lineage.",
+      "properties": {
+        "category": {
+          "description": "UI/filter category; SECURITY and BASELINE must match the corresponding classification.",
+          "enum": [
+            "QUALITY",
+            "COMPLEXITY",
+            "DUPLICATION",
+            "SECURITY",
+            "BASELINE"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "classification": {
+          "description": "QUALITY_REFACTOR, SECURITY_REVIEW or BASELINE; only eligible quality findings may enter ordinary Gate 1.",
+          "enum": [
+            "QUALITY_REFACTOR",
+            "SECURITY_REVIEW",
+            "BASELINE"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "confidence": {
+          "$ref": "#/$defs/Confidence",
+          "description": "Producer-reported score in [0,1] or explicit unknown reason; not an automatically calibrated probability."
+        },
+        "eligibility": {
+          "description": "Finding/selection gate state; not equivalent to successful execution or product approval by itself.",
+          "enum": [
+            "ELIGIBLE",
+            "INELIGIBLE",
+            "UNRESOLVED"
+          ],
+          "title": "Eligibility",
+          "type": "string"
+        },
+        "eligibility_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation when a finding is ineligible or unresolved.",
+          "title": "Eligibility Reason"
+        },
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "Finding",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "location_ids": {
+          "description": "location: source references; duplication findings require both source locations.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Location Ids",
+          "type": "array"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "rule_id": {
+          "description": "Stable originating rule identity, or null where a producer has no applicable rule.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "status": {
+          "description": "Context-specific exact state enum; never collapse execution, behavior, quality, security and evidence states.",
+          "enum": [
+            "OPEN",
+            "RESOLVED",
+            "SUPPRESSED",
+            "UNVERIFIED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "tool": {
+          "$ref": "#/$defs/ToolProvenance",
+          "description": "Observed tool identity/version/config provenance, or null for an unavailable capability."
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "classification",
+        "category",
+        "rule_id",
+        "tool",
+        "location_ids",
+        "evidence_ids",
+        "confidence",
+        "eligibility",
+        "eligibility_reason",
+        "status"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "FindingSnapshot": {
+      "additionalProperties": false,
+      "description": "Immutable complete-Finding fingerprint recorded by Gate 1.",
+      "properties": {
+        "finding_id": {
+          "description": "finding: reference bound by the adjacent immutable snapshot fingerprint.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Finding Id",
+          "type": "string"
+        },
+        "fingerprint": {
+          "description": "SHA-256 of canonical JSON of the complete selected Finding record.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fingerprint",
+          "type": "string"
+        }
+      },
+      "required": [
+        "finding_id",
+        "fingerprint"
+      ],
+      "title": "FindingSnapshot",
+      "type": "object"
+    },
+    "IssueSelection": {
+      "additionalProperties": false,
+      "description": "Approval Gate 1: immutable, source-bound selection snapshot, not an approval service.",
+      "properties": {
+        "actor_id": {
+          "description": "actor: identity of the human making the product selection; authenticate outside this data contract.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Actor Id",
+          "type": "string"
+        },
+        "approval_ref": {
+          "description": "approval: audit reference for Gate 1; the string itself does not authenticate an approval.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Approval Ref",
+          "type": "string"
+        },
+        "baseline_test_result_ids": {
+          "description": "test: baseline executions supporting Gate 1; eligible selections require nonempty passing baseline evidence.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Baseline Test Result Ids",
+          "type": "array"
+        },
+        "created_at": {
+          "description": "UTC timestamp of the immutable issue-selection decision, using a Z suffix.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Created At",
+          "type": "string"
+        },
+        "eligibility": {
+          "description": "Finding/selection gate state; not equivalent to successful execution or product approval by itself.",
+          "enum": [
+            "ELIGIBLE",
+            "REJECTED",
+            "UNRESOLVED"
+          ],
+          "title": "Eligibility",
+          "type": "string"
+        },
+        "fingerprint": {
+          "description": "Canonical scope+sorted snapshot fingerprint; excludes this field itself.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Fingerprint",
+          "type": "string"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "IssueSelection",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "reasons": {
+          "description": "Human-readable rejection/incompleteness explanations; empty only when the relevant gate is satisfied.",
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Reasons",
+          "type": "array"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "selected_finding_ids": {
+          "description": "finding: Gate 1 choices; only current eligible QUALITY_REFACTOR findings can be approved.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Selected Finding Ids",
+          "type": "array"
+        },
+        "snapshots": {
+          "description": "Selected finding IDs plus complete-record RFC 8785/SHA-256 fingerprints, sorted for the selection fingerprint.",
+          "items": {
+            "$ref": "#/$defs/FindingSnapshot"
+          },
+          "minItems": 1,
+          "title": "Snapshots",
+          "type": "array"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "selected_finding_ids",
+        "baseline_test_result_ids",
+        "snapshots",
+        "fingerprint",
+        "actor_id",
+        "created_at",
+        "approval_ref",
+        "eligibility",
+        "reasons"
+      ],
+      "title": "IssueSelection",
+      "type": "object"
+    },
+    "LanguageAdapterCapabilities": {
+      "additionalProperties": false,
+      "description": "Shared adapter declaration, independently covering all nine capability dimensions.",
+      "properties": {
+        "adapter_id": {
+          "description": "adapter: stable implementation/interface identity; a declaration does not prove runtime availability.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Adapter Id",
+          "type": "string"
+        },
+        "capability_ids": {
+          "description": "Exactly one reference for each of parse, symbol, quality, dependency, build, test, coverage, safe_patch and security.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "maxItems": 9,
+          "minItems": 9,
+          "title": "Capability Ids",
+          "type": "array"
+        },
+        "component_id": {
+          "description": "component: boundary for per-language routing and capability evidence.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Component Id",
+          "type": "string"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "implementation_state": {
+          "description": "CONTRACT_DEFINED versus RUNTIME_IMPLEMENTED; the latter needs at least one genuinely supported capability.",
+          "enum": [
+            "CONTRACT_DEFINED",
+            "RUNTIME_IMPLEMENTED"
+          ],
+          "title": "Implementation State",
+          "type": "string"
+        },
+        "kind": {
+          "const": "LanguageAdapterCapabilities",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "language": {
+          "description": "One of JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, CSHARP, GO or CPP; no silent language routing.",
+          "enum": [
+            "JAVA",
+            "PYTHON",
+            "JAVASCRIPT",
+            "TYPESCRIPT",
+            "CSHARP",
+            "GO",
+            "CPP"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "adapter_id",
+        "language",
+        "component_id",
+        "implementation_state",
+        "capability_ids"
+      ],
+      "title": "LanguageAdapterCapabilities",
+      "type": "object"
+    },
+    "Metric": {
+      "additionalProperties": false,
+      "description": "Measured quantity with comparison fingerprint and failure-inclusive population.",
+      "properties": {
+        "attempt_ids": {
+          "description": "Exactly the attempt population used by this measurement, retaining failed attempts.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Attempt Ids",
+          "type": "array"
+        },
+        "comparison": {
+          "$ref": "#/$defs/ComparisonContext",
+          "description": "Actual comparable inputs; comparison_key is checked against these fields, not trusted as an opaque claim."
+        },
+        "comparison_key": {
+          "description": "Fingerprint of tool/rules/config/measurement scope; excludes measured value.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Comparison Key",
+          "type": "string"
+        },
+        "currency_code": {
+          "anyOf": [
+            {
+              "pattern": "^[A-Z]{3}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit ISO-style three-letter currency code for CURRENCY, otherwise null; never inferred from a provider name.",
+          "title": "Currency Code"
+        },
+        "denominator": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Actual size of the declared attempt population; zero yields N/A rather than a fabricated zero ratio.",
+          "title": "Denominator"
+        },
+        "direction": {
+          "description": "How a comparable measurement changes quality: lower, higher, or contextual with no automatic ranking.",
+          "enum": [
+            "LOWER_IS_BETTER",
+            "HIGHER_IS_BETTER",
+            "CONTEXTUAL"
+          ],
+          "title": "Direction",
+          "type": "string"
+        },
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "Metric",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "measurement": {
+          "description": "Whether a value was actually MEASURED or remains explicitly UNKNOWN/UNAVAILABLE/NOT_APPLICABLE.",
+          "enum": [
+            "MEASURED",
+            "UNKNOWN",
+            "UNAVAILABLE",
+            "NOT_APPLICABLE"
+          ],
+          "title": "Measurement",
+          "type": "string"
+        },
+        "name": {
+          "description": "Observed human-readable identity or metric name; not a substitute for stable typed IDs.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "phase": {
+          "description": "Whether the metric measures BASELINE or CANDIDATE bytes.",
+          "enum": [
+            "BASELINE",
+            "CANDIDATE"
+          ],
+          "title": "Phase",
+          "type": "string"
+        },
+        "population": {
+          "description": "NONE, STARTED_ATTEMPTS or PLANNED_ATTEMPTS; determines the required failure-inclusive denominator.",
+          "enum": [
+            "NONE",
+            "STARTED_ATTEMPTS",
+            "PLANNED_ATTEMPTS"
+          ],
+          "title": "Population",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "unit": {
+          "description": "Explicit COUNT, PERCENT, MILLISECONDS, TOKENS or CURRENCY unit; consumers must not mix denominators.",
+          "enum": [
+            "COUNT",
+            "PERCENT",
+            "MILLISECONDS",
+            "TOKENS",
+            "CURRENCY"
+          ],
+          "title": "Unit",
+          "type": "string"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed value or explicit null; confidence and metric domains define their own constraints.",
+          "title": "Value"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "name",
+        "unit",
+        "currency_code",
+        "phase",
+        "value",
+        "measurement",
+        "reason",
+        "comparison_key",
+        "comparison",
+        "direction",
+        "population",
+        "denominator",
+        "attempt_ids",
+        "evidence_ids"
+      ],
+      "title": "Metric",
+      "type": "object"
+    },
+    "ModelProvenance": {
+      "additionalProperties": false,
+      "description": "Provider/model attribution without guessing deployment or generation settings.",
+      "properties": {
+        "model": {
+          "description": "Reported model name; not proof that an integration exists.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Model",
+          "type": "string"
+        },
+        "provider": {
+          "description": "Provider identity; local providers are allowed.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Provider",
+          "type": "string"
+        },
+        "revision": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Exact observed model revision, or null.",
+          "title": "Revision"
+        },
+        "revision_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the exact revision is unknown, or null.",
+          "title": "Revision Reason"
+        },
+        "settings": {
+          "anyOf": [
+            {
+              "additionalProperties": {
+                "anyOf": [
+                  {
+                    "maxLength": 2048,
+                    "minLength": 1,
+                    "type": "string"
+                  },
+                  {
+                    "type": "integer"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "boolean"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "propertyNames": {
+                "maxLength": 2048,
+                "minLength": 1
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed non-secret generation settings, or null.",
+          "title": "Settings"
+        },
+        "settings_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why settings are unknown, or null when known.",
+          "title": "Settings Reason"
+        }
+      },
+      "required": [
+        "provider",
+        "model",
+        "revision",
+        "revision_reason",
+        "settings",
+        "settings_reason"
+      ],
+      "title": "ModelProvenance",
+      "type": "object"
+    },
+    "PatchCandidate": {
+      "additionalProperties": false,
+      "description": "Proposed derivative patch metadata; never applies a patch or changes V0.",
+      "properties": {
+        "allowed_paths": {
+          "description": "Candidate-declared exact paths or directory prefixes ending in slash; intersect with independent PatchPolicy.",
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Allowed Paths",
+          "type": "array"
+        },
+        "applicability": {
+          "description": "Patch metadata applicability, independent of approval, behavioral safety and quality improvement.",
+          "enum": [
+            "APPLICABLE",
+            "REJECTED",
+            "UNVERIFIED"
+          ],
+          "title": "Applicability",
+          "type": "string"
+        },
+        "attempt_id": {
+          "description": "attempt: reference to a started attempt belonging to the same job.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Attempt Id",
+          "type": "string"
+        },
+        "behavior_status": {
+          "description": "PASSED, FAILED or UNVERIFIED, based on actual snapshot-matched test evidence.",
+          "enum": [
+            "PASSED",
+            "FAILED",
+            "UNVERIFIED"
+          ],
+          "title": "Behavior Status",
+          "type": "string"
+        },
+        "changed_files": {
+          "description": "Explicit file/operation/before/after manifest checked against independently trusted source metadata.",
+          "items": {
+            "$ref": "#/$defs/ChangedFile"
+          },
+          "minItems": 1,
+          "title": "Changed Files",
+          "type": "array"
+        },
+        "confidence": {
+          "$ref": "#/$defs/Confidence",
+          "description": "Producer-reported score in [0,1] or explicit unknown reason; not an automatically calibrated probability."
+        },
+        "diff_artifact_id": {
+          "description": "artifact: opaque reference to proposed unified-diff bytes; metadata validation never applies the diff.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Diff Artifact Id",
+          "type": "string"
+        },
+        "diff_sha256": {
+          "description": "SHA-256 of the diff artifact bytes, matched to the artifact inventory.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Diff Sha256",
+          "type": "string"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "job_id": {
+          "description": "job: parent refactoring job identity; separate from attempts and provider transport retries.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Job Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "PatchCandidate",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "model": {
+          "$ref": "#/$defs/ModelProvenance",
+          "description": "Provider/model/revision/settings provenance, with explicit reasons for unknown values."
+        },
+        "output_manifest_artifact_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "artifact: reference to the materialized candidate source manifest; null before it exists.",
+          "title": "Output Manifest Artifact Id"
+        },
+        "output_snapshot_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the candidate source snapshot is unknown; null when its hash and artifact are known.",
+          "title": "Output Snapshot Reason"
+        },
+        "output_snapshot_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed candidate source-manifest hash; null before materialization.",
+          "title": "Output Snapshot Sha256"
+        },
+        "quality_outcome": {
+          "description": "IMPROVED, UNCHANGED, WORSE or NOT_COMPARABLE, independently from behavior_status.",
+          "enum": [
+            "IMPROVED",
+            "UNCHANGED",
+            "WORSE",
+            "NOT_COMPARABLE"
+          ],
+          "title": "Quality Outcome",
+          "type": "string"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "rejection_reasons": {
+          "description": "Reasons why a proposed patch is rejected or remains unverified.",
+          "items": {
+            "maxLength": 2048,
+            "minLength": 1,
+            "type": "string"
+          },
+          "title": "Rejection Reasons",
+          "type": "array"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "security_finding_ids": {
+          "description": "finding: references restricted to SECURITY_REVIEW findings.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Security Finding Ids",
+          "type": "array"
+        },
+        "security_status": {
+          "description": "CLEAN or FINDINGS only after a completed evidenced scan; absence is explicit.",
+          "enum": [
+            "CLEAN",
+            "FINDINGS",
+            "NOT_RUN",
+            "UNAVAILABLE",
+            "INCOMPLETE"
+          ],
+          "title": "Security Status",
+          "type": "string"
+        },
+        "selection_id": {
+          "description": "selection: reference to the immutable Gate 1 selection snapshot.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Selection Id",
+          "type": "string"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "target_finding_id": {
+          "description": "finding: one target present in the approved source-bound selection.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Target Finding Id",
+          "type": "string"
+        },
+        "technique": {
+          "description": "Named proposed refactoring technique; not proof of quality improvement.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Technique",
+          "type": "string"
+        },
+        "validation_ids": {
+          "description": "validation: reciprocal references to actual assessments of this candidate.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Validation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "job_id",
+        "attempt_id",
+        "selection_id",
+        "target_finding_id",
+        "technique",
+        "diff_artifact_id",
+        "diff_sha256",
+        "output_snapshot_sha256",
+        "output_manifest_artifact_id",
+        "output_snapshot_reason",
+        "allowed_paths",
+        "changed_files",
+        "model",
+        "validation_ids",
+        "security_finding_ids",
+        "security_status",
+        "behavior_status",
+        "quality_outcome",
+        "applicability",
+        "rejection_reasons",
+        "confidence"
+      ],
+      "title": "PatchCandidate",
+      "type": "object"
+    },
+    "ResultEnvelope": {
+      "additionalProperties": false,
+      "description": "Versioned successful API result; references are validated as a closed graph.",
+      "properties": {
+        "data": {
+          "$ref": "#/$defs/ContractBundle",
+          "description": "Versioned result bundle; gates additionally require cross-record validation with trusted policy inputs."
+        },
+        "next_cursor": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Opaque cursor; null means no additional page.",
+          "title": "Next Cursor"
+        },
+        "request_id": {
+          "description": "request: identifier for correlating a safe API result/error with its request.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Request Id",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported schema version; v1 readers reject unknown versions and fields.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "status": {
+          "const": "OK",
+          "description": "Context-specific exact state enum; never collapse execution, behavior, quality, security and evidence states.",
+          "title": "Status",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "request_id",
+        "status",
+        "data",
+        "next_cursor"
+      ],
+      "title": "ResultEnvelope",
+      "type": "object"
+    },
+    "Scope": {
+      "additionalProperties": false,
+      "description": "Identity of one immutable source snapshot and repeat analysis/run.",
+      "properties": {
+        "analysis_id": {
+          "description": "Analysis ID; analysis: prefix; fresh for a repeat analysis.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Analysis Id",
+          "type": "string"
+        },
+        "baseline_sha256": {
+          "description": "SHA-256 of the immutable source manifest bytes.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Baseline Sha256",
+          "type": "string"
+        },
+        "project_id": {
+          "description": "Project registry ID; project: prefix.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Project Id",
+          "type": "string"
+        },
+        "run_id": {
+          "description": "Execution run ID; run: prefix; never reused for a retry.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Run Id",
+          "type": "string"
+        },
+        "source_revision": {
+          "description": "Git object SHA-1 of the source, not a file SHA-256.",
+          "pattern": "^[0-9a-f]{40}$",
+          "title": "Source Revision",
+          "type": "string"
+        },
+        "version_id": {
+          "description": "Immutable project version ID; version: prefix.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Version Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "project_id",
+        "version_id",
+        "analysis_id",
+        "run_id",
+        "source_revision",
+        "baseline_sha256"
+      ],
+      "title": "Scope",
+      "type": "object"
+    },
+    "SourceLocation": {
+      "additionalProperties": false,
+      "description": "1-based lines and Unicode-scalar columns; range end is exclusive.",
+      "properties": {
+        "end_column": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Exclusive 1-based Unicode-scalar column; null only for unresolved coordinates.",
+          "title": "End Column"
+        },
+        "end_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "1-based end line; range end must lexicographically follow range start.",
+          "title": "End Line"
+        },
+        "file_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "file: reference, or null when unresolved.",
+          "title": "File Id"
+        },
+        "file_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Original source-file SHA-256, or null when unresolved.",
+          "title": "File Sha256"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "SourceLocation",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "path": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Portable source path; null only for an unresolved location.",
+          "title": "Path"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit unresolved reason, otherwise null.",
+          "title": "Reason"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "resolution": {
+          "description": "RESOLVED versus UNRESOLVED; coordinates or dependency targets cannot be fabricated to appear resolved.",
+          "enum": [
+            "RESOLVED",
+            "UNRESOLVED"
+          ],
+          "title": "Resolution",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "start_column": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Inclusive 1-based Unicode-scalar column; a tab and an emoji each count as one scalar.",
+          "title": "Start Column"
+        },
+        "start_line": {
+          "anyOf": [
+            {
+              "minimum": 1,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Inclusive 1-based line; LF and CRLF each separate one logical line.",
+          "title": "Start Line"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "symbol_id": {
+          "anyOf": [
+            {
+              "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Optional symbol: reference; null means no resolved symbol.",
+          "title": "Symbol Id"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "path",
+        "file_id",
+        "file_sha256",
+        "resolution",
+        "reason",
+        "start_line",
+        "start_column",
+        "end_line",
+        "end_column",
+        "symbol_id"
+      ],
+      "title": "SourceLocation",
+      "type": "object"
+    },
+    "Symbol": {
+      "additionalProperties": false,
+      "description": "Language-independent symbol identity with explicit resolution uncertainty.",
+      "properties": {
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "Symbol",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "language": {
+          "description": "One of JAVA, PYTHON, JAVASCRIPT, TYPESCRIPT, CSHARP, GO or CPP; no silent language routing.",
+          "enum": [
+            "JAVA",
+            "PYTHON",
+            "JAVASCRIPT",
+            "TYPESCRIPT",
+            "CSHARP",
+            "GO",
+            "CPP"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "location_id": {
+          "description": "location: source range associated with a symbol.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Location Id",
+          "type": "string"
+        },
+        "name": {
+          "description": "Observed human-readable identity or metric name; not a substitute for stable typed IDs.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "public_api": {
+          "anyOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Null means visibility is unknown; it is not equivalent to private.",
+          "title": "Public Api"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "resolution": {
+          "description": "RESOLVED versus UNRESOLVED; coordinates or dependency targets cannot be fabricated to appear resolved.",
+          "enum": [
+            "RESOLVED",
+            "UNRESOLVED"
+          ],
+          "title": "Resolution",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "signature": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed symbol signature; null when it cannot be established.",
+          "title": "Signature"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "language",
+        "name",
+        "signature",
+        "location_id",
+        "resolution",
+        "reason",
+        "public_api",
+        "evidence_ids"
+      ],
+      "title": "Symbol",
+      "type": "object"
+    },
+    "TestResult": {
+      "additionalProperties": false,
+      "description": "One actual frozen-suite execution; a build is not a test result.",
+      "properties": {
+        "environment_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed test environment fingerprint, or null when execution cannot establish it.",
+          "title": "Environment Sha256"
+        },
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "execution_status": {
+          "description": "COMPLETED, FAILED, NOT_RUN, UNAVAILABLE or INCOMPLETE; distinct from result dimensions.",
+          "enum": [
+            "COMPLETED",
+            "FAILED",
+            "NOT_RUN",
+            "UNAVAILABLE",
+            "INCOMPLETE"
+          ],
+          "title": "Execution Status",
+          "type": "string"
+        },
+        "failed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed failing test count, or null when unknown; execution failure alone is not a failing test case.",
+          "title": "Failed"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "TestResult",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "outcome": {
+          "description": "Observed test-suite result; a nonempty completed suite is required for PASSED.",
+          "enum": [
+            "PASSED",
+            "FAILED",
+            "UNVERIFIED"
+          ],
+          "title": "Outcome",
+          "type": "string"
+        },
+        "passed": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed passing test count, or null when unknown.",
+          "title": "Passed"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "skipped": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed skipped-test count; skipped cases do not establish full behavioral PASS.",
+          "title": "Skipped"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "suite_id": {
+          "description": "suite: immutable frozen baseline test-suite identity.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Suite Id",
+          "type": "string"
+        },
+        "suite_sha256": {
+          "description": "SHA-256 of frozen test-suite manifest bytes, matched to the suite inventory.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Suite Sha256",
+          "type": "string"
+        },
+        "tool": {
+          "$ref": "#/$defs/ToolProvenance",
+          "description": "Observed tool identity/version/config provenance, or null for an unavailable capability."
+        },
+        "total": {
+          "anyOf": [
+            {
+              "minimum": 0,
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed total test cases; must equal passed+failed+skipped and the frozen suite case inventory.",
+          "title": "Total"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "suite_id",
+        "suite_sha256",
+        "tool",
+        "environment_sha256",
+        "execution_status",
+        "outcome",
+        "total",
+        "passed",
+        "failed",
+        "skipped",
+        "reason",
+        "evidence_ids"
+      ],
+      "title": "TestResult",
+      "type": "object"
+    },
+    "TestSuite": {
+      "additionalProperties": false,
+      "description": "Frozen test identity, separate from a particular test execution.",
+      "properties": {
+        "case_ids": {
+          "description": "Stable case: identifiers, including failed cases.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Case Ids",
+          "type": "array"
+        },
+        "id": {
+          "description": "suite: immutable baseline test-suite identifier.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "sha256": {
+          "description": "SHA-256 of the frozen test-suite manifest bytes.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Sha256",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "sha256",
+        "case_ids"
+      ],
+      "title": "TestSuite",
+      "type": "object"
+    },
+    "ToolProvenance": {
+      "additionalProperties": false,
+      "description": "Actual tool/version/config lineage; unavailable values stay unknown.",
+      "properties": {
+        "config_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why configuration is unavailable, or null when known.",
+          "title": "Config Reason"
+        },
+        "config_sha256": {
+          "anyOf": [
+            {
+              "pattern": "^[0-9a-f]{64}$",
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Actual configuration fingerprint, never an invented default.",
+          "title": "Config Sha256"
+        },
+        "tool_id": {
+          "description": "Tool product or adapter identity.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Tool Id",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed tool version; null if unknown.",
+          "title": "Version"
+        },
+        "version_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Why the version is unknown, or null when known.",
+          "title": "Version Reason"
+        }
+      },
+      "required": [
+        "tool_id",
+        "version",
+        "version_reason",
+        "config_sha256",
+        "config_reason"
+      ],
+      "title": "ToolProvenance",
+      "type": "object"
+    },
+    "ToolchainRequirement": {
+      "additionalProperties": false,
+      "description": "Observed availability and version of a required toolchain component.",
+      "properties": {
+        "name": {
+          "description": "Observed human-readable identity or metric name; not a substitute for stable typed IDs.",
+          "maxLength": 2048,
+          "minLength": 1,
+          "title": "Name",
+          "type": "string"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "status": {
+          "description": "Context-specific exact state enum; never collapse execution, behavior, quality, security and evidence states.",
+          "enum": [
+            "AVAILABLE",
+            "UNAVAILABLE",
+            "UNRESOLVED"
+          ],
+          "title": "Status",
+          "type": "string"
+        },
+        "version": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Observed toolchain/tool version, with explicit unavailable/unknown semantics.",
+          "title": "Version"
+        }
+      },
+      "required": [
+        "name",
+        "version",
+        "status",
+        "reason"
+      ],
+      "title": "ToolchainRequirement",
+      "type": "object"
+    },
+    "ValidationResult": {
+      "additionalProperties": false,
+      "description": "Evidence-backed independent behavior, quality, security and execution dimensions.",
+      "properties": {
+        "behavior_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explanation when behavior is UNVERIFIED; a build alone cannot establish preservation.",
+          "title": "Behavior Reason"
+        },
+        "behavior_status": {
+          "description": "PASSED, FAILED or UNVERIFIED, based on actual snapshot-matched test evidence.",
+          "enum": [
+            "PASSED",
+            "FAILED",
+            "UNVERIFIED"
+          ],
+          "title": "Behavior Status",
+          "type": "string"
+        },
+        "build_status": {
+          "description": "Build outcome, kept separate from behavioral and quality outcomes.",
+          "enum": [
+            "PASSED",
+            "FAILED",
+            "UNVERIFIED"
+          ],
+          "title": "Build Status",
+          "type": "string"
+        },
+        "candidate_ids": {
+          "description": "patch: candidates assessed by this result; individual validation requires exactly one.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "minItems": 1,
+          "title": "Candidate Ids",
+          "type": "array"
+        },
+        "evidence_ids": {
+          "description": "evidence: provenance links; verification gates require independent VERIFIED evidence for the same snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array"
+        },
+        "execution_status": {
+          "description": "COMPLETED, FAILED, NOT_RUN, UNAVAILABLE or INCOMPLETE; distinct from result dimensions.",
+          "enum": [
+            "COMPLETED",
+            "FAILED",
+            "NOT_RUN",
+            "UNAVAILABLE",
+            "INCOMPLETE"
+          ],
+          "title": "Execution Status",
+          "type": "string"
+        },
+        "id": {
+          "description": "Globally unique, type-prefixed immutable entity ID.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Id",
+          "type": "string"
+        },
+        "kind": {
+          "const": "ValidationResult",
+          "description": "Discriminator naming the exact CIR entity schema; no implicit fallback to another entity.",
+          "title": "Kind",
+          "type": "string"
+        },
+        "metric_ids": {
+          "description": "metric: comparable before/after measurements supporting the quality outcome.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Metric Ids",
+          "type": "array"
+        },
+        "quality_outcome": {
+          "description": "IMPROVED, UNCHANGED, WORSE or NOT_COMPARABLE, independently from behavior_status.",
+          "enum": [
+            "IMPROVED",
+            "UNCHANGED",
+            "WORSE",
+            "NOT_COMPARABLE"
+          ],
+          "title": "Quality Outcome",
+          "type": "string"
+        },
+        "quality_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explanation when the measurements cannot support a comparison.",
+          "title": "Quality Reason"
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explicit explanation for an unknown, unresolved, unavailable, incomplete or failed state; null when inapplicable.",
+          "title": "Reason"
+        },
+        "recorded_at": {
+          "description": "Actual UTC record timestamp; fixtures use an explicitly synthetic fixed timestamp.",
+          "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}(?:\\.\\d{1,6})?Z$",
+          "title": "Recorded At",
+          "type": "string"
+        },
+        "schema_version": {
+          "const": "1.0.0",
+          "description": "Exact supported contract version. Unknown versions are rejected.",
+          "title": "Schema Version",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "#/$defs/Scope",
+          "description": "Source/project/version/analysis/run binding."
+        },
+        "security_evidence_ids": {
+          "description": "evidence: independent deterministic/human scan evidence for the exact validated snapshot.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Security Evidence Ids",
+          "type": "array"
+        },
+        "security_execution_status": {
+          "description": "Whether the security scan actually completed, independent of overall execution.",
+          "enum": [
+            "COMPLETED",
+            "FAILED",
+            "NOT_RUN",
+            "UNAVAILABLE",
+            "INCOMPLETE"
+          ],
+          "title": "Security Execution Status",
+          "type": "string"
+        },
+        "security_finding_ids": {
+          "description": "finding: references restricted to SECURITY_REVIEW findings.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Security Finding Ids",
+          "type": "array"
+        },
+        "security_reason": {
+          "anyOf": [
+            {
+              "maxLength": 2048,
+              "minLength": 1,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "Explanation when scanning is unavailable, incomplete or not run.",
+          "title": "Security Reason"
+        },
+        "security_status": {
+          "description": "CLEAN or FINDINGS only after a completed evidenced scan; absence is explicit.",
+          "enum": [
+            "CLEAN",
+            "FINDINGS",
+            "NOT_RUN",
+            "UNAVAILABLE",
+            "INCOMPLETE"
+          ],
+          "title": "Security Status",
+          "type": "string"
+        },
+        "subject_sha256": {
+          "description": "Actual observed source-manifest snapshot; baseline and candidate evidence must not be interchanged.",
+          "pattern": "^[0-9a-f]{64}$",
+          "title": "Subject Sha256",
+          "type": "string"
+        },
+        "test_result_ids": {
+          "description": "test: actual executions on the validated source snapshot, not merely passing baseline tests.",
+          "items": {
+            "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+            "type": "string"
+          },
+          "title": "Test Result Ids",
+          "type": "array"
+        },
+        "validation_scope": {
+          "description": "CANDIDATE versus COMBINED; individual success does not establish combined success.",
+          "enum": [
+            "CANDIDATE",
+            "COMBINED"
+          ],
+          "title": "Validation Scope",
+          "type": "string"
+        },
+        "workspace_kind": {
+          "description": "CANDIDATE_DERIVATIVE versus FRESH_V0_COMBINATION; combined results require a fresh V0 workspace.",
+          "enum": [
+            "CANDIDATE_DERIVATIVE",
+            "FRESH_V0_COMBINATION"
+          ],
+          "title": "Workspace Kind",
+          "type": "string"
+        },
+        "workspace_manifest_artifact_id": {
+          "description": "artifact: validated workspace manifest, whose hash must match the result subject snapshot.",
+          "pattern": "^[a-z][a-z0-9_]*:[A-Za-z0-9][A-Za-z0-9._-]{0,127}$",
+          "title": "Workspace Manifest Artifact Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "schema_version",
+        "id",
+        "scope",
+        "subject_sha256",
+        "recorded_at",
+        "kind",
+        "candidate_ids",
+        "validation_scope",
+        "workspace_kind",
+        "workspace_manifest_artifact_id",
+        "execution_status",
+        "build_status",
+        "behavior_status",
+        "behavior_reason",
+        "quality_outcome",
+        "quality_reason",
+        "security_status",
+        "security_reason",
+        "security_execution_status",
+        "security_evidence_ids",
+        "security_finding_ids",
+        "test_result_ids",
+        "metric_ids",
+        "evidence_ids",
+        "reason"
+      ],
+      "title": "ValidationResult",
+      "type": "object"
+    }
+  },
+  "$id": "urn:genesis:cir:1.0.0",
+  "$ref": "#/$defs/ContractBundle",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

@@ -12,10 +12,14 @@
     "dev": "vite --host 0.0.0.0",
     "build": "tsc -b && vite build",
     "preview": "vite preview --configLoader runner",
-    "test": "vitest run",
-    "check": "npm run test && npm run build"
+    "test": "node scripts/contracts.mjs --check && vitest run",
+    "check": "npm run test && npm run build",
+    "contracts:sync": "node scripts/contracts.mjs",
+    "contracts:check": "node scripts/contracts.mjs --check"
   },
   "dependencies": {
+    "ajv": "8.20.0",
+    "monaco-editor": "0.56.0",
     "react": "19.3.1",
     "react-dom": "19.3.1"
   },
@@ -24,8 +28,13 @@
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",
     "@vitejs/plugin-react": "6.2.1",
+    "jsdom": "31.0.1",
+    "json-schema-to-typescript": "16.0.0",
     "typescript": "6.0.3",
     "vite": "8.3.6",
     "vitest": "5.1.0"
+  },
+  "overrides": {
+    "dompurify": "3.4.18"
   }
 }

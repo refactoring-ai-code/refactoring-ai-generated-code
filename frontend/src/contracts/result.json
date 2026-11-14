@@ -1,0 +1,1176 @@
+{
+  "data": {
+    "artifacts": [
+      {
+        "id": "artifact:analysis",
+        "media_type": "application/json",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "f44e85c4b8ea2addc796f8beab6600e801d767ccd26c800dce6d88fdaa5eb4e6"
+      },
+      {
+        "id": "artifact:tests",
+        "media_type": "application/json",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "59830ebc3a4184110566bf1a290d08473dfdcbd492ce498b14cd1a5e2fa2e441"
+      },
+      {
+        "id": "artifact:security",
+        "media_type": "application/json",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "5d2d3ceb7abe552344276d47d36a8175b7aeb250a9bf0bf00e850cd23ecf2e43"
+      },
+      {
+        "id": "artifact:candidate-tests",
+        "media_type": "application/json",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "2938750f84ec0399c7051647037e15f0a77544d48ee194b151570919a0959e50"
+      },
+      {
+        "id": "artifact:candidate-analysis",
+        "media_type": "application/json",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "e22862d0ea67b7aec69bdc7016a8b9d56e1f4cf8f930c092a3a6cee4e044540e"
+      },
+      {
+        "id": "artifact:candidate-manifest",
+        "media_type": "application/json",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf"
+      },
+      {
+        "id": "artifact:failed-attempt",
+        "media_type": "application/json",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "03c416b42a651912627ba6c02b1a227afb106129a49606e4fb453f208970b4ea"
+      },
+      {
+        "id": "artifact:diff",
+        "media_type": "text/x-diff",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "df087996d45b03e7eb8c133c0298fd98d35113fca26aaba58612fef3cc212cad"
+      },
+      {
+        "id": "artifact:context",
+        "media_type": "text/plain",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "sha256": "ea7792a26f405e2ae9c6f49ca93bbe6076ceac0a1fc53d83426c7d7f2d9377e4"
+      }
+    ],
+    "attempts": [
+      {
+        "artifact_ids": [],
+        "evidence_ids": [
+          "evidence:candidate-tests"
+        ],
+        "execution_status": "COMPLETED",
+        "failure_kind": null,
+        "id": "attempt:first",
+        "job_id": "job:first",
+        "number": 1,
+        "reason": null,
+        "started": true
+      },
+      {
+        "artifact_ids": [
+          "artifact:failed-attempt"
+        ],
+        "evidence_ids": [],
+        "execution_status": "FAILED",
+        "failure_kind": "CONTRACT_REJECTION",
+        "id": "attempt:failed",
+        "job_id": "job:first",
+        "number": 2,
+        "reason": "Synthetic failed correction retained in denominators.",
+        "started": true
+      }
+    ],
+    "files": [
+      {
+        "frozen": false,
+        "id": "file:main",
+        "is_symlink": false,
+        "path": "src/Main.java",
+        "protected_test": false,
+        "sha256": "7b0a66e62ad60f2daf5bc50dbd1599b775823fe018ccba41150b6f490ace647f",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397"
+      },
+      {
+        "frozen": false,
+        "id": "file:helper",
+        "is_symlink": false,
+        "path": "src/Helper.java",
+        "protected_test": false,
+        "sha256": "f1de1c981ad60ffe55fc9d8bf359849b5a69be62c440d0328603efad49a8cc4b",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397"
+      }
+    ],
+    "mode": "FIXTURE",
+    "records": [
+      {
+        "end_column": 5,
+        "end_line": 1,
+        "file_id": "file:main",
+        "file_sha256": "7b0a66e62ad60f2daf5bc50dbd1599b775823fe018ccba41150b6f490ace647f",
+        "id": "location:main",
+        "kind": "SourceLocation",
+        "path": "src/Main.java",
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "resolution": "RESOLVED",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "start_column": 2,
+        "start_line": 1,
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "symbol_id": "symbol:main"
+      },
+      {
+        "end_column": 7,
+        "end_line": 1,
+        "file_id": "file:helper",
+        "file_sha256": "f1de1c981ad60ffe55fc9d8bf359849b5a69be62c440d0328603efad49a8cc4b",
+        "id": "location:helper",
+        "kind": "SourceLocation",
+        "path": "src/Helper.java",
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "resolution": "RESOLVED",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "start_column": 1,
+        "start_line": 1,
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "symbol_id": "symbol:helper"
+      },
+      {
+        "evidence_ids": [
+          "evidence:analysis"
+        ],
+        "id": "symbol:main",
+        "kind": "Symbol",
+        "language": "JAVA",
+        "location_id": "location:main",
+        "name": "Main.main",
+        "public_api": true,
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "resolution": "RESOLVED",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "signature": "void main()",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397"
+      },
+      {
+        "evidence_ids": [
+          "evidence:analysis"
+        ],
+        "id": "symbol:helper",
+        "kind": "Symbol",
+        "language": "JAVA",
+        "location_id": "location:helper",
+        "name": "Helper.run",
+        "public_api": false,
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "resolution": "RESOLVED",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "signature": "void run()",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397"
+      },
+      {
+        "evidence_ids": [
+          "evidence:analysis"
+        ],
+        "from_symbol_id": "symbol:main",
+        "id": "dependency:call",
+        "kind": "DependencyEdge",
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "relationship": "CALL",
+        "resolution": "RESOLVED",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "to_symbol_id": "symbol:helper"
+      },
+      {
+        "actor_id": null,
+        "artifact_id": "artifact:analysis",
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "id": "evidence:analysis",
+        "kind": "Evidence",
+        "location_ids": [
+          "location:main",
+          "location:helper"
+        ],
+        "model": null,
+        "producer_kind": "DETERMINISTIC_TOOL",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "rule_id": "fixture:analysis",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "symbol_ids": [],
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        },
+        "verification": "VERIFIED"
+      },
+      {
+        "actor_id": null,
+        "artifact_id": "artifact:tests",
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "id": "evidence:tests",
+        "kind": "Evidence",
+        "location_ids": [
+          "location:main",
+          "location:helper"
+        ],
+        "model": null,
+        "producer_kind": "DETERMINISTIC_TOOL",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "rule_id": "fixture:tests",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "symbol_ids": [],
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        },
+        "verification": "VERIFIED"
+      },
+      {
+        "actor_id": null,
+        "artifact_id": "artifact:security",
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "id": "evidence:security",
+        "kind": "Evidence",
+        "location_ids": [],
+        "model": null,
+        "producer_kind": "DETERMINISTIC_TOOL",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "rule_id": "fixture:security",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf",
+        "symbol_ids": [],
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        },
+        "verification": "VERIFIED"
+      },
+      {
+        "actor_id": null,
+        "artifact_id": "artifact:candidate-tests",
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "id": "evidence:candidate-tests",
+        "kind": "Evidence",
+        "location_ids": [],
+        "model": null,
+        "producer_kind": "DETERMINISTIC_TOOL",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "rule_id": "fixture:candidate-tests",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf",
+        "symbol_ids": [],
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        },
+        "verification": "VERIFIED"
+      },
+      {
+        "actor_id": null,
+        "artifact_id": "artifact:candidate-analysis",
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "id": "evidence:candidate-analysis",
+        "kind": "Evidence",
+        "location_ids": [],
+        "model": null,
+        "producer_kind": "DETERMINISTIC_TOOL",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "rule_id": "fixture:candidate-analysis",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf",
+        "symbol_ids": [],
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        },
+        "verification": "VERIFIED"
+      },
+      {
+        "category": "COMPLEXITY",
+        "classification": "QUALITY_REFACTOR",
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "eligibility": "ELIGIBLE",
+        "eligibility_reason": null,
+        "evidence_ids": [
+          "evidence:analysis"
+        ],
+        "id": "finding:quality",
+        "kind": "Finding",
+        "location_ids": [
+          "location:main"
+        ],
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "rule_id": "fixture:complexity",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "OPEN",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        }
+      },
+      {
+        "category": "SECURITY",
+        "classification": "SECURITY_REVIEW",
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "eligibility": "INELIGIBLE",
+        "eligibility_reason": "Security review is not an ordinary quality task.",
+        "evidence_ids": [
+          "evidence:analysis"
+        ],
+        "id": "finding:security",
+        "kind": "Finding",
+        "location_ids": [
+          "location:main"
+        ],
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "rule_id": "fixture:security-review",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "OPEN",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        }
+      },
+      {
+        "attempt_ids": [],
+        "comparison": {
+          "environment_reason": null,
+          "environment_sha256": "0c46eb879e765db9f64b8e7ade372fbf127314fa929e54b3abc230cfe0ec1494",
+          "measurement_scope_sha256": "2285c7a5d750348171366d844a7eb5308110c106fbe6e91dc2ab274d2deed985",
+          "rule_set_reason": null,
+          "rule_set_version": "fixture-rules-v1",
+          "test_suite_sha256": null,
+          "test_suite_state": "NOT_APPLICABLE",
+          "tool": {
+            "config_reason": null,
+            "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+            "tool_id": "fixture-analyzer",
+            "version": "1.fixture",
+            "version_reason": null
+          }
+        },
+        "comparison_key": "42b265ab02256431ec233ee10fda312e1a913a4ae7e903fbf5dde0a93e435145",
+        "currency_code": null,
+        "denominator": null,
+        "direction": "LOWER_IS_BETTER",
+        "evidence_ids": [
+          "evidence:analysis"
+        ],
+        "id": "metric:baseline",
+        "kind": "Metric",
+        "measurement": "MEASURED",
+        "name": "fixture-complexity",
+        "phase": "BASELINE",
+        "population": "NONE",
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "unit": "COUNT",
+        "value": 10.0
+      },
+      {
+        "attempt_ids": [],
+        "comparison": {
+          "environment_reason": null,
+          "environment_sha256": "0c46eb879e765db9f64b8e7ade372fbf127314fa929e54b3abc230cfe0ec1494",
+          "measurement_scope_sha256": "2285c7a5d750348171366d844a7eb5308110c106fbe6e91dc2ab274d2deed985",
+          "rule_set_reason": null,
+          "rule_set_version": "fixture-rules-v1",
+          "test_suite_sha256": null,
+          "test_suite_state": "NOT_APPLICABLE",
+          "tool": {
+            "config_reason": null,
+            "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+            "tool_id": "fixture-analyzer",
+            "version": "1.fixture",
+            "version_reason": null
+          }
+        },
+        "comparison_key": "42b265ab02256431ec233ee10fda312e1a913a4ae7e903fbf5dde0a93e435145",
+        "currency_code": null,
+        "denominator": null,
+        "direction": "LOWER_IS_BETTER",
+        "evidence_ids": [
+          "evidence:candidate-analysis"
+        ],
+        "id": "metric:candidate",
+        "kind": "Metric",
+        "measurement": "MEASURED",
+        "name": "fixture-complexity",
+        "phase": "CANDIDATE",
+        "population": "NONE",
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf",
+        "unit": "COUNT",
+        "value": 8.0
+      },
+      {
+        "environment_sha256": "0c46eb879e765db9f64b8e7ade372fbf127314fa929e54b3abc230cfe0ec1494",
+        "evidence_ids": [
+          "evidence:tests"
+        ],
+        "execution_status": "COMPLETED",
+        "failed": 0,
+        "id": "test:baseline",
+        "kind": "TestResult",
+        "outcome": "PASSED",
+        "passed": 2,
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "skipped": 0,
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "suite_id": "suite:frozen",
+        "suite_sha256": "d401a17c5bfe62f6df9c23587df52e1fb98fda61809c1dff567834ed6e4fe247",
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        },
+        "total": 2
+      },
+      {
+        "environment_sha256": "0c46eb879e765db9f64b8e7ade372fbf127314fa929e54b3abc230cfe0ec1494",
+        "evidence_ids": [
+          "evidence:candidate-tests"
+        ],
+        "execution_status": "COMPLETED",
+        "failed": 0,
+        "id": "test:candidate",
+        "kind": "TestResult",
+        "outcome": "PASSED",
+        "passed": 2,
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "skipped": 0,
+        "subject_sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf",
+        "suite_id": "suite:frozen",
+        "suite_sha256": "d401a17c5bfe62f6df9c23587df52e1fb98fda61809c1dff567834ed6e4fe247",
+        "tool": {
+          "config_reason": null,
+          "config_sha256": "b0d4913f313bf0e18b6ec2d81d84ff748bdd415a26cb32243978b22b248567bc",
+          "tool_id": "fixture-analyzer",
+          "version": "1.fixture",
+          "version_reason": null
+        },
+        "total": 2
+      },
+      {
+        "actor_id": "actor:fixture-user",
+        "approval_ref": "approval:fixture-first-gate",
+        "baseline_test_result_ids": [
+          "test:baseline"
+        ],
+        "created_at": "2026-11-04T00:00:00Z",
+        "eligibility": "ELIGIBLE",
+        "fingerprint": "3af9ad71bc50740831b47fcd257e6f5875f14db6447a20dafe5de9be4c1bc334",
+        "id": "selection:first",
+        "kind": "IssueSelection",
+        "reasons": [],
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "selected_finding_ids": [
+          "finding:quality"
+        ],
+        "snapshots": [
+          {
+            "finding_id": "finding:quality",
+            "fingerprint": "200c4d665205094387b280622980f092328297b0700708f273941687300d4328"
+          }
+        ],
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397"
+      },
+      {
+        "artifact_ids": [
+          "artifact:context"
+        ],
+        "budget": {
+          "max_tokens": 1024,
+          "measurement": "MEASURED",
+          "reason": null,
+          "used_tokens": 128
+        },
+        "callee_symbol_ids": [
+          "symbol:helper"
+        ],
+        "caller_symbol_ids": [],
+        "completeness": "COMPLETE",
+        "dependency_ids": [
+          "dependency:call"
+        ],
+        "evidence_ids": [
+          "evidence:analysis"
+        ],
+        "excluded": [],
+        "id": "context:bounded",
+        "included_ids": [
+          "finding:quality",
+          "symbol:main",
+          "symbol:helper",
+          "location:main",
+          "location:helper",
+          "dependency:call",
+          "test:baseline"
+        ],
+        "kind": "ContextPackage",
+        "known_side_effects": [],
+        "missing_critical_ids": [],
+        "public_api_symbol_ids": [
+          "symbol:main"
+        ],
+        "reasons": [],
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "redaction": "NO_SENSITIVE_CONTENT",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "selection_id": "selection:first",
+        "side_effect_status": "KNOWN",
+        "source_location_ids": [
+          "location:main",
+          "location:helper"
+        ],
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "target_finding_id": "finding:quality",
+        "target_symbol_id": "symbol:main",
+        "test_result_ids": [
+          "test:baseline"
+        ],
+        "unresolved_dependency_ids": []
+      },
+      {
+        "allowed_paths": [
+          "src/"
+        ],
+        "applicability": "APPLICABLE",
+        "attempt_id": "attempt:first",
+        "behavior_status": "PASSED",
+        "changed_files": [
+          {
+            "after_sha256": "968e3e09f41c4aaf8ebeb4a8ae819d70c37f08c8f9cac1278484ed42fca6aba8",
+            "before_sha256": "7b0a66e62ad60f2daf5bc50dbd1599b775823fe018ccba41150b6f490ace647f",
+            "file_id": "file:main",
+            "operation": "MODIFY",
+            "path": "src/Main.java"
+          }
+        ],
+        "confidence": {
+          "reason": null,
+          "value": 0.9
+        },
+        "diff_artifact_id": "artifact:diff",
+        "diff_sha256": "df087996d45b03e7eb8c133c0298fd98d35113fca26aaba58612fef3cc212cad",
+        "id": "patch:first",
+        "job_id": "job:first",
+        "kind": "PatchCandidate",
+        "model": {
+          "model": "fixture-model",
+          "provider": "fixture-local-provider",
+          "revision": null,
+          "revision_reason": "Synthetic fixture; no serving model was run.",
+          "settings": null,
+          "settings_reason": "Generation settings are not available in this fixture."
+        },
+        "output_manifest_artifact_id": "artifact:candidate-manifest",
+        "output_snapshot_reason": null,
+        "output_snapshot_sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf",
+        "quality_outcome": "IMPROVED",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "rejection_reasons": [],
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "security_finding_ids": [],
+        "security_status": "CLEAN",
+        "selection_id": "selection:first",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "target_finding_id": "finding:quality",
+        "technique": "fixture:extract-method",
+        "validation_ids": [
+          "validation:first"
+        ]
+      },
+      {
+        "behavior_reason": null,
+        "behavior_status": "PASSED",
+        "build_status": "PASSED",
+        "candidate_ids": [
+          "patch:first"
+        ],
+        "evidence_ids": [
+          "evidence:candidate-tests"
+        ],
+        "execution_status": "COMPLETED",
+        "id": "validation:first",
+        "kind": "ValidationResult",
+        "metric_ids": [
+          "metric:baseline",
+          "metric:candidate"
+        ],
+        "quality_outcome": "IMPROVED",
+        "quality_reason": null,
+        "reason": null,
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "security_evidence_ids": [
+          "evidence:security"
+        ],
+        "security_execution_status": "COMPLETED",
+        "security_finding_ids": [],
+        "security_reason": null,
+        "security_status": "CLEAN",
+        "subject_sha256": "216ce7f842a88c45c2ab693303496ea84950df1807dfeb559ec7543b3ad21fbf",
+        "test_result_ids": [
+          "test:candidate"
+        ],
+        "validation_scope": "CANDIDATE",
+        "workspace_kind": "CANDIDATE_DERIVATIVE",
+        "workspace_manifest_artifact_id": "artifact:candidate-manifest"
+      },
+      {
+        "capability": "parse",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-parse",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "symbol",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-symbol",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "quality",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-quality",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "dependency",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-dependency",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "build",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-build",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "test",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-test",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "coverage",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-coverage",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "safe_patch",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-safe_patch",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "capability": "security",
+        "component_id": "component:fixture",
+        "confidence": {
+          "reason": "Interface fixture only.",
+          "value": null
+        },
+        "evidence_ids": [],
+        "id": "capability:java-security",
+        "kind": "Capability",
+        "language": "JAVA",
+        "limitations": [
+          "No runtime adapter is implemented by F02."
+        ],
+        "reason": "Contract declaration only; real evidence belongs to the adapter tasks.",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "status": "NOT_IMPLEMENTED",
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+        "tool": null,
+        "toolchain": []
+      },
+      {
+        "adapter_id": "adapter:java",
+        "capability_ids": [
+          "capability:java-parse",
+          "capability:java-symbol",
+          "capability:java-quality",
+          "capability:java-dependency",
+          "capability:java-build",
+          "capability:java-test",
+          "capability:java-coverage",
+          "capability:java-safe_patch",
+          "capability:java-security"
+        ],
+        "component_id": "component:fixture",
+        "id": "adaptercaps:java",
+        "implementation_state": "CONTRACT_DEFINED",
+        "kind": "LanguageAdapterCapabilities",
+        "language": "JAVA",
+        "recorded_at": "2026-11-04T00:00:00Z",
+        "schema_version": "1.0.0",
+        "scope": {
+          "analysis_id": "analysis:initial",
+          "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+          "project_id": "project:fixture",
+          "run_id": "run:initial",
+          "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "version_id": "version:v0"
+        },
+        "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397"
+      }
+    ],
+    "schema_version": "1.0.0",
+    "scope": {
+      "analysis_id": "analysis:initial",
+      "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+      "project_id": "project:fixture",
+      "run_id": "run:initial",
+      "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "version_id": "version:v0"
+    },
+    "test_suites": [
+      {
+        "case_ids": [
+          "case:first",
+          "case:second"
+        ],
+        "id": "suite:frozen",
+        "sha256": "d401a17c5bfe62f6df9c23587df52e1fb98fda61809c1dff567834ed6e4fe247"
+      }
+    ]
+  },
+  "next_cursor": null,
+  "request_id": "request:fixture",
+  "schema_version": "1.0.0",
+  "status": "OK"
+}
