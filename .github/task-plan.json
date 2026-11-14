@@ -173,7 +173,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "ASSIGNED",
+      "actual_status": "VERIFIED_COMPLETE",
       "issue_number": 10,
       "allowed_paths": [
         "backend/",
@@ -664,7 +664,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "NOT STARTED",
+      "actual_status": "ASSIGNED",
       "issue_number": 21,
       "allowed_paths": [
         "frontend/",
@@ -1609,16 +1609,16 @@
       "tahaugurtoyran"
     ],
     "initial_owner": "cakarburkayy",
-    "active_owner": "ismail-cevik",
-    "active_task_plan_id": "F01-ENV",
-    "last_confirmed_task_id": "F02-CONTRACT",
-    "last_confirmed_commit": "176de7ed5d77cc2571a73ce55c32b4121e70bf7e",
-    "rotation_index": 3,
+    "active_owner": "tahaugurtoyran",
+    "active_task_plan_id": "F08-UI",
+    "last_confirmed_task_id": "F01-ENV",
+    "last_confirmed_commit": "908a52849da0c9f8333c18da28b5f50edf110fd9",
+    "rotation_index": 4,
     "handoff_confirmed": false,
-    "next_owner_if_accepted": "tahaugurtoyran",
-    "last_accepted_handoff_key": "F02-CONTRACT:123e809d6fd892f9a8630cb51e87fcfe68152dc2",
+    "next_owner_if_accepted": "cakarburkayy",
+    "last_accepted_handoff_key": "F01-ENV:2d1af7a978d4e975bef90b2e29de43b4434e7997",
     "initialized_under": "PROJECT_GENESIS_V2_2026-10-26",
-    "note": "F00-V0 #9 accepted once after PR #45 merged to main at fdd573286834fe15c1ac1c0d51db4ed9b0015db7, exact source HEAD d923134da4f9f5a2ab55a5f51fbf9415ff717262, ADR 0006 Cafer delegated approval and successful PR/main checks. Cafer explicitly authorized formal acceptance and selected Alperen / F02-CONTRACT #11 in the task chat on 2026-11-04. Rotation advanced exactly once from 1 to 2; handoff_confirmed=false refers to Alperen current task, not the accepted Cafer handoff. New task implementation NOT_STARTED and requires its own execution contract."
+    "note": "On 2026-11-14, tahaugurtoyran explicitly requested the formal F01-ENV acceptance and Taha handoff in the task chat. PR #55 merged to main at 908a52849da0c9f8333c18da28b5f50edf110fd9, source head 2d1af7a978d4e975bef90b2e29de43b4434e7997; Issue #10 is completed and the applicable PR/main hosted checks passed. Record acceptance once and advance rotation from index 3 to 4. Taha / F08-UI #21 is the selected active assignment; its prerequisites #11 and #10 are accepted. handoff_confirmed=false belongs to the newly assigned, unimplemented F08-UI task. Conditional next owner after its acceptance is cakarburkayy. This administrative change implements no UI and does not accept F08-UI or advance another turn."
   },
   "assignment_migration": {
     "status": "PARTIAL",
