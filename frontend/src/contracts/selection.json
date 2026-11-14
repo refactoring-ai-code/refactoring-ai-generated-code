@@ -1,0 +1,33 @@
+{
+  "actor_id": "actor:fixture-user",
+  "approval_ref": "approval:fixture-first-gate",
+  "baseline_test_result_ids": [
+    "test:baseline"
+  ],
+  "created_at": "2026-11-04T00:00:00Z",
+  "eligibility": "ELIGIBLE",
+  "fingerprint": "3af9ad71bc50740831b47fcd257e6f5875f14db6447a20dafe5de9be4c1bc334",
+  "id": "selection:first",
+  "kind": "IssueSelection",
+  "reasons": [],
+  "recorded_at": "2026-11-04T00:00:00Z",
+  "schema_version": "1.0.0",
+  "scope": {
+    "analysis_id": "analysis:initial",
+    "baseline_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397",
+    "project_id": "project:fixture",
+    "run_id": "run:initial",
+    "source_revision": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "version_id": "version:v0"
+  },
+  "selected_finding_ids": [
+    "finding:quality"
+  ],
+  "snapshots": [
+    {
+      "finding_id": "finding:quality",
+      "fingerprint": "200c4d665205094387b280622980f092328297b0700708f273941687300d4328"
+    }
+  ],
+  "subject_sha256": "35c53b7986dfb2897e7e2e9cdf56c69a49d2c1bcccaea7c310d60b11b59c9397"
+}

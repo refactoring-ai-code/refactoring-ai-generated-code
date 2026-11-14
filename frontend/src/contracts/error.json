@@ -1,0 +1,15 @@
+{
+  "code": "STALE_SELECTION",
+  "component": "CONTRACT",
+  "details": [
+    {
+      "entity_id": null,
+      "field": "fingerprint"
+    }
+  ],
+  "message": "The selected findings have changed. A fresh selection is required.",
+  "request_id": "request:fixture",
+  "retryable": true,
+  "schema_version": "1.0.0",
+  "status": "ERROR"
+}

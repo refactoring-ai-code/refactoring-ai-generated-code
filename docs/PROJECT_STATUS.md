@@ -5,7 +5,7 @@
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
 > F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV and F01-ENV are accepted.
-> Taha is assigned F08-UI / #21. Implementation has not started; see the latest handoff below.
+> Taha is assigned F08-UI / #21. Fixture UI implementation is prepared; see the latest verification below.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
 > verified. The Turkish and English SRS v0.4.0 were approved.
 > Historical statements below do not override newer verified
@@ -314,3 +314,41 @@ error states. Backend/state-machine, analysis, sandbox and Local AI work are
 outside this task. SRS, architecture, contracts, immutable V0 and frozen inputs
 are unchanged. This handoff implements no UI; research is NOT_RUN and release
 remains NOT_READY.
+
+
+## 2026-11-14 — F08-UI implemented against approved fixtures
+
+Taha (@tahaugurtoyran) prepared [F08-UI / #21](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/21)
+on `feature/21-f08-ui`, based on canonical main
+`cf6a3b6c13a46ff1dea0cdf8426a3fd60f3ac234`. The Issue Explorer supplies category
+and source-path filters, explicit fixture labeling, disabled/ineligible findings,
+independent duplicate locations and a read-only Monaco source view. Source hashes
+and CIR scalar-to-UTF-16 coordinate conversion preserve the approved source-byte
+binding, including tabs, astral Unicode and CRLF. Unresolved or mismatched locations
+are not guessed. Only eligible, open QUALITY_REFACTOR findings with passing
+baseline and independent evidence can enter the local choice preview.
+
+The approved CIR/OpenAPI and example fixtures remain unchanged. Consumer types and
+byte-identical schema/fixture copies are generated and checked against their
+canonical sources. Additional UI coverage cases are clearly identified as
+synthetic derivatives. The preview does not persist an IssueSelection, authenticate
+an approval or call a backend. F08-INTEGRATE and all analysis/provider/sandbox/model
+work remain outside this task.
+
+Local frontend verification with pinned Node 24.22.2/npm 11.19.1 passed the locked
+scripts-disabled install, all 47 tests, TypeScript/Vite build and `npm run check`.
+The npm dependency audit reported zero known vulnerabilities after pinning the
+patched DOMPurify dependency. Real production-preview inspection verified Monaco
+loading and read-only behavior, duplicate navigation, preview/error recovery and
+desktop/mobile layout without horizontal overflow. The lazy Monaco chunk retains
+Vite's size warning; native macOS/M3 and live API integration remain unverified.
+See the [frontend guide](../frontend/README.md) for commands, fixture provenance
+and boundary details.
+
+Review the task PR's actual revision-specific hosted governance, documentation,
+security, frontend, pilot and application-stack results before integration.
+The Windows host's existing symlink privilege limitation is not waived; hosted
+Ubuntu governance CI remains the complete-suite authority. No SRS, architecture,
+contract, frozen V0/test input, task graph or rotation record changed. The task
+is implemented for review, not accepted or merged. Taha remains the active
+developer. Research is NOT_RUN and release remains NOT_READY.
