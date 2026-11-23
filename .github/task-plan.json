@@ -318,6 +318,9 @@
       "allowed_paths": [
         "backend/storage/",
         "backend/api/",
+        "backend/app/main.py",
+        "backend/Dockerfile",
+        "backend/tests/",
         "tests/",
         "docs/"
       ],
