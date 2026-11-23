@@ -4,10 +4,13 @@ version = "0.1.0"
 description = "Project Genesis FastAPI development environment"
 requires-python = ">=3.13,<3.14"
 dependencies = [
+  "alembic==1.20.1",
   "fastapi==0.162.2",
   "pydantic==2.11.7",
   "redis==8.1.0",
   "rfc8785==0.1.4",
+  "rq==3.0.0",
+  "sqlalchemy==2.1.9",
   "uvicorn==0.54.0",
 ]
 
