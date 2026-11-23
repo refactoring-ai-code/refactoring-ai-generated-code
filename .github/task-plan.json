@@ -271,6 +271,9 @@
         "backend/core/",
         "backend/storage/",
         "backend/workers/",
+        "backend/pyproject.toml",
+        "backend/uv.lock",
+        "backend/tests/",
         "tests/",
         "docs/"
       ],
