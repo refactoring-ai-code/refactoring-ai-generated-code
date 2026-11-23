@@ -4,8 +4,8 @@
 > project snapshots. Always use the current GitHub main commit,
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
-> F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV and F01-ENV are accepted.
-> Taha is assigned F08-UI / #21. Fixture UI implementation is prepared; see the latest verification below.
+> F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV, F01-ENV and F08-UI are accepted.
+> Burkay is assigned F02-STATE / #12. Implementation has not started.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
 > verified. The Turkish and English SRS v0.4.0 were approved.
 > Historical statements below do not override newer verified
@@ -352,3 +352,26 @@ Ubuntu governance CI remains the complete-suite authority. No SRS, architecture,
 contract, frozen V0/test input, task graph or rotation record changed. The task
 is implemented for review, not accepted or merged. Taha remains the active
 developer. Research is NOT_RUN and release remains NOT_READY.
+
+## 2026-11-24 — F08-UI accepted and F02-STATE assigned to Burkay
+
+Project owner Burkay Çakar (`@cakarburkayy`) explicitly accepted Taha's
+F08-UI delivery and selected F02-STATE in the task chat.
+[PR #57](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/57)
+merged to `main` at [`637bf5d7a1141cfbf0097c72c9bb50907c0f8d20`](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/637bf5d7a1141cfbf0097c72c9bb50907c0f8d20)
+from source head `a6fd50fdd03672573e7a9a13b22cc188926c9905`.
+[Issue #21](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/21)
+is closed as completed. The applicable hosted checks passed for both revisions.
+The [main frontend run](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/43626456517)
+passed contract verification, 47 tests and the production build. The accepted
+scope is the [fixture Issue Explorer and local choice preview](../frontend/README.md).
+Real analysis and persisted approval remain outside that scope.
+
+Rotation advances once from index 4 to index 0 using
+`F08-UI:a6fd50fdd03672573e7a9a13b22cc188926c9905`. Burkay's active task is
+[F02-STATE / #12](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/12).
+Its two native prerequisites, [F01-ENV / #10](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/10)
+and [F02-CONTRACT / #11](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/11),
+are completed and recorded in the [acceptance registry](../.github/acceptance.json).
+The [task plan](../.github/task-plan.json) records the assignment. F02-STATE
+implementation has not started. Cafer is next after F02-STATE acceptance.

@@ -265,7 +265,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "NOT STARTED",
+      "actual_status": "ASSIGNED",
       "issue_number": 12,
       "allowed_paths": [
         "backend/core/",
@@ -664,7 +664,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "ASSIGNED",
+      "actual_status": "VERIFIED_COMPLETE",
       "issue_number": 21,
       "allowed_paths": [
         "frontend/",
@@ -1609,16 +1609,16 @@
       "tahaugurtoyran"
     ],
     "initial_owner": "cakarburkayy",
-    "active_owner": "tahaugurtoyran",
-    "active_task_plan_id": "F08-UI",
-    "last_confirmed_task_id": "F01-ENV",
-    "last_confirmed_commit": "908a52849da0c9f8333c18da28b5f50edf110fd9",
-    "rotation_index": 4,
+    "active_owner": "cakarburkayy",
+    "active_task_plan_id": "F02-STATE",
+    "last_confirmed_task_id": "F08-UI",
+    "last_confirmed_commit": "637bf5d7a1141cfbf0097c72c9bb50907c0f8d20",
+    "rotation_index": 0,
     "handoff_confirmed": false,
-    "next_owner_if_accepted": "cakarburkayy",
-    "last_accepted_handoff_key": "F01-ENV:2d1af7a978d4e975bef90b2e29de43b4434e7997",
+    "next_owner_if_accepted": "caferkilinc",
+    "last_accepted_handoff_key": "F08-UI:a6fd50fdd03672573e7a9a13b22cc188926c9905",
     "initialized_under": "PROJECT_GENESIS_V2_2026-10-26",
-    "note": "On 2026-11-14, tahaugurtoyran explicitly requested the formal F01-ENV acceptance and Taha handoff in the task chat. PR #55 merged to main at 908a52849da0c9f8333c18da28b5f50edf110fd9, source head 2d1af7a978d4e975bef90b2e29de43b4434e7997; Issue #10 is completed and the applicable PR/main hosted checks passed. Record acceptance once and advance rotation from index 3 to 4. Taha / F08-UI #21 is the selected active assignment; its prerequisites #11 and #10 are accepted. handoff_confirmed=false belongs to the newly assigned, unimplemented F08-UI task. Conditional next owner after its acceptance is cakarburkayy. This administrative change implements no UI and does not accept F08-UI or advance another turn."
+    "note": "On 2026-11-24, project owner cakarburkayy explicitly accepted F08-UI #21 and selected F02-STATE #12 in the task chat. PR #57 merged to main at 637bf5d7a1141cfbf0097c72c9bb50907c0f8d20 from source head a6fd50fdd03672573e7a9a13b22cc188926c9905. Issue #21 is completed and the applicable PR and main checks passed. This acceptance advances rotation once from index 4 to 0. The active assignment is Burkay / F02-STATE #12, with accepted native prerequisites #11 and #10. handoff_confirmed=false applies to the new assignment. Conditional next owner after F02-STATE acceptance is caferkilinc."
   },
   "assignment_migration": {
     "status": "PARTIAL",
