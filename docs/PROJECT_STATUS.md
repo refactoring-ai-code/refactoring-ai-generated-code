@@ -4,8 +4,8 @@
 > project snapshots. Always use the current GitHub main commit,
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
-> F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV, F01-ENV and F08-UI are accepted.
-> Burkay is assigned F02-STATE / #12. Implementation has not started.
+> F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV, F01-ENV, F08-UI and F02-STATE are accepted.
+> F02-STATE / #12 is verified complete. The next assignment and handoff are pending.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
 > verified. The Turkish and English SRS v0.4.0 were approved.
 > Historical statements below do not override newer verified
@@ -375,3 +375,20 @@ and [F02-CONTRACT / #11](https://github.com/refactoring-ai-code/refactoring-ai-g
 are completed and recorded in the [acceptance registry](../.github/acceptance.json).
 The [task plan](../.github/task-plan.json) records the assignment. F02-STATE
 implementation has not started. Cafer is next after F02-STATE acceptance.
+
+## 2026-11-24 — F02-STATE accepted
+
+Project owner Burkay Çakar (`@cakarburkayy`) explicitly accepted F02-STATE
+in the task chat. [PR #60](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/60)
+merged to `main` at [`ae48c71fc7aaa437f2cfb919f0f8487e7e876af6`](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/ae48c71fc7aaa437f2cfb919f0f8487e7e876af6)
+from source head `c79a463d1cf6d1a44577447c9cf30cd77350eb05`.
+[Issue #12](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/12)
+is closed as completed. Seven PR checks and six merge-revision checks passed.
+The [acceptance registry](../.github/acceptance.json) records the run links.
+
+The [implementation notes](F02-STATE.md) cover SQLite migration, persisted
+workflow transitions and approval metadata, POST idempotency, and Redis/RQ
+recovery with a single committed state event after worker interruption.
+POST verification used an isolated FastAPI route. Live IssueSelection remains
+part of F08-INTEGRATE. The current rotation index is 0. The handoff to Cafer
+awaits a separate assignment decision.

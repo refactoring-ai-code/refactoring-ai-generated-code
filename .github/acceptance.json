@@ -80,6 +80,26 @@
         "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/41916594761"
       ]
     },
+    "12": {
+      "pr": 60,
+      "head_sha": "c79a463d1cf6d1a44577447c9cf30cd77350eb05",
+      "ci_sha": "ae48c71fc7aaa437f2cfb919f0f8487e7e876af6",
+      "evidence": [
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/12",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/60",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/ae48c71fc7aaa437f2cfb919f0f8487e7e876af6",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/blob/c79a463d1cf6d1a44577447c9cf30cd77350eb05/docs/F02-STATE.md",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278517358",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278517125",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278517187",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278517265",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278517380",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278896414",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278896355",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278896348",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45278896439"
+      ]
+    },
     "21": {
       "pr": 57,
       "head_sha": "a6fd50fdd03672573e7a9a13b22cc188926c9905",

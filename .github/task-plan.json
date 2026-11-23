@@ -265,7 +265,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "ASSIGNED",
+      "actual_status": "VERIFIED_COMPLETE",
       "issue_number": 12,
       "allowed_paths": [
         "backend/core/",
