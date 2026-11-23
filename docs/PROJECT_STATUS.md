@@ -5,7 +5,7 @@
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
 > F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV, F01-ENV, F08-UI and F02-STATE are accepted.
-> F02-STATE / #12 is verified complete. The next assignment and handoff are pending.
+> F02-STATE / #12 is verified complete. Cafer is assigned F03-INPUT / #13.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
 > verified. The Turkish and English SRS v0.4.0 were approved.
 > Historical statements below do not override newer verified
@@ -392,3 +392,20 @@ recovery with a single committed state event after worker interruption.
 POST verification used an isolated FastAPI route. Live IssueSelection remains
 part of F08-INTEGRATE. The current rotation index is 0. The handoff to Cafer
 awaits a separate assignment decision.
+
+## 2026-11-24 — F03-INPUT assigned to Cafer
+
+Project owner Burkay Çakar (`@cakarburkayy`) authorized choosing and recording
+Cafer's next task. [F03-INPUT / #13](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/13)
+is the earliest implementation phase with accepted prerequisites. It covers safe intake of ZIP,
+folder and snippet sources, immutable V0, independent consent records and owner
+checks. The Java adapter and sandbox tasks depend on this foundation.
+
+The sole native prerequisite, F02-STATE / #12, is closed as completed and
+accepted in `main` through [PR #61](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/61).
+The [native graph audit](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45279992224)
+verified the prerequisite graph on that merge revision. Rotation advances once
+from index 0 to index 1 under
+`F02-STATE:c79a463d1cf6d1a44577447c9cf30cd77350eb05`. Cafer (`@caferkilinc`)
+owns F03-INPUT. Alperen Enes Yaman is next after its acceptance. F03-INPUT is
+assigned, with implementation pending.

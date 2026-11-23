@@ -313,7 +313,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "NOT STARTED",
+      "actual_status": "ASSIGNED",
       "issue_number": 13,
       "allowed_paths": [
         "backend/storage/",
@@ -1612,16 +1612,16 @@
       "tahaugurtoyran"
     ],
     "initial_owner": "cakarburkayy",
-    "active_owner": "cakarburkayy",
-    "active_task_plan_id": "F02-STATE",
-    "last_confirmed_task_id": "F08-UI",
-    "last_confirmed_commit": "637bf5d7a1141cfbf0097c72c9bb50907c0f8d20",
-    "rotation_index": 0,
+    "active_owner": "caferkilinc",
+    "active_task_plan_id": "F03-INPUT",
+    "last_confirmed_task_id": "F02-STATE",
+    "last_confirmed_commit": "ae48c71fc7aaa437f2cfb919f0f8487e7e876af6",
+    "rotation_index": 1,
     "handoff_confirmed": false,
-    "next_owner_if_accepted": "caferkilinc",
-    "last_accepted_handoff_key": "F08-UI:a6fd50fdd03672573e7a9a13b22cc188926c9905",
+    "next_owner_if_accepted": "Yaman-A-E",
+    "last_accepted_handoff_key": "F02-STATE:c79a463d1cf6d1a44577447c9cf30cd77350eb05",
     "initialized_under": "PROJECT_GENESIS_V2_2026-10-26",
-    "note": "On 2026-11-24, project owner cakarburkayy explicitly accepted F08-UI #21 and selected F02-STATE #12 in the task chat. PR #57 merged to main at 637bf5d7a1141cfbf0097c72c9bb50907c0f8d20 from source head a6fd50fdd03672573e7a9a13b22cc188926c9905. Issue #21 is completed and the applicable PR and main checks passed. This acceptance advances rotation once from index 4 to 0. The active assignment is Burkay / F02-STATE #12, with accepted native prerequisites #11 and #10. handoff_confirmed=false applies to the new assignment. Conditional next owner after F02-STATE acceptance is caferkilinc."
+    "note": "On 2026-11-24, project owner cakarburkayy authorized choosing Cafer's next task and recording the handoff. F02-STATE #12 is completed and already accepted in main through PR #61. Its implementation PR #60 merged at ae48c71fc7aaa437f2cfb919f0f8487e7e876af6 from source head c79a463d1cf6d1a44577447c9cf30cd77350eb05. This handoff advances rotation once from index 0 to 1. The selected assignment is Cafer / F03-INPUT #13, with native prerequisite #12 completed and accepted. handoff_confirmed=false applies to F03-INPUT. The conditional next owner is Yaman-A-E."
   },
   "assignment_migration": {
     "status": "PARTIAL",
