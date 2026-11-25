@@ -14,8 +14,10 @@ COPY pyproject.toml uv.lock ./backend/
 RUN uv sync --project backend --frozen --no-dev
 
 COPY __init__.py ./backend/__init__.py
+COPY api ./backend/api
 COPY app ./backend/app
 COPY core ./backend/core
+COPY storage ./backend/storage
 
 RUN mkdir /data && chown -R genesis:genesis /data /workspace
 

@@ -91,7 +91,7 @@ def test_migration_repeated_on_new_and_existing_database(tmp_path):
                     connection.exec_driver_sql(
                         "SELECT version_num FROM genesis_state_revision"
                     ).scalar_one()
-                    == "0001_state"
+                    == "0002_input"
                 )
                 if existing:
                     assert (

@@ -1,4 +1,4 @@
-"""Minimal trusted application surface for F01-ENV service verification."""
+"""Project Genesis development API."""
 
 from __future__ import annotations
 
@@ -8,10 +8,13 @@ from fastapi import FastAPI
 from fastapi.concurrency import run_in_threadpool
 from fastapi.responses import JSONResponse
 
+from backend.api.source_input import input_lifespan
+from backend.api.source_input import router as input_router
 from backend.app.config import Settings
 from backend.app.health import ComponentHealth, check_redis, check_storage
 
-app = FastAPI(title="Project Genesis", version="0.1.0")
+app = FastAPI(title="Project Genesis", version="0.1.0", lifespan=input_lifespan)
+app.include_router(input_router)
 
 
 @app.get("/health/live", tags=["health"])
