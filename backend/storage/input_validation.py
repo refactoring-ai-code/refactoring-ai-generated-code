@@ -13,6 +13,8 @@ import zlib
 from dataclasses import dataclass
 from pathlib import PurePosixPath
 
+from backend.core.schemas.models import portable_path
+
 MAX_BODY_BYTES = 12 * 1024 * 1024
 MAX_TOTAL_BYTES = 8 * 1024 * 1024
 MAX_FILE_BYTES = 2 * 1024 * 1024
@@ -75,7 +77,7 @@ def relative_path(raw: str) -> str:
             or len(part.encode("utf-8", errors="surrogatepass")) > 100
             for part in parts
         )
-        or any(c in '\\:<>"|?*' or unicodedata.category(c).startswith("C") for c in path)
+        or any(c in '\\:%<>"|?*' or unicodedata.category(c).startswith("C") for c in path)
     ):
         raise InputRejected("Unsafe relative path.")
     return path
@@ -158,7 +160,11 @@ class Intake:
         if reason:
             self.excluded.append({"path": path, "reason": reason})
         else:
-            self.files.append(SourceFile(path, data))
+            try:
+                canonical = portable_path(path)
+            except ValueError:
+                raise InputRejected("Unsafe relative path.") from None
+            self.files.append(SourceFile(canonical, data))
 
     def finish(self) -> Intake:
         if not self.files:

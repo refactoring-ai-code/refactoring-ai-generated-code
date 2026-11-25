@@ -260,6 +260,7 @@ async def test_folder_and_derivatives_preserve_exact_bytes_and_isolate_changes(i
         ["tree", "tree/child.py"],
         ["src/A.py", "SRC/B.py"],
         ["aux.py"],
+        ["literal%name.py"],
     ],
 )
 async def test_unsafe_paths_are_rejected_without_persistence(intake_api, paths):
