@@ -313,7 +313,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "ASSIGNED",
+      "actual_status": "VERIFIED_COMPLETE",
       "issue_number": 13,
       "allowed_paths": [
         "backend/storage/",
@@ -360,7 +360,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "NOT STARTED",
+      "actual_status": "ASSIGNED",
       "issue_number": 14,
       "allowed_paths": [
         "backend/language_adapters/",
@@ -1615,16 +1615,16 @@
       "tahaugurtoyran"
     ],
     "initial_owner": "cakarburkayy",
-    "active_owner": "caferkilinc",
-    "active_task_plan_id": "F03-INPUT",
-    "last_confirmed_task_id": "F02-STATE",
-    "last_confirmed_commit": "ae48c71fc7aaa437f2cfb919f0f8487e7e876af6",
-    "rotation_index": 1,
+    "active_owner": "Yaman-A-E",
+    "active_task_plan_id": "F04-JAVA",
+    "last_confirmed_task_id": "F03-INPUT",
+    "last_confirmed_commit": "dcef98f14655fe8520da640d2282d9acd0f9cce2",
+    "rotation_index": 2,
     "handoff_confirmed": false,
-    "next_owner_if_accepted": "Yaman-A-E",
-    "last_accepted_handoff_key": "F02-STATE:c79a463d1cf6d1a44577447c9cf30cd77350eb05",
+    "next_owner_if_accepted": "ismail-cevik",
+    "last_accepted_handoff_key": "F03-INPUT:82bb4dbcc5f8a435b849d01ab18a3810c5e2534f",
     "initialized_under": "PROJECT_GENESIS_V2_2026-10-26",
-    "note": "On 2026-11-24, project owner cakarburkayy authorized choosing Cafer's next task and recording the handoff. F02-STATE #12 is completed and already accepted in main through PR #61. Its implementation PR #60 merged at ae48c71fc7aaa437f2cfb919f0f8487e7e876af6 from source head c79a463d1cf6d1a44577447c9cf30cd77350eb05. This handoff advances rotation once from index 0 to 1. The selected assignment is Cafer / F03-INPUT #13, with native prerequisite #12 completed and accepted. handoff_confirmed=false applies to F03-INPUT. The conditional next owner is Yaman-A-E."
+    "note": "2026-11-26: F03-INPUT #13 implementation PR #63 merged to main; independent current-head review and applicable hosted checks verified. Acceptance and handoff authorized in orchestration request. Rotation advances exactly once from 1 to 2; F04-JAVA #14 assigned to Yaman-A-E, prerequisites #11 and #13 accepted. handoff_confirmed=false applies to F04-JAVA. Next conditional owner: ismail-cevik."
   },
   "assignment_migration": {
     "status": "PARTIAL",

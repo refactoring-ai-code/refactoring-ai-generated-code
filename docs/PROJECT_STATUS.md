@@ -409,3 +409,9 @@ from index 0 to index 1 under
 `F02-STATE:c79a463d1cf6d1a44577447c9cf30cd77350eb05`. Cafer (`@caferkilinc`)
 owns F03-INPUT. Alperen Enes Yaman is next after its acceptance. F03-INPUT is
 assigned, with implementation pending.
+
+## 2026-11-26 — F03-INPUT acceptance and F04-JAVA assignment
+
+[PR #63](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/63) merged to main at `dcef98f14655fe8520da640d2282d9acd0f9cce2` from head `82bb4dbcc5f8a435b849d01ab18a3810c5e2534f`. [Independent review](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/63#pullrequestreview-6064343265) approved that exact head. Seven distinct [PR checks](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/82bb4dbcc5f8a435b849d01ab18a3810c5e2534f/checks) and six [merge checks](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/dcef98f14655fe8520da640d2282d9acd0f9cce2/checks) passed. The [technical report](F03-INPUT.md) describes safe intake, immutable V0, separate consents and owner-scoped retrieval. Local test counts and loopback exercise are developer-reported; hosted checks were independently verified. Local Docker was unavailable; hosted application-stack checks passed. Actual sandbox execution remains separate.
+
+The [acceptance registry](../.github/acceptance.json) records #13. This governance PR records the acceptance and one rotation advance from index 1 to 2 under `F03-INPUT:82bb4dbcc5f8a435b849d01ab18a3810c5e2534f`. The [task plan](../.github/task-plan.json) assigns [F04-JAVA / #14](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/14) to Alperen Enes Yaman (@Yaman-A-E), with #11 and #13 as prerequisites. Issue closure and assignment synchronization must be verified after integration before implementation. Next conditional owner: İsmail (@ismail-cevik). Research and release readiness are not established by this handoff.
