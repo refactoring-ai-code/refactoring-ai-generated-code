@@ -15,7 +15,7 @@ Open **[uml-studio.html](uml-studio.html)** as a saved local HTML file (or from 
 | Human gate 2 | UC-13 | Explicit and separate patch approval |
 | Combined final/results | UC-14–UC-18 | Fresh V0, full regression/security scan, before/after metrics, artifacts, History |
 
-**Stereotypes:** `«include»` means the calling use case reuses required behavior; `«extend»` denotes conditional auxiliary behavior (the local Falcon-Mamba review is advisory, never a security verdict). **Security findings are not automatically eligible quality refactoring targets.**
+**Stereotypes:** `«include»` means the calling use case reuses required behavior; `«extend»` denotes conditional auxiliary behavior (the local Qwen3-Coder review is advisory, never a security verdict). **Security findings are not automatically eligible quality refactoring targets.**
 
 ## Class view (24 conceptual elements)
 
@@ -28,6 +28,6 @@ This is a **conceptual class model**; the SRS does not dictate physical ORM sche
 
 ## Delivery boundary
 
-This is presentation/documentation only: product backend/frontend, real seven-language E2E, Falcon-Mamba and consolidated validation must be established through code and tests independently. This documentation commit must not be misclassified as IMPLEMENTED/VERIFIED. Neither original V0 nor frozen suites are rewritten by the diagram work.
+This is presentation/documentation only: product backend/frontend, real seven-language E2E, Qwen3-Coder and consolidated validation must be established through code and tests independently. This documentation commit must not be misclassified as IMPLEMENTED/VERIFIED. Neither original V0 nor frozen suites are rewritten by the diagram work.
 
 **Superseded files removed from PR #43 branch:** `architecture-atlas.html`, and the initial `use-case.puml` / `class-diagram.puml` sketches. Historical Git commits remain immutable; these files are absent from the new branch HEAD.

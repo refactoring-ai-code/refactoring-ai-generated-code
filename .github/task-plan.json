@@ -573,7 +573,7 @@
         "F00-PLAN"
       ],
       "module": "local-ai",
-      "objective": "Measure actual Falcon-Mamba variant/runtime/quantization compatibility before committing to service deployment.",
+      "objective": "Measure actual Qwen3-Coder 30B-A3B revision/runtime/quantization/memory compatibility on the target hardware before committing to service deployment (ADR 0007).",
       "deliverable": "docs/DECISIONS/ local-model record, loading evidence, VRAM/latency table.",
       "acceptance": [
         "Exact model and runtime revisions recorded",
@@ -800,7 +800,7 @@
       "objective": "Conservatively schedule independent work without hidden shared-contract conflicts.",
       "deliverable": "backend/refactoring/conflicts/, scheduler and task DAG.",
       "acceptance": [
-        "Three independent tasks can run with max_parallel=3",
+        "Six independent tasks can run with max_parallel=6 (ADR 0007)",
         "Two conflicting pairs and unknown dependency serialize",
         "Cycle detection and cancellation tested",
         "Each job has unique input hash/workspace"
@@ -1298,7 +1298,7 @@
         "F14-MIX"
       ],
       "module": "qa",
-      "objective": "Run release-blocking, real seven-language E2E with both approval gates, Falcon-Mamba, comprehensive reporting and negative-path checks.",
+      "objective": "Run release-blocking, real seven-language E2E with both approval gates, Qwen3-Coder, comprehensive reporting and negative-path checks.",
       "deliverable": "tests/e2e/, versioned run evidence and release-candidate record.",
       "acceptance": [
         "Real upload-to-ZIP with two product approvals",
@@ -1306,7 +1306,7 @@
         "New regressions prevent validated output",
         "No model mock counted as real patch; all required checks evidenced",
         "Each of seven required languages has a real positive candidate-patch acceptance and failing regression example",
-        "Real Falcon-Mamba 7B security review, scanners and masking verified; no mock counts as model integration",
+        "Real Qwen3-Coder 30B-A3B security review, scanners and masking verified; no mock counts as model integration",
         "Consistent final ZIP, HTML/PDF/history and mixed-language evidence for all supported components"
       ],
       "kind": "code",
@@ -1642,7 +1642,7 @@
       "go",
       "cpp"
     ],
-    "required_local_security_model": "Falcon-Mamba 7B",
+    "required_local_security_model": "Qwen3-Coder 30B-A3B",
     "new_task_ids": [
       "F14-CS",
       "F14-GO",
@@ -1652,7 +1652,7 @@
     "original_native_dependency_edges": 54,
     "graph_sync_status": "VERIFIED",
     "reforecast_required": true,
-    "release_rule": "P0 mandatory: no READY_FOR_RELEASE before seven-language verified E2E, real Falcon-Mamba and all product gates.",
+    "release_rule": "P0 mandatory: no READY_FOR_RELEASE before seven-language verified E2E, real Qwen3-Coder and all product gates.",
     "note": "Native issue parents and all 69 blocked-by links verified by GitHub Actions run 40518968864, attempt 2 (2026-10-27). Original 31 tasks/54 edges preserved; no approved task dependency removed."
   }
 }

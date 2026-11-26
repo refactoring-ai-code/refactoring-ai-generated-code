@@ -34,7 +34,7 @@ def report(plan):
       "- The original 70/30 owner/support split and reviewer allocations are historical and not a workload forecast under sequential ownership.",
       "- All 31 technical tasks and six work packages remain in the registry.",
       "- Prerequisite completion, verification, handoff publication and available people constrain real scheduling.",
-      "- Owner-approved P0 now includes Falcon-Mamba and Python/JS/TS. Do not defer mandatory items silently.",
+      "- Owner-approved P0 now includes the local Qwen3-Coder security LLM and Python/JS/TS. Do not defer mandatory items silently.",
       "- The 2027-01-01 due date is a target; this table does not imply that the work fits available capacity.",
       "- Update task windows only after evidence-based replanning and owner acceptance where consequential.",
       ""])

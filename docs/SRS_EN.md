@@ -7,12 +7,12 @@
 > Current GitHub task, PR and dependency states must always
 > be independently verified against live repository evidence.
 
-**Document:** RAGC-SRS-001 · **Version:** 0.4.0 · **Date:** 2026-10-27  
-**Status:** APPROVED SRS — Burkay Çakar approved both complete Turkish and English specifications on 2026-10-27; product verification remains separate.  
+**Document:** RAGC-SRS-001 · **Version:** 0.4.1 · **Date:** 2026-10-27  
+**Status:** APPROVED SRS — v0.4.0 approved by Burkay Çakar on 2026-10-27; the v0.4.1 amendment (local security model, cloud refactoring LLMs, approval authority) was recorded by the project owner on 2026-11-25 in [ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md); product verification remains separate.  
 **Product:** Refactoring AI-Generated Code — Engineering Design II, Group B  
 **Target delivery:** 2027-01-01 (exact local submission time UNKNOWN)  
 **Authority:** Owner-supplied `01_Master_Sistem_Mimarisi.pdf` v2.0 → `02_Adim_Adim_Gelistirme_Rehberi.pdf` v2.0 → modular presentation + 2026-10-20 image → associated live GitHub requirement and issue records. Older `01_System_Operation_and_Architecture.pdf` and `03_Technical_System_Presentation_Revised.pdf` are secondary historical documents.  
-**Execution governance:** PROJECT GENESIS v2.0, owner decisions dated 2026-10-26 and 2026-10-27, with sole final approval authority Burkay Çakar.  
+**Execution governance:** owner decisions dated 2026-10-26, 2026-10-27 and 2026-11-25 (ADR 0007); approvals follow the GitHub development workflow (protocol v3) with no single final approver.  
 **Language equivalent:** [SRS.md](SRS.md), same stable FR/NFR IDs. The source PDFs were owner-provided artifacts and MUST NOT be assumed present inside the public repo.
 
 > This specifies an intended system; it does not claim that a requirement, integration, security claim, benchmark, deployment or research outcome is already VERIFIED.
@@ -21,7 +21,7 @@
 
 The product receives authorized AI-generated or other source code as ZIP, folder or snippet; creates an immutable original V0 and per-component language capabilities; runs three evidence-bearing baseline branches (quality, deterministic security with local model commentary, and isolated initial build/test/coverage); offers users two separate acceptance points; generates targeted LLM patch proposals with bounded context and conflict-aware scheduling; validates each patch in isolation; composes selected verified patches on a *new V0 clone* and reruns every mandatory combined check; then produces measured before/after comparisons, a validated final ZIP, HTML/PDF outputs and accessible history.
 
-**Actors:** code owner/user (two product decisions and input/cloud/execution consents); application operator; research evaluator; language analysis adapters; sandbox/build/test workers; authorized cloud patch providers; local Falcon-Mamba security review; developer/Codex/orchestrator (development responsibilities only).
+**Actors:** code owner/user (two product decisions and input/cloud/execution consents); application operator; research evaluator; language analysis adapters; sandbox/build/test workers; authorized cloud patch providers; local Qwen3-Coder security review; developer/Codex/orchestrator (development responsibilities only).
 
 **Included:** safe input and evidence provenance, language adapter framework, real Java/Python/JavaScript/TypeScript/C#/Go/C++ capabilities, security scanner and mandatory 7B local review, deterministic validation, approval UX, bounded LLM calls, final ZIP/PDF/HTML/history and rigorous research protocol.
 
@@ -40,9 +40,9 @@ The product receives authorized AI-generated or other source code as ZIP, folder
 | Python adapter | ast/LibCST, Ruff/Pylint, pytest, coverage.py | **Mandatory first delivery (P0)** |
 | JS/TS adapters | TS Compiler API/ts-morph, ESLint, tsc, Vitest/Jest and coverage | **Mandatory first delivery (P0)**; monorepo/component boundaries honored |
 | Static security | Gitleaks, Semgrep, OSV Scanner | Real deterministic results and explicit incomplete/unavailable statuses |
-| Local AI | Falcon-Mamba 7B target, isolated service with checked model/quantization/GPU/runtime compatibility | **Mandatory first delivery (P0)**; no false readiness while unavailable |
+| Local AI | Qwen3-Coder 30B-A3B target (ADR 0007); only the AST/SAST-paired security review runs locally, as an isolated service with checked model/quantization/memory/runtime compatibility (target hardware: NVIDIA DGX Spark / GB10) | **Mandatory first delivery (P0)**; no false readiness while unavailable |
 | Cloud refactoring | Authorized DeepSeek/GLM/Qwen style provider adapters, bounded unified diffs | Real provider evidence, no paid/unconsented request |
-| Context/scheduler | Symbol graph, side-effect/read-write analysis, conservative DAG | Serialize unknown conflicts, up to three genuinely independent jobs |
+| Context/scheduler | Symbol graph, side-effect/read-write analysis, conservative DAG | Serialize unknown conflicts, up to six genuinely independent jobs (ADR 0007) |
 | Validation | Sandbox workers, per-language test/build/coverage/scanners | Candidate and complete combined validation, independent quality/behavior assessment |
 | Reporting | Comparison engine, charts, artifact/history service, HTML/PDF | **Mandatory first delivery (P0)** |
 | C# language adapter | Roslyn/.NET SDK, supported xUnit/NUnit/MSTest and coverage | **Mandatory P0 first delivery**, real build, source/symbol evidence and safe patch |
@@ -55,10 +55,10 @@ The exact dependency versions, model weight IDs, quantization/runtime and deploy
 
 1. **Safe intake:** validate ZIP/folder/snippet, manifest, consent, processing/retention limits; freeze exact V0 with hash.
 2. **Language routing:** detect per-component languages, declare parser/scanner/test/coverage/safe_patch capabilities.
-3. **Initial analysis:** actual quality findings, deterministic security evidence (+ local Falcon-Mamba commentary), and sandboxed baseline tests/coverage; keep each branch's errors explicit.
+3. **Initial analysis:** actual quality findings, deterministic security evidence (+ local Qwen3-Coder commentary), and sandboxed baseline tests/coverage; keep each branch's errors explicit.
 4. **Approval Gate 1:** show source-aligned issue explorer, category filters, eligible quality refactoring choices, immutable chosen-finding fingerprints.
 5. **Bounded context:** target symbols, caller/callee edges, public interfaces, side effects, relevant tests and source restrictions; build conservative conflict DAG.
-6. **Refactoring provider:** request narrow structured patch from authorized real provider, at most three evidence-independent jobs concurrently.
+6. **Refactoring provider:** request narrow structured patch from authorized real provider, at most six evidence-independent jobs concurrently (ADR 0007).
 7. **Individual validation:** build/typecheck/frozen regression, inspect target quality and new security risks; one initial candidate + at most two corrective attempts per task.
 8. **Approval Gate 2:** human selects actually acceptable patch IDs based on diff/test/security evidence.
 9. **Final composition and outputs:** apply only accepted patches on a clean V0 clone; full combined regression/security/static verification; durable final ZIP, HTML/PDF dashboards and analysis history.
@@ -112,7 +112,7 @@ P0 = mandatory first delivery; all FR-001–FR-062 requirements below are P0 und
 | FR-027 | P0 | Generate bounded, redacted ContextPackages from symbols, callers/callees, tests, models, effects and public interfaces. | #23 |
 | FR-028 | P0 | On context-budget overflow, never silently discard critical dependencies; narrow safely, ask for context or stop. | #23 |
 | FR-029 | P0 | Construct a conservative conflict DAG from read/write sets and unknown shared contracts; serialize conflicts. | #24 |
-| FR-030 | P0 | Allow at most three evidence-independent jobs in parallel, each with separate workspace and immutable input hash. | #24 |
+| FR-030 | P0 | Allow at most six evidence-independent jobs in parallel (ADR 0007), each with separate workspace and immutable input hash. | #24 |
 | FR-031 | P0 | Obtain schema-valid unified diffs and explanations from an authorized real patch provider, enforce path/scope allowlists. | #25 |
 | FR-032 | P0 | Require approval of provider egress, source permissions, API quota and charges before uploading sensitive code or making paid calls. | #25 |
 | FR-033 | P0 | Reject patches that modify protected tests, rule configurations, V0 or disallowed paths. | #25 |
@@ -136,15 +136,15 @@ P0 = mandatory first delivery; all FR-001–FR-062 requirements below are P0 und
 | FR-051 | P0 | Deliver a working Python AST/LibCST, Ruff/Pylint and pytest/coverage adapter with safe-patch validation without breaking Java. | #32 |
 | FR-052 | P0 | Deliver JS/TS adapters using TS Compiler API, ESLint, tsc, Jest/Vitest and coverage with actual verified capabilities. | #33 |
 | FR-053 | P0 | Support mixed Java/Python/JS/TS/C#/Go/C++ projects with per-component metrics/tests, honest cross-service uncertainty and language-specific verification. | #34,#40–#42 |
-| FR-054 | P0 | Integrate a real Falcon-Mamba 7B review service after validating exact model/revision, quantization, GPU/runtime, VRAM and latency. | #19 |
-| FR-055 | P0 | Return redacted, evidence-linked UNCONFIRMED Falcon-Mamba commentary; deterministic SAST continues when local AI fails. | #20 |
-| FR-056 | P0 | Evaluate Falcon-Mamba against independently labeled examples, including precision/recall and complete FP/FN denominators. | #20 |
+| FR-054 | P0 | Integrate a real Qwen3-Coder 30B-A3B review service after validating exact model/revision, quantization, GPU/runtime, VRAM and latency. | #19 |
+| FR-055 | P0 | Return redacted, evidence-linked UNCONFIRMED Qwen3-Coder commentary; deterministic SAST continues when local AI fails. | #20 |
+| FR-056 | P0 | Evaluate Qwen3-Coder against independently labeled examples, including precision/recall and complete FP/FN denominators. | #20 |
 | FR-057 | P0 | Provide detailed AI-assisted PDF/HTML reports with numeric parity, backend-derived metrics and evidence-based narration. | #31 |
 | FR-058 | P0 | Implement a working C#/Roslyn adapter with symbol/source-range analysis, real .NET build, supported xUnit/NUnit/MSTest and coverage, evidence-backed quality checks, scoped patch and sandbox verification; report missing SDK honestly. | #40 |
 | FR-059 | P0 | Implement a working Go adapter with module/workspace-aware parser/type analysis, go vet or applicable quality rules, real go test/coverage and dependency-aware scoped patch validation. | #41 |
 | FR-060 | P0 | Implement a working C++/Clang adapter with AST/source locations, compile_commands-aware context, clang-tidy, real CMake/CTest or supported project build/test/coverage, isolated scoped patch validation; missing build context is UNVERIFIED. | #42 |
 | FR-061 | P0 | Produce real positive and negative validation evidence for all seven mandatory language adapters, mixed-project capability, immutable V0/frozen tests and trustworthy export/report results. | #34,#35,#40–#42 |
-| FR-062 | P0 | Gate first-delivery acceptance on seven VERIFIED language patch capabilities together with Falcon-Mamba, HTML/PDF/ZIP and all required security validation. No missing adapter may be silently deferred. | #35,#37,#40–#42 |
+| FR-062 | P0 | Gate first-delivery acceptance on seven VERIFIED language patch capabilities together with Qwen3-Coder, HTML/PDF/ZIP and all required security validation. No missing adapter may be silently deferred. | #35,#37,#40–#42 |
 
 ## 6. Non-functional requirements
 
@@ -165,7 +165,7 @@ P0 = mandatory first delivery; all FR-001–FR-062 requirements below are P0 und
 | NFR-13 | P0 | Support hardware/model/research claims only with real measurements, limitations and configurations. | #19,#36 |
 | NFR-14 | P0 | All seven mandatory adapters expose individual capabilities/confidence/coverage without regressing other language workflows. | #32–#34,#40–#42 |
 | NFR-15 | P0 | Do not claim public deployment without verified isolation, threat model, deployment configuration and release decision. | Architecture v2 §16 |
-| NFR-16 | P0 | Verify actual installability, licensing, OS/runtime constraints and reproducible tool versions for JDK, Python, Node/TypeScript, .NET SDK, Go, Clang/native build and Falcon-Mamba service. | #10,#19,#40–#42 |
+| NFR-16 | P0 | Verify actual installability, licensing, OS/runtime constraints and reproducible tool versions for JDK, Python, Node/TypeScript, .NET SDK, Go, Clang/native build and Qwen3-Coder service. | #10,#19,#40–#42 |
 | NFR-17 | P0 | Execute native, .NET and Go builds/tests only in resource-limited sandboxes; expose C++ ABI/compile database assumptions, Go module dependencies and .NET restore egress restrictions. | #16,#35,#40–#42 |
 
 ## 7. Measurable acceptance matrix and release gates
@@ -179,7 +179,7 @@ P0 = mandatory first delivery; all FR-001–FR-062 requirements below are P0 und
 | Sandbox runaway/untrusted access | Resource-limited isolation and no host secret/network access |
 | Missing tests or broken baseline | Correct UNVERIFIED/BASELINE_FAILURE; no normal validated final export |
 | Scanner offline, malicious secret or fake Local AI line | Masking, explicit INCOMPLETE, rejection of fabricated evidence references |
-| Local Falcon-Mamba 7B service | Recorded exact model/version/runtime/quantization/VRAM/latency and independent labeled evaluation |
+| Local Qwen3-Coder 30B-A3B service | Recorded exact model/version/runtime/quantization/VRAM/latency and independent labeled evaluation |
 | Approval 1 bypass/security issue selection | Server rejects invalid choices; saved immutable selected issue snapshot |
 | Unknown conflict and genuinely independent jobs | Conflicting jobs serialized; up to 3 independent jobs concurrently |
 | Invalid patch / test-file change | Rejected before downstream validation |
@@ -189,7 +189,7 @@ P0 = mandatory first delivery; all FR-001–FR-062 requirements below are P0 und
 | HTML/PDF/ZIP/history | Same evidence/run numbers, user authorization, complete redact/re-download paths |
 | Research dataset and repeated trials | At least 12 frozen tasks, 3 matched repeats per condition, failed attempts in denominators |
 
-A passing governance test or a successful Git push is *not* product acceptance. All mandatory paths require task-specific test evidence and a separate risk-based release decision. Delivery cannot be declared ready while any of the seven mandatory language adapters, Falcon-Mamba, PDF/HTML or secure sandbox requirements remain unverified.
+A passing governance test or a successful Git push is *not* product acceptance. All mandatory paths require task-specific test evidence and a separate risk-based release decision. Delivery cannot be declared ready while any of the seven mandatory language adapters, Qwen3-Coder, PDF/HTML or secure sandbox requirements remain unverified.
 
 ## 8. Traceability to existing GitHub plans (do not delete planning history)
 
@@ -222,7 +222,7 @@ A passing governance test or a successful Git push is *not* product acceptance. 
 - **GOV-005:** Preserve all 31 technical issues and dependencies. Remove fixed future assignee/primary/support/reviewer assignments after compatibility migration; assign the current implementation owner only through canonical state, not preassigned issue backlog.
 - **GOV-006:** Orchestrator assigns one bounded task → Codex inspects, edits, verifies, reports and stops → human reviews, commits and pushes → orchestrator verifies handoff/evidence → exactly one rotation advances on acceptance; duplicate (task, SHA) cannot count twice.
 - **GOV-007:** Maintain minimal permanent AGENTS.md, a proven-compatible development-handoff skill, current report and roadmap/state/history records; reuse existing equivalents, avoid parallel sources of truth.
-- **GOV-008:** Preserve protection, independent approval and source/CI evidence. The owner must explicitly approve consequential design, destructive actions, security boundary changes and release/merge operations.
+- **GOV-008:** Approvals follow the GitHub development workflow (protocol v3): normal repository permissions, the required PR reviews and successful technical CI. The single-final-approver rule (ADR 0004) and the `GENESIS-OWNER-APPROVED` marker are retired by ADR 0007. The project owner records consequential scope, architecture, security-boundary and release decisions as ADRs; real CI and handoff evidence remain mandatory.
 
 ## 10. Controlled decisions, implementation blockers and document approval
 
@@ -232,8 +232,8 @@ A passing governance test or a successful Git push is *not* product acceptance. 
 | DEC-002 | Due 2027-01-01; submission time/channel UNKNOWN. |
 | DEC-003 | Fixed team assignments are superseded by rotating single developer; actual registry/gate and issue migration is staged to avoid bypassing review. |
 | DEC-004 | PR #38 cannot merge solely because its existing governance CI checks passed; fresh independent review and separate owner merge decision are prerequisites. |
-| DEC-005 | Java may implement first, but Python, JS/TS, C#, Go, C++, mixed-component validation and local Falcon-Mamba are mandatory **in the same first delivery**. |
-| DEC-006 | Falcon-Mamba exact weights, quantization, compatible GPU/runtime and latency remain unverified; access to an M3 is not CUDA. |
+| DEC-005 | Java may implement first, but Python, JS/TS, C#, Go, C++, mixed-component validation and local Qwen3-Coder are mandatory **in the same first delivery**. |
+| DEC-006 | Qwen3-Coder 30B-A3B (ADR 0007) exact weights, quantization, compatible hardware/runtime and latency remain unverified; access to an M3 is not CUDA. Refactoring LLMs run with authorized cloud providers. |
 | DEC-007 | HTML/PDF and history must use real evidence and consistent numbers, not an optional mock final. |
 | DEC-008 | Actual patch provider model, privacy/egress consent, quota and spending authorization UNKNOWN; not permission to incur costs. |
 | DEC-009 | Local academic demonstration versus internet-facing multi-user deployment requires a distinct threat/deployment approval. |
@@ -242,10 +242,12 @@ This v0.4.0 document was approved by the owner on 2026-10-27. Superseded histori
 
 ## 11. DEC-010 — 2026-10-27 owner-approved seven-language mandatory scope
 
-The owner's latest explicit scope makes **C#, Go and C++ working adapters mandatory P0 for the same first delivery** as Java, Python, JavaScript, TypeScript and local Falcon-Mamba 7B. This supersedes any historical `future adapter` or P1 wording. New stable task IDs F14-CS (issue #40), F14-GO (#41) and F14-CPP (#42) are approved planning work. Each requires accepted F02-CONTRACT, F06-SANDBOX and F11-VALIDATE; mixed adapter acceptance F14-MIX (#34) requires all three plus Python/JS/TS. F15-P0 (#35) additionally requires F14-MIX, F07B-LOCAL (#20) and F13-ADV (#31) before it may pass first-delivery verification.
+The owner's latest explicit scope makes **C#, Go and C++ working adapters mandatory P0 for the same first delivery** as Java, Python, JavaScript, TypeScript and local Falcon-Mamba 7B. This supersedes any historical `future adapter` or P1 wording. New stable task IDs F14-CS (issue #40), F14-GO (#41) and F14-CPP (#42) are approved planning work. Each requires accepted F02-CONTRACT, F06-SANDBOX and F11-VALIDATE; mixed adapter acceptance F14-MIX (#34) requires all three plus Python/JS/TS. F15-P0 (#35) additionally requires F14-MIX, F07B-LOCAL (#20) and F13-ADV (#31) before it may pass first-delivery verification. *(2026-11-25: the local security model was changed to Qwen3-Coder 30B-A3B by ADR 0007.)*
 
 Three live GitHub issues exist without fixed assignees. Existing 31 tasks / 54 native edges were not destroyed; new native subissue and prerequisite links remain **PENDING_SAFE_MIGRATION** until independently reviewed policy activation. PR #38 remains OPEN, and no separate merge authorization has been granted. Burkay is the owner-designated technical lead and audit coordinator for PR #38; independent review still requires a non-contributor, non-author reviewer under the existing governance controls. This SRS and the Turkish v0.4 counterpart remain **REVIEW DRAFT** until dual-language final sign-off.
 
 ## 12. Final owner SRS approval — 27 October 2026
 
 **APPROVED_BY:** Burkay Çakar (@cakarburkayy). Both complete SRS v0.4.0 translations, FR-001–062 and NFR-01–17, are approved. Seven working language adapters (including C#, Go and C++) and real Falcon-Mamba 7B are mandatory P0 first delivery. Burkay is the sole required final approver; peer reviews are optional. Each future PR approval is bound to its HEAD SHA while actual CI, dependency, security and handoff verification remain mandatory. PR #38 was merged at `5754ed6eeaeef0cce9bc46264c8baeddfb62f88c`. Approved requirements are not verified running software.
+
+**AMENDMENT — v0.4.1 (2026-11-25, [ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md)):** The project owner recorded these decisions: (1) the mandatory P0 local security review model is **Qwen3-Coder 30B-A3B**, replacing Falcon-Mamba 7B; current requirement lines are updated, dated decision paragraphs and the sign-off above are kept and annotated, and the earlier wording remains in Git history. (2) Only the AST/SAST-paired security LLM runs locally; refactoring/patch LLMs run with authorized cloud providers on masked, bounded context (FR-016 and FR-032 unchanged). (3) The "sole required final approver" rule above and the HEAD-bound Burkay approval are retired; approvals follow the protocol v3 GitHub workflow (GOV-008). (4) The limit for concurrently running verified-independent refactoring jobs is raised from three to six (FR-030); conflicting or unknown relationships still run one after another. FR/NFR identifiers, P0 priorities, the seven-language scope and both in-product approval gates are unchanged; only the parallelism limit in FR-030 is updated.

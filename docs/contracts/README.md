@@ -25,7 +25,7 @@ There is no independently maintained second set of CIR types.
 
 All example bundles are explicitly `mode: FIXTURE`. Their tool versions, source
 revisions, hashes and measurements are synthetic values for interoperability
-tests, not claims that tools, a provider or Falcon-Mamba ran. The seven adapter
+tests, not claims that tools, a provider or the local security LLM ran. The seven adapter
 declarations all use CONTRACT_DEFINED/NOT_IMPLEMENTED. The one supported-parser
 state constructed in a unit test tests the guard's data semantics only.
 

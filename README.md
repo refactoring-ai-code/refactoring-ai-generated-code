@@ -2,9 +2,9 @@
 
 Engineering Design II — Ankara Bilim University. A planned multilingual platform for improving AI-generated code with controlled patches, reproducible analysis, isolated validation and two explicit product approvals.
 
-**Current state (2026-10-27):** PR #38 and #39 are merged; SRS v0.4 TR/EN and 34-task/69-edge GitHub prerequisite graph are approved and audited. Application backend/frontend and product tests are still NOT_STARTED. See [actual status](docs/PROJECT_STATUS.md).
+**Current state (2026-11-27):** 8 of 34 tasks are accepted — F00-PLAN, F00-V0, F01-GOV, F01-ENV, F02-CONTRACT, F02-STATE, F03-INPUT and F08-UI: the Docker development environment (FastAPI backend, React frontend, Redis, SQLite), the CIR/API contracts, the workflow state machine and queue, authenticated source intake with immutable V0, and the first approval UI (fixture data). The active task is F04-JAVA (#14, Alperen Enes Yaman). Language adapters, analysis, sandbox validation, patch generation and reporting are not implemented yet; release remains NOT_READY. The 2026-11-25 decisions are recorded in [ADR 0007](docs/DECISIONS/0007-local-llm-and-approval-authority.md). See [actual status](docs/PROJECT_STATUS.md).
 
-**Final course deadline: 2027-01-01; time unspecified.** All owner-approved Python/JS/TS, Falcon-Mamba, HTML/PDF and core refactoring capabilities are mandatory first-delivery P0; historical P1 schedule must be replanned. TÜBİTAK eligibility/application and advisors are separate, unverified decisions.
+**Final course deadline: 2027-01-01; time unspecified.** All owner-approved Python/JS/TS, Qwen3-Coder, HTML/PDF and core refactoring capabilities are mandatory first-delivery P0; historical P1 schedule must be replanned. TÜBİTAK eligibility/application and advisors are separate, unverified decisions.
 
 | Member | GitHub | Domain expertise (not fixed implementation assignment) |
 |---|---|---|
@@ -18,7 +18,7 @@ All five repository accounts were verified on October 22: Cafer Admin, four coll
 
 ## Scope
 
-First-delivery P0: Java, Python, JavaScript, TypeScript, C#, Go and C++ (including mixed projects), real local Falcon-Mamba 7B, deterministic security, immutable V0, both user approvals, bounded real-provider refactoring, isolated candidate and combined verification, final ZIP, evidence-based HTML/PDF reports and history. C#/Go/C++ are also mandatory P0 first-delivery requirements per the owner decision on 2026-10-27, requiring real build/test/coverage/patch evidence. Lack of required GPU/provider access blocks release rather than becoming a fabricated PASS.
+First-delivery P0: Java, Python, JavaScript, TypeScript, C#, Go and C++ (including mixed projects), real local Qwen3-Coder 30B-A3B, deterministic security, immutable V0, both user approvals, bounded real-provider refactoring, isolated candidate and combined verification, final ZIP, evidence-based HTML/PDF reports and history. C#/Go/C++ are also mandatory P0 first-delivery requirements per the owner decision on 2026-10-27, requiring real build/test/coverage/patch evidence. Lack of required GPU/provider access blocks release rather than becoming a fabricated PASS.
 
 FastAPI/Redis/workers/storage and React/TypeScript/Monaco are planned components. No completed platform or measured improvement rate is claimed here. M3/macOS is a development environment; CUDA inference needs a separately verified GPU runtime.
 
@@ -47,9 +47,9 @@ These checks validate development infrastructure. They do not demonstrate produc
 
 ## Current approved architecture and development state (2026-10-26)
 
-The owner-approved target is the v2.0 modular secure-refactoring pipeline, including immutable V0, per-language analysis, deterministic security + local Falcon-Mamba 7B, two user approval gates, bounded context/LLM patching, individual and combined validation, Python/JS/TS, and measured ZIP/HTML/PDF/history. **This repository has not yet proven these product capabilities are implemented.** See [TR SRS](docs/SRS.md), [EN SRS](docs/SRS_EN.md), [architecture](docs/ARCHITECTURE.md), and [roadmap](docs/DEVELOPMENT_ROADMAP.md).
+The owner-approved target is the v2.0 modular secure-refactoring pipeline, including immutable V0, per-language analysis, deterministic security + local Qwen3-Coder 30B-A3B, two user approval gates, bounded context/LLM patching, individual and combined validation, Python/JS/TS, and measured ZIP/HTML/PDF/history. **This repository has not yet proven these product capabilities are implemented.** See [TR SRS](docs/SRS.md), [EN SRS](docs/SRS_EN.md), [architecture](docs/ARCHITECTURE.md), and [roadmap](docs/DEVELOPMENT_ROADMAP.md).
 
-Implementation ownership rotates one at a time: **Burkay → Cafer → Alperen Enes Yaman → İsmail → Taha Uğur Toyran → repeat**, after evidence-based handoff acceptance. PR #38 was merged as pre-Genesis work and consumed no rotation. `main` is the accepted integration branch and topic PR review remains mandatory. The first delivery scope includes Falcon-Mamba, Python/JS/TS and full reporting; model hardware/provider capability is not yet verified.
+Implementation ownership rotates one at a time: **Burkay → Cafer → Alperen Enes Yaman → İsmail → Taha Uğur Toyran → repeat**, after evidence-based handoff acceptance. PR #38 was merged as pre-Genesis work and consumed no rotation. `main` is the accepted integration branch and topic PR review remains mandatory. The first delivery scope includes Qwen3-Coder, Python/JS/TS and full reporting; model hardware/provider capability is not yet verified.
 
 **2026-10-27 change note:** See [TR SRS v0.4](docs/SRS.md), [EN SRS v0.4](docs/SRS_EN.md) and [roadmap](docs/DEVELOPMENT_ROADMAP.md). The plan expanded to 34 tasks and 69 edges while preserving the 31 original issues and 54 original edges.
 

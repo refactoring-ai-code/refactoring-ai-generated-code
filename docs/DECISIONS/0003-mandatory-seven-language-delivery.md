@@ -3,6 +3,7 @@
 **Decision date:** 2026-10-27  
 **Authority:** Explicit project-owner instructions on 2026-10-27  
 **Status:** APPROVED_SCOPE; implementation, native issue synchronization and release acceptance PENDING  
+**Amended:** 2026-11-25 by [ADR 0007](0007-local-llm-and-approval-authority.md) — the mandatory local security model is now Qwen3-Coder 30B-A3B (replacing Falcon-Mamba 7B); refactoring LLMs run in the cloud.  
 **Supersedes:** Any 2026-10-26/historical interpretation that C#, Go or C++ adapters may be deferred beyond first delivery.
 
 ## Approved decision

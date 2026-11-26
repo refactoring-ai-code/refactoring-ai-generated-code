@@ -6,7 +6,7 @@ permissions:
   issues: read
 jobs:
   audit:
-    if: github.actor == 'cakarburkayy' && github.ref == 'refs/heads/main'
+    if: contains(fromJSON('["cakarburkayy","caferkilinc"]'), github.actor) && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:

@@ -4,12 +4,20 @@
 > project snapshots. Always use the current GitHub main commit,
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
-> F00-PLAN, F00-V0, F02-CONTRACT, F01-GOV, F01-ENV, F08-UI and F02-STATE are accepted.
-> F02-STATE / #12 is verified complete. Cafer is assigned F03-INPUT / #13.
+> F00-PLAN, F00-V0, F01-GOV, F01-ENV, F02-CONTRACT, F02-STATE, F03-INPUT and F08-UI are accepted (8 of 34).
+> F03-INPUT / #13 is verified complete (PR #63). Alperen Enes Yaman is assigned F04-JAVA / #14;
+> the conditional next owner is İsmail.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
 > verified. The Turkish and English SRS v0.4.0 were approved.
 > Historical statements below do not override newer verified
 > evidence. Release remains NOT_READY.
+>
+> **2026-11-25 decision update ([ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md)):** the mandatory local security LLM is
+> Qwen3-Coder 30B-A3B (replacing Falcon-Mamba 7B); only this AST/SAST-paired model runs locally and refactoring LLMs run
+> with authorized cloud providers. The single-final-approver rule (ADR 0004/0006) is retired; approvals follow the GitHub
+> workflow. Up to six verified-independent refactoring jobs may run in parallel (was three).
+> Hardware (NVIDIA DGX Spark / GB10) and a USD 100–200 cloud API budget are requested, not yet approved.
+> Older snapshots below that mention Falcon-Mamba or Burkay as sole approver are superseded.
 
 Audited 2026-10-22: main `7e068040c3a4fb1a2f32783a4c592dc974324f36`, tree `4cb63e9e40fc88ae19cd83eadc538f951601b123`. Ten September commits and eight Markdown files are preserved. There is no application package, executable product test suite, measured refactoring experiment or deployed model in that base.
 
@@ -23,7 +31,7 @@ Audited 2026-10-22: main `7e068040c3a4fb1a2f32783a4c592dc974324f36`, tree `4cb63
 | F05 | NOT STARTED | [#15](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/15) |
 | F06 | NOT STARTED | [#16](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/16), [#17](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/17) |
 | F07A | NOT STARTED | [#18](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/18) |
-| F07B | BLOCKED — first-delivery mandatory; actual Falcon-Mamba hardware/runtime UNKNOWN | #19, #20 |
+| F07B | BLOCKED — first-delivery mandatory; actual Qwen3-Coder 30B-A3B hardware/runtime UNKNOWN (ADR 0007) | #19, #20 |
 | F08 | NOT STARTED | [#21](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/21), [#22](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/22) |
 | F09 | NOT STARTED | [#23](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/23), [#24](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/24) |
 | F10 | BLOCKED — resource evidence required | [#25](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/25) |

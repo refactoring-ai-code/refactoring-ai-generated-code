@@ -2,6 +2,7 @@
 
 **Decision date:** 2026-10-27  
 **Status:** APPROVED by Burkay Çakar (@cakarburkayy)  
+**Superseded:** 2026-11-25 by [ADR 0007](0007-local-llm-and-approval-authority.md). The single-final-approver rule and the `GENESIS-OWNER-APPROVED` marker below are historical; approvals follow the v3 GitHub development workflow.  
 **Supersedes:** Requirements for an independent approval from İsmail, Uğur or any other team member during implementation/release transitions.
 
 Burkay Çakar is the project planner and **only required final approver** for architecture, requirements, developer handoffs and PR merges. Peer reviews remain optional and may still identify defects; they do not independently authorize code. For ordinary future PRs, the trusted governance gate expects an authenticated GitHub PR conversation comment with the exact body `GENESIS-OWNER-APPROVED: <CURRENT_PR_HEAD_SHA>` from `@cakarburkayy`. A changed head requires fresh owner approval. Approval does not waive genuine applicable CI, required dependencies, safe Git publication, sandbox/security validation or evidence-based product release gates.
