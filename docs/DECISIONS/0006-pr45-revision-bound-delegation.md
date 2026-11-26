@@ -2,6 +2,7 @@
 
 Date: 2026-11-04 (Europe/Istanbul).<br>
 State: PREPARED_FOR_REVIEW; activation on trusted main is pending.<br>
+Status update 2026-11-25: historical; superseded by [ADR 0007](0007-local-llm-and-approval-authority.md) (no owner or delegated approval marker is required any more).<br>
 Task: F01-GOV / #1, bounded approval-policy maintenance authorized in this chat.<br>
 Developer: Cafer (`caferkilinc`).<br>
 Approved preparation baseline: `aa7d2c810a3c19dbc92bd6efa69c517a598dde7e`.

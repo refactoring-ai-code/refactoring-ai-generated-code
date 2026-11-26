@@ -23,7 +23,7 @@ coverage tool or security adapter as working.
 
 RUNTIME_IMPLEMENTED requires future evidence from the actual integration. A
 synthetic unit-test payload deliberately exercising SUPPORTED does not count.
-Real Falcon-Mamba 7B remains mandatory P0, with actual model/revision/settings
+Real local Qwen3-Coder 30B-A3B (ADR 0007) remains mandatory P0, with actual model/revision/settings
 unknown until measured by its own task. No model was installed or invoked here.
 Provider settings and budgets need actual authorization; no paid API is required
 by these contracts.

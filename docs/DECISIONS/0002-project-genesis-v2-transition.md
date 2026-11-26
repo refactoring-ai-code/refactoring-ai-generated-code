@@ -1,6 +1,7 @@
 # ADR 0002 — Project Genesis v2.0 sequential ownership and mandatory first delivery
 
 **Status:** PROPOSED MIGRATION / approved owner decisions, implementation review pending  
+**Amended:** 2026-11-25 by [ADR 0007](0007-local-llm-and-approval-authority.md) — Falcon-Mamba 7B references below are historical; the local security model is now Qwen3-Coder 30B-A3B, and the single-final-approver rule is retired.  
 **Date:** 2026-10-26  
 **Decision authority:** project owner in project conversation.  
 **Applies to:** `main` as accepted integration branch after independently reviewed and separately approved PR #38/bootstrap migration.

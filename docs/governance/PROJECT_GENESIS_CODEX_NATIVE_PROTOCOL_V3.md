@@ -29,5 +29,5 @@ consumes no product rotation turn.
 
 This workflow supersedes repository execution and publication instructions in
 the [v2.1 protocol](PROJECT_GENESIS_ORCHESTRATOR_PROTOCOL_V2_1.md), dated migration
-reports, historical approval decisions and earlier repository governance clauses in the SRS. The approved [SRS TR](../SRS.md),
+reports, historical approval decisions and earlier repository governance clauses in the SRS. [ADR 0007](../DECISIONS/0007-local-llm-and-approval-authority.md) retires the single-final-approver rule of ADR 0004 and the delegation of ADR 0006; no owner approval marker is required. The approved [SRS TR](../SRS.md),
 [SRS EN](../SRS_EN.md) and [architecture](../ARCHITECTURE.md) govern the product.

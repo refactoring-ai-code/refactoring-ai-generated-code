@@ -6,7 +6,7 @@
 **Burkay (@cakarburkayy) → Cafer (@caferkilinc) → Alperen Enes Yaman (@Yaman-A-E) → İsmail (@ismail-cevik) → Taha Uğur Toyran (@tahaugurtoyran) → repeat.**
 
 ## 1. What remains authoritative
-- Product behavior: owner-provided Master Architecture v2.0 + Step-by-Step Development Guide v2.0; [TR SRS](SRS.md) and [EN SRS](SRS_EN.md) v0.4.0 were approved by Burkay Çakar on 2026-10-27. Approval does not prove implementation.
+- Product behavior: owner-provided Master Architecture v2.0 + Step-by-Step Development Guide v2.0; [TR SRS](SRS.md) and [EN SRS](SRS_EN.md) v0.4.0 were approved by Burkay Çakar on 2026-10-27 and amended to v0.4.1 by [ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md). Approval does not prove implementation.
 - Existing implementation planning: [roadmap](DEVELOPMENT_ROADMAP.md), `.github/task-plan.json`, and the verified GitHub-native graph: 34 technical tasks / 69 dependencies (31 original tasks and 54 original edges preserved). Actual acceptances and the active owner come from the trusted registry and GitHub evidence, not legacy issue assignees.
 - Execution model: exactly **one** authorized implementation owner at any point. Module expertise and historical issue assignees do not grant implementation authority.
 - Integration branch: `main`; issue-numbered topic branches and PRs remain for independent review, but do not permit several concurrent active writers.
@@ -41,7 +41,7 @@ Use `AGENTS.md` only for stable instructions and `.agents/skills/development-han
 Keep verification and merge evidence in the PR or an existing task report.
 
 ## 6. No artificial schedule certainty
-The due date is **2027-01-01** (time UNKNOWN). Falcon-Mamba 7B, Python and JS/TS capabilities, PDF/HTML and mixed-language tests are first-delivery **P0**; lack of GPU/runtime/provider access is a release blocker, not approval to silently downgrade scope. Replan from evidence and actual available capacity, never from a speculative workload split.
+The due date is **2027-01-01** (time UNKNOWN). Qwen3-Coder 30B-A3B, Python and JS/TS capabilities, PDF/HTML and mixed-language tests are first-delivery **P0**; lack of GPU/runtime/provider access is a release blocker, not approval to silently downgrade scope. Replan from evidence and actual available capacity, never from a speculative workload split.
 
 ## 7. Mandatory 2026-10-27 release scope
-Every adapter for Java, Python, JavaScript, TypeScript, C#, Go and C++ is **P0**; real local Falcon-Mamba 7B, frozen V0/tests, isolated patch verification, two product approvals and HTML/PDF/ZIP/history remain mandatory. F14-MIX depends on all seven adapters, and F15-P0 requires the final integration gates. PR #38 and #39 are merged historical transitions. The [PR #45 delegation](DECISIONS/0006-pr45-revision-bound-delegation.md) remains tied to its accepted head.
+Every adapter for Java, Python, JavaScript, TypeScript, C#, Go and C++ is **P0**; real local Qwen3-Coder 30B-A3B, frozen V0/tests, isolated patch verification, two product approvals and HTML/PDF/ZIP/history remain mandatory. F14-MIX depends on all seven adapters, and F15-P0 requires the final integration gates. PR #38 and #39 are merged historical transitions. The [PR #45 delegation](DECISIONS/0006-pr45-revision-bound-delegation.md) remains tied to its accepted head.

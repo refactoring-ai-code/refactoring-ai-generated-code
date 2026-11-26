@@ -83,7 +83,7 @@ Evidence retains its producer kind, tool/version/config, rule or model provenanc
 source snapshot, artifact integrity, source/symbol references, verification,
 confidence and redaction. An LLM claim remains UNCONFIRMED; corroboration is a
 separate independently VERIFIED evidence record. Unknown model settings or
-Falcon-Mamba revision are not filled with invented defaults. Provider settings
+local security LLM (Qwen3-Coder) revision are not filled with invented defaults. Provider settings
 must not contain credential fields. Actual secret scanning/masking and artifact
 authorization are later runtime responsibilities; metadata declarations are not
 proof that raw content is safe to send.
