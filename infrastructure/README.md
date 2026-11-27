@@ -78,9 +78,13 @@ the image build contexts. The three pinned base images support both Linux
 AMD64 and ARM64; macOS/Windows hosts require Docker's Linux container mode.
 
 Windows package tests have been exercised locally. Native macOS installation
-and Docker startup are still pending verification; the application-stack CI
-workflow is prepared to check actual container health when the changes are
-published.
+and local Docker startup are still pending verification. The published
+`application-stack-checks` workflow builds the stack on GitHub-hosted Ubuntu and
+checks actual container health on every relevant pull request and push to `main`.
+
+The F04-JAVA language adapter tests additionally need Java 21 and Maven 3.9.11; see
+[F04-JAVA](../docs/F04-JAVA.md). The Compose images do not include the Java toolchain
+or the language adapter.
 
 Stop the stack with `down`. Use `config` to validate Compose configuration and
 `logs` for the current container output.

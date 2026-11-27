@@ -3,8 +3,9 @@
 
 > **Güncel kararların önceliği:** Bu belgedeki eski tarihli
 > taslak ve geçiş açıklamaları tarihsel kayıttır.
-> 27 Ekim 2026 tarihinde onaylanan SRS v0.4.0 ve sonradan
-> onaylanmış kapsam kararları geçerlidir. Güncel GitHub görev,
+> 27 Ekim 2026 tarihinde onaylanan SRS v0.4.0, 25 Kasım 2026
+> tarihli v0.4.1 değişikliği (ADR 0007) ve sonradan onaylanmış
+> kapsam kararları geçerlidir. Güncel GitHub görev,
 > PR ve bağımlılık durumları canlı kaynaklardan doğrulanır.
 
 **Kimlik:** RAGC-SRS-001  
@@ -61,7 +62,7 @@ Geliştirici, kendisinin işleme yetkisi bulunan AI-generated veya diğer kaynak
 3. **Başlangıç paralel analiz:** (A) statik kalite, (B) Gitleaks/Semgrep/OSV ve opsiyonel yerel yorum, (C) izolasyonda başlangıç build/test/coverage. Dinamik iş güvenli sandbox olmadan başlamaz.
 4. **Issue Explorer ve Onay Kapısı 1:** Kaynak kod/satır kanıtlı bulgular; yalnız uygun QUALITY_REFACTOR adayları; değişmez issue-selection snapshot.
 5. **Dependency-Aware Context Builder:** Hedef sembol, çağıran/çağrılanlar, imzalar, testler, yan etkiler, izinli bağlam; read/write set ve conservative conflict DAG.
-6. **Patch Engine:** En çok üç kanıtlanmış bağımsız iş, tek aday dizisi/iş, sağlayıcı API, kısıtlı JSON+unified diff; her iş bağımsız workspace.
+6. **Patch Engine:** En çok altı kanıtlanmış bağımsız iş (ADR 0007), tek aday dizisi/iş, sağlayıcı API, kısıtlı JSON+unified diff; her iş bağımsız workspace.
 7. **Candidate Validation:** Syntax/type/build, frozen regresyon, kalite/security yeniden tarama; davranış ve kalite ayrı; en fazla ilk deneme + iki düzeltme.
 8. **Onay Kapısı 2 ve birleşik final:** Monaco Diff ile tüm denemeler; yalnız normal onaya uygun adaylar. Taze V0 kopyasında seçilen patch'ler deterministik sırayla birleşir; tam frozen suite ve kurallar yeniden çalışır.
 9. **Sonuç ve geçmiş:** Başarılı combined validation sonunda değişmez final sürümü, indirilebilir ZIP ve HTML/PDF, before/after, audit ve History. Başarısız/UNVERIFIED çalışmalar yalnız açık uyarılı taslak olarak kalır.
@@ -240,11 +241,11 @@ Gereksinim kabulü için her satır gerçek davranış testi, kanıtlı kaynak �
 
 ## 11. Değişiklik ve kabul politikası
 
-Bu sürüm **derleme taslağıdır**. Project owner'ın 2026-10-26 tarihinde yetkilendirdiği mimari/GitHub kaynak kararları uygulanmıştır; bu dosyanın nihai tekil SRS onayı henüz ayrı belirtilmemiştir. Ana SRS, API şeması, backend state ve mevcut task graph arasında uygulama esnasında bulunan bir çelişki bir change-request/ADR ile çözülür. Uygulama ilerleme yüzdeleri kanıtsız verilmez. Rehberin örnek API JSON'ları, sayısal değerleri ve test komutları gerçek sonuç olarak sunulamaz. Sürüm değişikliği SRS gereksinim kimliklerini yeniden kullanmaz.
+Bu sürüm **onaylanmış SRS v0.4.1**'dir: v0.4.0 Türkçe ve İngilizce metinleriyle 2026-10-27 tarihinde onaylanmış (§14), v0.4.1 değişikliği 2026-11-25 tarihinde [ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md) ile kaydedilmiştir. Ana SRS, API şeması, backend state ve mevcut task graph arasında uygulama esnasında bulunan bir çelişki bir change-request/ADR ile çözülür. Uygulama ilerleme yüzdeleri kanıtsız verilmez. Rehberin örnek API JSON'ları, sayısal değerleri ve test komutları gerçek sonuç olarak sunulamaz. Sürüm değişikliği SRS gereksinim kimliklerini yeniden kullanmaz.
 
 ## 12. 2026-10-26–27 kararları — zorunlu kapsam ve geçiş kabul kapısı
 
-**Owner decision GOV-DEC-2026-10-26:** Beşli sabit sıra Burkay → Cafer → Alperen Enes Yaman → İsmail → Taha Uğur Toyran; PR #38 bu döngüden önceki bootstrap çalışmasıdır, rotasyon turu sayılmaz. Tam 31 teknik issue ve 54 dependent edge silinmez; sabit atanmış issue/registry owner-support-reviewer bilgileri kontrollü gate/CI migrasyonunda kaldırılır. `main` kabul edilmiş entegrasyon dalıdır; numaralı topic PR'ları inceleme için kalabilir. PR #38 ancak gerçek bağımsız onay, geçerli CI ve **ayrı proje sahibi merge izni** sonrasında birleştirilebilir.
+**Owner decision GOV-DEC-2026-10-26:** Beşli sabit sıra Burkay → Cafer → Alperen Enes Yaman → İsmail → Taha Uğur Toyran; PR #38 bu döngüden önceki bootstrap çalışmasıdır, rotasyon turu sayılmaz. Tam 31 teknik issue ve 54 dependent edge silinmez; sabit atanmış issue/registry owner-support-reviewer bilgileri kontrollü gate/CI migrasyonunda kaldırılır. `main` kabul edilmiş entegrasyon dalıdır; numaralı topic PR'ları inceleme için kalabilir. PR #38 ancak gerçek bağımsız onay, geçerli CI ve **ayrı proje sahibi merge izni** sonrasında birleştirilebilir. *(Sonraki durum: PR #38, 2026-10-27 tarihinde proje sahibinin izniyle `5754ed6` olarak merge edildi.)*
 
 **Mandatory first-delivery promotion:** #19 F07B-PILOT, #20 F07B-LOCAL, #31 F13-ADV, #32 F14-PY, #33 F14-JSTS, #34 F14-MIX P0'dır. Geçerli mimari kaynaklarında P1 olarak yazılmış önceki bölümler bu açık owner kararı karşısında tarihsel bilgi sayılır. İlgili kıyaslamalar aynı son teslim tarihi 2027-01-01 için gereklidir; teknik kaynak eksikliği gizlenemez.
 
@@ -252,11 +253,11 @@ Bu sürüm **derleme taslağıdır**. Project owner'ın 2026-10-26 tarihinde yet
 
 **Zorunlu ilk teslim acceptance:** (1) Java E2E; (2) Python adapter E2E; (3) JavaScript ve TypeScript E2E; (4) C#/Roslyn, Go ve C++/Clang gerçek kaynak, build/test/coverage, uygun güvenli patch E2E; (5) yedi dil için karma bileşen testleri; (5) Qwen3-Coder gerçek masked evidence incelemesi ve bağımsız etiketli değerlendirme; (6) tüm zorunlu secure scanning; (7) iki onay kapısı; (8) güvenli HTML/PDF, ZIP ve History; (9) reproducible deney. Capabilities gerekçeyle eksik gösterilebilir ancak kabul edilmemiş ilk teslim tamamlanmış sayılmaz.
 
-**Belge uyumu:** `docs/SRS.md` Türkçe kanonik SRS'dir; `docs/SRS_EN.md` aynı FR/NFR kimliklerine sahip İngilizce teknik eşdeğeridir. Terminoloji farklılığı davranış değiştirmemelidir. Anlaşmazlık varsa owner kararı ile eşdeğer sürümlerde birlikte düzeltme yapılır. Ayrı SRS kabulü kaydı beklenmektedir.
+**Belge uyumu:** `docs/SRS.md` Türkçe kanonik SRS'dir; `docs/SRS_EN.md` aynı FR/NFR kimliklerine sahip İngilizce teknik eşdeğeridir. Terminoloji farklılığı davranış değiştirmemelidir. Anlaşmazlık varsa owner kararı ile eşdeğer sürümlerde birlikte düzeltme yapılır. İki dilin kabul kaydı §14'tedir.
 
 ### DEC-010 — 2026-10-27: C#, Go, C++ ilk teslim P0
 
-**Onaylanmış kapsam değişikliği:** Yedi dil (Java, Python, JavaScript, TypeScript, C#, Go, C++) ve yerel Falcon-Mamba 7B aynı ilk teslimin zorunlu parçalarıdır. Yeni teknik görevler F14-CS (#40), F14-GO (#41), F14-CPP (#42); her birinin plan önkoşulları F02-CONTRACT, F06-SANDBOX, F11-VALIDATE'dir. F14-MIX (#34) bu üç yeni adapterın kabulünü de bekleyecek; F15-P0 (#35) F14-MIX + F07B-LOCAL (#20) + F13-ADV (#31) kabul edilmeden READY değildir. Üç yeni native issue açıldı, ancak GitHub native sub-issue ve dependency edges henüz inceleme/aktivasyon sonrası güvenli senkronizasyon gerektirir. Önceki 31 görev ve 54 native edge silinmedi. PR #38 için merge izni **verilmedi**; Burkay teknik lider ve denetim koordinatörü, ancak PR yazarı ile katkıda bulunan kod incelemecisi arasındaki bağımsızlık şartı korunur. *(2026-11-25: yerel güvenlik modeli ADR 0007 ile Qwen3-Coder 30B-A3B olarak değiştirildi.)*
+**Onaylanmış kapsam değişikliği:** Yedi dil (Java, Python, JavaScript, TypeScript, C#, Go, C++) ve yerel Falcon-Mamba 7B aynı ilk teslimin zorunlu parçalarıdır. Yeni teknik görevler F14-CS (#40), F14-GO (#41), F14-CPP (#42); her birinin plan önkoşulları F02-CONTRACT, F06-SANDBOX, F11-VALIDATE'dir. F14-MIX (#34) bu üç yeni adapterın kabulünü de bekleyecek; F15-P0 (#35) F14-MIX + F07B-LOCAL (#20) + F13-ADV (#31) kabul edilmeden READY değildir. Üç yeni native issue açıldı, ancak GitHub native sub-issue ve dependency edges henüz inceleme/aktivasyon sonrası güvenli senkronizasyon gerektirir. Önceki 31 görev ve 54 native edge silinmedi. PR #38 için merge izni **verilmedi**; Burkay teknik lider ve denetim koordinatörü, ancak PR yazarı ile katkıda bulunan kod incelemecisi arasındaki bağımsızlık şartı korunur. *(Sonraki durum: native bağlantılar Actions run 40518968864 ile doğrulandı; PR #38 2026-10-27 tarihinde `5754ed6` olarak merge edildi.)* *(2026-11-25: yerel güvenlik modeli ADR 0007 ile Qwen3-Coder 30B-A3B olarak değiştirildi.)*
 
 ## 14. Şartnamenin nihai kabulü — 27 Ekim 2026
 

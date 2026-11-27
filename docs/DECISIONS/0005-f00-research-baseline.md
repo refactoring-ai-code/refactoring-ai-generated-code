@@ -3,7 +3,7 @@
 **Date:** 2026-11-02 (Europe/Istanbul)<br>
 **Task / owner:** F00-PLAN / #8 / Burkay Çakar (@cakarburkayy)<br>
 **Status:** Protocol prepared for owner review; dataset **NOT_FROZEN**; experiments **NOT_RUN**. This document does not attest implementation or accepted handoff.<br>
-**Amended:** 2026-11-25 by [ADR 0007](0007-local-llm-and-approval-authority.md) — approvals assigned to Burkay below (e.g. dataset freeze) are recorded by the project owner through the v3 GitHub workflow; the local model under evaluation is Qwen3-Coder 30B-A3B.<br>
+**Amended:** 2026-11-25 by [ADR 0007](0007-local-llm-and-approval-authority.md) — approvals assigned to Burkay below (e.g. dataset freeze) are recorded by the project owner through the v3 GitHub workflow; the local model under evaluation is Qwen3-Coder 30B-A3B, and the parallel condition allows at most six genuinely independent jobs (section 4; previously three). The applicable SRS is v0.4.1.<br>
 **Inspected baseline:** `67233482f2d10462933328c4b162d150bb4b0993`, accepted integration branch `main`; local task branch `docs/8-freeze-evidence-protocol`.
 
 ## 1. Authority, scope and existing evidence

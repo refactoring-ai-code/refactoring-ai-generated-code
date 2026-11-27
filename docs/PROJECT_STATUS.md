@@ -4,11 +4,12 @@
 > project snapshots. Always use the current GitHub main commit,
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
-> F00-PLAN, F00-V0, F01-GOV, F01-ENV, F02-CONTRACT, F02-STATE, F03-INPUT and F08-UI are accepted (8 of 34).
-> F03-INPUT / #13 is verified complete (PR #63). Alperen Enes Yaman is assigned F04-JAVA / #14;
-> the conditional next owner is İsmail.
+> F00-PLAN, F00-V0, F01-GOV, F01-ENV, F02-CONTRACT, F02-STATE, F03-INPUT, F08-UI and F04-JAVA are accepted (9 of 34).
+> F04-JAVA / #14 is verified complete (PR #67, merge `2c3d35a`). İsmail Çevik is assigned F05-QUALITY / #15;
+> the conditional next owner is Taha Uğur Toyran.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
-> verified. The Turkish and English SRS v0.4.0 were approved.
+> verified. The Turkish and English SRS v0.4.0 were approved on 2026-10-27 and amended to v0.4.1 by ADR 0007.
+> The phase table and dated sections below are historical snapshots in chronological order.
 > Historical statements below do not override newer verified
 > evidence. Release remains NOT_READY.
 >
@@ -431,3 +432,28 @@ The [acceptance registry](../.github/acceptance.json) records #13. This governan
 **Review deviation.** No independent GitHub review was recorded on PR #67 before merge. The task named İsmail (@ismail-cevik) as reviewer, and the active developer explicitly instructed acceptance without it. A post-merge review of `96009c0` remains recommended. This record does not claim an independent review.
 
 The [acceptance registry](../.github/acceptance.json) records #14. This governance PR records the acceptance and one rotation advance from index 2 to 3 under `F04-JAVA:96009c01f9882b4a554ea44d1837c3e3f05179ac`. The [task plan](../.github/task-plan.json) assigns [F05-QUALITY / #15](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/15) to İsmail (@ismail-cevik). It is the next ready task in plan order and its only prerequisite is #14. Its scope, acceptance criteria and allowed paths are unchanged. Issue closure and assignment synchronization must be verified after integration before implementation. Next conditional owner: Taha Uğur Toyran (@tahaugurtoyran). Quality analysis, sandbox execution and release readiness are not established by this handoff.
+
+## 2026-11-27 — documentation maintenance after F04-JAVA acceptance
+
+This governance maintenance (F01-GOV / #1) brings stale documentation in line with
+the accepted state. It changes no product code, task assignment, acceptance record,
+frozen pilot input or rotation. The active task remains F05-QUALITY / #15 for İsmail
+Çevik; Taha Uğur Toyran is next after its acceptance.
+
+- README, this status note and the roadmap now show 9 of 34 accepted tasks and the
+  F05-QUALITY assignment. The F04-JAVA report no longer describes the CI gap closed
+  by PR #66.
+- Architecture: the local Qwen3-Coder review is shown as mandatory, and an incorrect
+  model reference is removed.
+- SRS TR/EN v0.4.1: the parallel refactoring limit is six everywhere (ADR 0007);
+  outdated draft, pending sign-off and open PR #38 wording is corrected. FR/NFR
+  identifiers, priorities and requirements are unchanged.
+- PR #38 (merge `5754ed6`, 2026-10-27) and PR #45 (merge `fdd5732`, 2026-11-04) are
+  recorded as merged in the SRS, experiment READMEs and related notes.
+- Contract README/consumer notes reflect F02 acceptance and the Java runtime adapter.
+  ADR 0003 and ADR 0005 carry amendment notes; their decision text is unchanged.
+- The UML studio uses `maxParallel: 6`. The infrastructure README reflects the
+  published application-stack CI.
+- Governance CI and issue graph sync no longer trigger on retired bootstrap
+  branches. The verification skill records that PR #48 resolved the former pilot
+  manifest mismatch.

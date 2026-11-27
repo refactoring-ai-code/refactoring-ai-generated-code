@@ -1,9 +1,9 @@
 name: Governance CI
 on:
   push:
-    branches: [main, 'chore/1-team-workflow', 'chore/project-genesis-v2-migration']
+    branches: [main]
   pull_request:
-    branches: [main, 'chore/1-team-workflow', 'chore/project-genesis-v2-migration']
+    branches: [main]
 permissions:
   contents: read
 concurrency:

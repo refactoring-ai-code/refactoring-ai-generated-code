@@ -28,9 +28,11 @@ snapshot pending human publication, hosted CI and Burkay's exact-HEAD approval;
 the earlier paragraph records the historical baseline. The twelve-task dataset
 remains NOT_FROZEN, comparative research NOT_RUN and release NOT_READY.
 
-Publication update: [PR #45](https://github.com/caferkilinc/refactoring-ai-generated-code/pull/45)
-is open. The corrected source revision passed real hosted pilot/governance
-checks; [publication evidence](java-pilot/evidence/publication-checks.json)
-records the exact revision and missing-owner-approval readiness failure.
-Earlier pending-publication wording is the local-stage snapshot. No accepted
-handoff, rotation advancement or whole-dataset freeze has occurred.
+Publication update: [PR #45](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/45)
+was merged on 2026-11-04 at `fdd573286834fe15c1ac1c0d51db4ed9b0015db7` from source
+`d923134da4f9f5a2ab55a5f51fbf9415ff717262`, and F00-V0 (#9) was accepted the same day
+(see the [acceptance registry](../.github/acceptance.json)). The
+[publication evidence](java-pilot/evidence/publication-checks.json) records the
+pre-merge revision checks. The pilot source and fixed tests are the frozen V0
+baseline. The twelve-task research dataset remains NOT_FROZEN and comparative
+research NOT_RUN; the earlier paragraphs are historical snapshots.

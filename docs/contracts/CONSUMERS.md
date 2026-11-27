@@ -2,7 +2,8 @@
 
 These expectations derive from the approved SRS/architecture and Issue #11.
 They do not claim personal approval from Taha, Burkay or Alperen and do not assign
-new tasks. The candidate wire version is 1.0.0 and remains subject to human review.
+new tasks; the names identify consumer areas, not current implementation owners. The
+wire version 1.0.0 was accepted with F02-CONTRACT (PR #52).
 
 | Consumer | Required behavior | Shared fixture / verification |
 |---|---|---|
@@ -17,12 +18,16 @@ validators, coordinate-byte checks, pure operation guard, API design description
 field dictionary, synthetic examples and automated checks.
 
 CONTRACT_DEFINED: all seven language interfaces and the four documented API route
-candidates. The committed capability fixture reports every operation as
-NOT_IMPLEMENTED. This task does not report a parser, test runner, safe patcher,
-coverage tool or security adapter as working.
+candidates. The committed capability fixture is synthetic contract data and reports
+every operation as NOT_IMPLEMENTED. F02-CONTRACT itself did not report a parser, test
+runner, safe patcher, coverage tool or security adapter as working.
 
-RUNTIME_IMPLEMENTED requires future evidence from the actual integration. A
-synthetic unit-test payload deliberately exercising SUPPORTED does not count.
+RUNTIME_IMPLEMENTED requires evidence from an actual integration. A synthetic
+unit-test payload deliberately exercising SUPPORTED does not count. Current runtime
+state: F04-JAVA (#14, PR #67) declares the Java adapter RUNTIME_IMPLEMENTED with
+`parse`, `symbol` and `dependency` SUPPORTED from real JavaParser runs; its other six
+capabilities and the other six languages remain NOT_IMPLEMENTED. See
+[F04-JAVA](../F04-JAVA.md).
 Real local Qwen3-Coder 30B-A3B (ADR 0007) remains mandatory P0, with actual model/revision/settings
 unknown until measured by its own task. No model was installed or invoked here.
 Provider settings and budgets need actual authorization; no paid API is required

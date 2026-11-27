@@ -25,7 +25,7 @@ flowchart TD
   G --> H[Approval 2: accepted patch selection]
   H --> I[Combine on fresh V0 and revalidate]
   I --> J[Final ZIP and measured report]
-  K[Optional Local AI review] -.-> C
+  K[Mandatory local Qwen3-Coder review, advisory findings] -.-> C
 ```
 
 The two approvals are product decisions; an independent GitHub PR review is a separate development control. A model's security claim is unconfirmed until supported by tool/test/independent evidence. Security findings do not silently become eligible quality-refactoring tasks.
@@ -36,7 +36,7 @@ V0 and frozen test hashes must remain unchanged. Patches cannot edit tests or we
 
 P0 first delivery includes Java 21/Maven/JavaParser/PMD/CPD, Python AST/LibCST and pytest/coverage.py, TypeScript API/ts-morph with ESLint and Jest/Vitest, deterministic security plus real Qwen3-Coder 30B-A3B local review, HTML/PDF/history. Implementation is dependency ordered, with Java pilot first, but all are required for first delivery. Capabilities and coverage remain per language/component; unresolved cross-service contracts remain uncertain.
 
-Real local Qwen3-Coder 30B-A3B security review is **mandatory P0** ([ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md), replacing Qwen3-Coder 30B-A3B). Only this AST/SAST-paired review model runs locally; refactoring/patch LLMs run with authorized cloud providers on masked, bounded context packages. Its exact model revision, quantization, runtime, memory and latency must be measured in #19 on the target hardware (NVIDIA DGX Spark or ASUS Ascent GX10, GB10 with 128 GB; fallback: a 16 GB GPU served by llama.cpp). ARM64 compatibility of the language toolchains must be verified before purchase. M3 does not supply CUDA. Hardware and cloud API budget are requested but not yet approved; a missing GPU remains a release blocker, not a reason to drop scope.
+Real local Qwen3-Coder 30B-A3B security review is **mandatory P0** ([ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md)). Only this AST/SAST-paired review model runs locally; refactoring/patch LLMs run with authorized cloud providers on masked, bounded context packages. Its exact model revision, quantization, runtime, memory and latency must be measured in #19 on the target hardware (NVIDIA DGX Spark or ASUS Ascent GX10, GB10 with 128 GB; fallback: a 16 GB GPU served by llama.cpp). ARM64 compatibility of the language toolchains must be verified before purchase. M3 does not supply CUDA. Hardware and cloud API budget are requested but not yet approved; a missing GPU remains a release blocker, not a reason to drop scope.
 
 ## Development governance boundary (approved 2026-10-26)
 
