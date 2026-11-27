@@ -1,9 +1,11 @@
 # F02-CONTRACT 1.0.0
 
-Status: **CONTRACT_DEFINED**, local implementation prepared for human review.
-This package supplies data contracts, pure validation and fixtures. Runtime
-adapters, HTTP services, approval persistence, context extraction, patch generation,
-sandbox execution, model integration and deployment are not implemented here.
+Status: **ACCEPTED** — F02-CONTRACT / #11 was merged through PR #52 and recorded as
+verified complete on 2026-11-05. This package supplies data contracts, pure validation
+and fixtures. Runtime adapters, HTTP services, approval persistence, context extraction,
+patch generation, sandbox execution, model integration and deployment are not part of
+this package. Later tasks consume it: F02-STATE (workflow state), F03-INPUT (source
+intake) and F04-JAVA (the Java runtime adapter in `backend/language_adapters/`).
 
 The authoritative types are [Pydantic models](../../backend/core/schemas/models.py).
 Their deterministic [JSON Schema Draft 2020-12 export](../../backend/core/schemas/cir-1.0.0.schema.json)

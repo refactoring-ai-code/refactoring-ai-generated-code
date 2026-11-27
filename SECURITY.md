@@ -4,7 +4,7 @@ Never commit API keys, `.env`, credentials, private academic documents, student 
 
 The planned product must treat uploaded code as untrusted: immutable V0, safe archive extraction, separate worker sandbox, no host execution, network denied by default, resource/time limits, read-only frozen tests, masking and explicit cloud/dynamic-execution consent. See the [architecture](docs/ARCHITECTURE.md).
 
-Governance CI uses ephemeral GitHub-hosted runners and read-only tokens. The task dependency audit runs only code from current trusted main and checks head and policy freshness. Product changes must stay within their task scope. The issue-graph sync is the sole issue-write job, owner-only on its named bootstrap branch or manual main dispatch; it never checks out external PR code. All workflows avoid persistent checkout credentials and pin the official checkout action commit.
+Governance CI uses ephemeral GitHub-hosted runners and read-only tokens. The task dependency audit runs only code from current trusted main and checks head and policy freshness. Product changes must stay within their task scope. The issue-graph sync is the sole issue-write job, owner-only on pushes to main or manual dispatch on main; it never checks out external PR code. All workflows avoid persistent checkout credentials and pin the official checkout action commit.
 
 `security-checks` is a deterministic credential/private-artefact hygiene check, not a full SAST/SCA or proof of security. Real application dependency scanning, sandbox validation and security analysis belong to F01-ENV/F06/F07A. No self-hosted runner or external API spend is enabled by this setup.
 

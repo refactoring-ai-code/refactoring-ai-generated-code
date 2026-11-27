@@ -133,10 +133,10 @@ which needs Node.js ≥ 22.18 for TypeScript type stripping.
 | `contract-checks` (`run_checks.py`, `export --check`) | PASS (55 tests; exports current) |
 | Java pilot `verify_integrity.py` before/after, `reproduce.py` | PASS; 10/10 JUnit tests; V0 and fixed-test hashes unchanged |
 
-**CI gap.** The current `backend-checks` workflow runs only `pytest backend/tests` and
-installs no JDK, so these adapter tests do not run in hosted CI from this task's
-allowed paths. Connecting them needs a workflow change outside F04's scope. It is
-proposed through governance (F01-GOV) as a separate PR.
+**Hosted CI.** Governance PR #66 added JDK 21, checksum-verified Maven 3.9.11 and
+Node.js to the `backend-checks` workflow, which now lints, builds and runs
+`tests/language_adapters`. Hosted runs on the PR #67 head and merge revisions passed
+all 27 adapter tests with none skipped.
 
 ## Limitations
 

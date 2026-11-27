@@ -101,9 +101,11 @@ bytes; manifests never contain their own digest. Build output and evidence logs
 are outside the frozen input inventories. The verifier rejects missing/extra
 inputs, changed bytes, changed manifests and symlinks.
 
-Status is **LOCAL_SEALED_PENDING_OWNER_ACCEPTANCE**. Original/test bytes are
-locally fixed; no Burkay freeze approval, Git publication, accepted F00-V0
-handoff or whole-dataset freeze is claimed. Keep the receipts with the reviewed
+Status: the pilot V0 and fixed tests are **accepted and frozen**. PR #45 was merged
+on 2026-11-04 and F00-V0 (#9) was accepted with this exact source revision. The
+manifests still carry their original `seal_status` value
+`LOCAL_SEALED_PENDING_OWNER_ACCEPTANCE`, because they are frozen bytes and are never
+rewritten. Keep the receipts with the reviewed
 revision: these unsigned hashes detect drift, not an adversary replacing both
 files and receipts. Never refresh them merely to make a modified V0 pass.
 Corrections require an attributable new baseline revision and owner decision.
@@ -136,8 +138,9 @@ merge and orchestrator acceptance remain separate requirements.
 
 ### Published execution evidence
 
-[PR #45](https://github.com/caferkilinc/refactoring-ai-generated-code/pull/45)
-is open. [Hosted history](evidence/hosted-ci-history.json) retains the initial
+[PR #45](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/45)
+was merged on 2026-11-04 at `fdd573286834fe15c1ac1c0d51db4ed9b0015db7`. The paragraph
+below records the pre-merge revision checks. [Hosted history](evidence/hosted-ci-history.json) retains the initial
 setup-java version-resolution failure and exact one-line correction. At the
 observed correction SHA `eae5d891e926ec12b87375023f33b813cc1c64a2`, the real
 [pilot run](https://github.com/caferkilinc/refactoring-ai-generated-code/actions/runs/41687880387)
@@ -145,5 +148,6 @@ passed all ten JUnit tests and both manifest checks on Ubuntu. Governance jobs
 and dependency-gate passed; merge-readiness failed for missing Burkay approval.
 [Publication evidence](evidence/publication-checks.json) distinguishes the
 observed source SHA, GitHub test-merge checkout and the later containing report
-revision, whose fresh results are delivered in the final chat receipt. No merge,
-owner approval, dataset freeze or accepted handoff is claimed.
+revision. The delegated approval, the merge-revision pilot and governance runs, and
+the accepted handoff are recorded in the [acceptance registry](../../.github/acceptance.json)
+entry for #9. The twelve-task research dataset is still not frozen.

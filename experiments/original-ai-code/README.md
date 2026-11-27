@@ -9,5 +9,5 @@ maintainability, and technical debt analysis.
 The first local candidate is [java-inventory-v0](../java-pilot/README.md).
 Its original generated source and Maven descriptor are separate from the fixed
 tests in `tests/fixtures/java-inventory-v0/`. The source/test manifests are
-locally sealed pending owner acceptance; do not edit them to fit later patches.
-No twelve-task dataset freeze or accepted F00-V0 handoff is claimed.
+frozen: F00-V0 (#9) was accepted after PR #45 merged on 2026-11-04. Do not edit them
+to fit later patches. The twelve-task research dataset is not yet frozen.

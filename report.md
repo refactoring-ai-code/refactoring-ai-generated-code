@@ -54,3 +54,25 @@ V0, Java pilotu ve sabit test dosyalarının SHA-256 değerleri değişmedi. `ex
 ## Devir
 
 Rotasyon bir kez 2 → 3 ilerledi; anahtar `F04-JAVA:96009c01f9882b4a554ea44d1837c3e3f05179ac`. Plan sırasındaki ilk hazır görev F05-QUALITY / #15. Tek önkoşulu #14; kapsamı, kabul ölçütleri ve izinli yolları değiştirilmedi. Sorumlusu İsmail Çevik (`ismail-cevik`). Kabulden sonraki koşullu sorumlu Taha Uğur Toyran (`tahaugurtoyran`).
+
+## Ek: 2026-11-27 dokümantasyon bakımı (F01-GOV / #1)
+
+F04-JAVA kabulünden sonra güncellenmeyen belgeler, gerçek duruma göre düzeltildi. Ürün kodu, görev ataması, kabul kaydı, rotasyon ve dondurulmuş pilot dosyaları değişmedi. Aktif görev F05-QUALITY / #15, İsmail Çevik; sıradaki Taha Uğur Toyran. Bakım, proje içi rotasyon turu tüketmez.
+
+| Dosya | Düzeltme |
+|---|---|
+| `README.md` | 9/34 kabul, aktif F05-QUALITY; repo erişimi (beş hesap Admin, 2026-11-27); SRS v0.4.1; ADR 0007 ile kalkan tek onaycı kuralı |
+| `docs/PROJECT_STATUS.md` | Üst not güncellendi; 2026-11-27 bakım bölümü eklendi |
+| `docs/DEVELOPMENT_ROADMAP.md` | Canlı durum notu, Status satırı, F04/F05 satırları, mevcut yetkili geliştirme; tek onaycı ve v2.1 ifadeleri; yerel model adı |
+| `docs/F04-JAVA.md` | "CI gap" paragrafı → PR #66 sonrası hosted CI durumu |
+| `docs/ARCHITECTURE.md` | Hatalı "replacing Qwen3-Coder" parantezi kaldırıldı; diyagramda yerel Qwen3-Coder incelemesi zorunlu |
+| `docs/SRS.md`, `docs/SRS_EN.md` | Paralel refactoring işi en fazla altı; taslak / onay bekliyor ifadeleri düzeltildi; "7B" → Qwen3-Coder 30B-A3B; PR #38 merge edildi (`5754ed6`). FR/NFR kimlikleri ve öncelikleri değişmedi |
+| `docs/contracts/README.md`, `CONSUMERS.md` | F02 kabulü ve Java runtime adaptörü |
+| `docs/DECISIONS/0003`, `0005` | Başlığa sonraki durum / amendment notu; karar metni değişmedi |
+| `docs/visualizations/` | `maxParallel: 6`; SRS v0.4.1 |
+| `infrastructure/README.md` | Yayındaki application-stack CI; Java araç zinciri notu |
+| `experiments/` README'leri | PR #45 merge edildi (`fdd5732`), F00-V0 kabul edildi; manifestler değişmedi |
+| `.github/workflows/governance-ci.yml`, `issue-graph-sync.yml`, `SECURITY.md` | Emekli bootstrap dallarına tetik kaldırıldı |
+| `.agents/skills/verification/SKILL.md` | Pilot manifest uyuşmazlığının PR #48 ile giderildiği |
+
+Doğrulama sonuçları ve merge kanıtı bu değişikliğin PR'ında kayıtlıdır.

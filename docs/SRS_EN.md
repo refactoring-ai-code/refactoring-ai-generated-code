@@ -2,8 +2,9 @@
 # Secure Refactoring and Quality Improvement of AI-Generated Code
 
 > **Current-decision precedence:** Earlier draft and transition
-> statements are historical records. The approved SRS v0.4.0
-> and subsequently approved scope decisions take precedence.
+> statements are historical records. The approved SRS v0.4.0,
+> its 2026-11-25 v0.4.1 amendment (ADR 0007) and subsequently
+> approved scope decisions take precedence.
 > Current GitHub task, PR and dependency states must always
 > be independently verified against live repository evidence.
 
@@ -23,7 +24,7 @@ The product receives authorized AI-generated or other source code as ZIP, folder
 
 **Actors:** code owner/user (two product decisions and input/cloud/execution consents); application operator; research evaluator; language analysis adapters; sandbox/build/test workers; authorized cloud patch providers; local Qwen3-Coder security review; developer/Codex/orchestrator (development responsibilities only).
 
-**Included:** safe input and evidence provenance, language adapter framework, real Java/Python/JavaScript/TypeScript/C#/Go/C++ capabilities, security scanner and mandatory 7B local review, deterministic validation, approval UX, bounded LLM calls, final ZIP/PDF/HTML/history and rigorous research protocol.
+**Included:** safe input and evidence provenance, language adapter framework, real Java/Python/JavaScript/TypeScript/C#/Go/C++ capabilities, security scanner and mandatory local Qwen3-Coder 30B-A3B review, deterministic validation, approval UX, bounded LLM calls, final ZIP/PDF/HTML/history and rigorous research protocol.
 
 **Excluded unless separately approved:** automatic remediation of arbitrary security findings, broad bug fixing, replacement of a user's tests to obtain a pass, uncontrolled program rewrites, arbitrary network/code exfiltration, proof of complete behavior equivalence.
 
@@ -181,7 +182,7 @@ P0 = mandatory first delivery; all FR-001–FR-062 requirements below are P0 und
 | Scanner offline, malicious secret or fake Local AI line | Masking, explicit INCOMPLETE, rejection of fabricated evidence references |
 | Local Qwen3-Coder 30B-A3B service | Recorded exact model/version/runtime/quantization/VRAM/latency and independent labeled evaluation |
 | Approval 1 bypass/security issue selection | Server rejects invalid choices; saved immutable selected issue snapshot |
-| Unknown conflict and genuinely independent jobs | Conflicting jobs serialized; up to 3 independent jobs concurrently |
+| Unknown conflict and genuinely independent jobs | Conflicting jobs serialized; up to 6 independent jobs concurrently (ADR 0007) |
 | Invalid patch / test-file change | Rejected before downstream validation |
 | Patch correction budget | Initial + at most 2 correction attempts persisted |
 | Individually passing but jointly broken | Combined validation FAILED, no VALIDATED final ZIP |
@@ -218,7 +219,7 @@ A passing governance test or a successful Git push is *not* product acceptance. 
 - **GOV-001:** The authorized five: Burkay (@cakarburkayy), Cafer (@caferkilinc), Alperen Enes Yaman (@Yaman-A-E), İsmail (@ismail-cevik), Uğur = Taha Uğur Toyran (@tahaugurtoyran).
 - **GOV-002:** Exactly one active implementation owner; invariant cyclic order Burkay → Cafer → Alperen → İsmail → Uğur → repeat. No skipped turn without the project owner's explicitly recorded exception.
 - **GOV-003:** `main` is the approved accepted integration branch. Numbered feature PR branches remain available for independent review; they do not confer concurrent implementation ownership.
-- **GOV-004:** PR #38 was made before Genesis activation and is **not** a completed Genesis rotation. It must first be reconciled and independently reviewed with actual passing checks; **a separate explicit owner authorization to merge** is required.
+- **GOV-004:** PR #38 was made before Genesis activation and is **not** a completed Genesis rotation. It was merged with explicit owner authorization on 2026-10-27 (`5754ed6`) and consumed no rotation turn.
 - **GOV-005:** Preserve all 31 technical issues and dependencies. Remove fixed future assignee/primary/support/reviewer assignments after compatibility migration; assign the current implementation owner only through canonical state, not preassigned issue backlog.
 - **GOV-006:** Orchestrator assigns one bounded task → Codex inspects, edits, verifies, reports and stops → human reviews, commits and pushes → orchestrator verifies handoff/evidence → exactly one rotation advances on acceptance; duplicate (task, SHA) cannot count twice.
 - **GOV-007:** Maintain minimal permanent AGENTS.md, a proven-compatible development-handoff skill, current report and roadmap/state/history records; reuse existing equivalents, avoid parallel sources of truth.
@@ -231,20 +232,20 @@ A passing governance test or a successful Git push is *not* product acceptance. 
 | DEC-001 | Supplied 2026 v2.0 Master Architecture and Step-by-Step Guide override conflicting historical v1 PDF and presentation claims. |
 | DEC-002 | Due 2027-01-01; submission time/channel UNKNOWN. |
 | DEC-003 | Fixed team assignments are superseded by rotating single developer; actual registry/gate and issue migration is staged to avoid bypassing review. |
-| DEC-004 | PR #38 cannot merge solely because its existing governance CI checks passed; fresh independent review and separate owner merge decision are prerequisites. |
+| DEC-004 | PR #38 could not merge solely because its governance CI checks passed; it was merged on 2026-10-27 (`5754ed6`) after the separate owner merge decision. |
 | DEC-005 | Java may implement first, but Python, JS/TS, C#, Go, C++, mixed-component validation and local Qwen3-Coder are mandatory **in the same first delivery**. |
 | DEC-006 | Qwen3-Coder 30B-A3B (ADR 0007) exact weights, quantization, compatible hardware/runtime and latency remain unverified; access to an M3 is not CUDA. Refactoring LLMs run with authorized cloud providers. |
 | DEC-007 | HTML/PDF and history must use real evidence and consistent numbers, not an optional mock final. |
 | DEC-008 | Actual patch provider model, privacy/egress consent, quota and spending authorization UNKNOWN; not permission to incur costs. |
 | DEC-009 | Local academic demonstration versus internet-facing multi-user deployment requires a distinct threat/deployment approval. |
 
-This v0.4.0 document was approved by the owner on 2026-10-27. Superseded historical note: Owner approval was given for the input authority, collaboration strategy, priority promotion, English+Turkish SRS delivery and non-merge PR policy. **Final sign-off of both SRS language versions remains pending**. Record deviations via scoped change request/ADR; keep stable FR/NFR IDs and version increments without rewriting unrelated historic task metadata.
+This document is the approved SRS v0.4.1: both v0.4.0 language versions were approved by the owner on 2026-10-27 (§12) and the v0.4.1 amendment was recorded on 2026-11-25 by ADR 0007. Record deviations via scoped change request/ADR; keep stable FR/NFR IDs and version increments without rewriting unrelated historic task metadata.
 
 ## 11. DEC-010 — 2026-10-27 owner-approved seven-language mandatory scope
 
 The owner's latest explicit scope makes **C#, Go and C++ working adapters mandatory P0 for the same first delivery** as Java, Python, JavaScript, TypeScript and local Falcon-Mamba 7B. This supersedes any historical `future adapter` or P1 wording. New stable task IDs F14-CS (issue #40), F14-GO (#41) and F14-CPP (#42) are approved planning work. Each requires accepted F02-CONTRACT, F06-SANDBOX and F11-VALIDATE; mixed adapter acceptance F14-MIX (#34) requires all three plus Python/JS/TS. F15-P0 (#35) additionally requires F14-MIX, F07B-LOCAL (#20) and F13-ADV (#31) before it may pass first-delivery verification. *(2026-11-25: the local security model was changed to Qwen3-Coder 30B-A3B by ADR 0007.)*
 
-Three live GitHub issues exist without fixed assignees. Existing 31 tasks / 54 native edges were not destroyed; new native subissue and prerequisite links remain **PENDING_SAFE_MIGRATION** until independently reviewed policy activation. PR #38 remains OPEN, and no separate merge authorization has been granted. Burkay is the owner-designated technical lead and audit coordinator for PR #38; independent review still requires a non-contributor, non-author reviewer under the existing governance controls. This SRS and the Turkish v0.4 counterpart remain **REVIEW DRAFT** until dual-language final sign-off.
+Three live GitHub issues exist without fixed assignees. Existing 31 tasks / 54 native edges were not destroyed; new native subissue and prerequisite links remain **PENDING_SAFE_MIGRATION** until independently reviewed policy activation. PR #38 remains OPEN, and no separate merge authorization has been granted. Burkay is the owner-designated technical lead and audit coordinator for PR #38; independent review still requires a non-contributor, non-author reviewer under the existing governance controls. This SRS and the Turkish v0.4 counterpart remain **REVIEW DRAFT** until dual-language final sign-off. *(Later state: the native links were verified by Actions run 40518968864; PR #38 was merged on 2026-10-27 at `5754ed6`; both SRS versions were approved the same day, see §12.)*
 
 ## 12. Final owner SRS approval — 27 October 2026
 

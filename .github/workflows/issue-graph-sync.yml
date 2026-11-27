@@ -1,7 +1,7 @@
 name: Issue graph sync
 on:
   push:
-    branches: ['chore/1-team-workflow', main]
+    branches: [main]
     paths: ['.github/task-plan.json', 'scripts/governance/sync_issues.py', '.github/workflows/issue-graph-sync.yml']
   workflow_dispatch:
 permissions:
@@ -9,7 +9,7 @@ permissions:
   issues: write
 jobs:
   sync:
-    if: contains(fromJSON('["cakarburkayy","caferkilinc"]'), github.actor) && (github.ref == 'refs/heads/chore/1-team-workflow' || github.ref == 'refs/heads/main')
+    if: contains(fromJSON('["cakarburkayy","caferkilinc"]'), github.actor) && github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     timeout-minutes: 10
     concurrency: issue-graph-sync

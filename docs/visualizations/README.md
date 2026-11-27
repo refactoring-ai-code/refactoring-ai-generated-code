@@ -1,6 +1,6 @@
 # Interactive SRS UML Studio
 
-**Source of truth:** [Turkish SRS v0.4.0](../SRS.md), [English SRS](../SRS_EN.md), [Architecture](../ARCHITECTURE.md), and project-owner decisions in [AGENTS.md](../../AGENTS.md).
+**Source of truth:** [Turkish SRS v0.4.1](../SRS.md), [English SRS](../SRS_EN.md), [Architecture](../ARCHITECTURE.md), and project-owner decisions in [AGENTS.md](../../AGENTS.md).
 
 Open **[uml-studio.html](uml-studio.html)** as a saved local HTML file (or from raw GitHub content) in a modern browser. It uses inline SVG, no network assets, and offers **two views only** — Use Case and Class Diagram. Use drag-to-pan, scroll-to-zoom, *Fit*, fullscreen, search, and click-to-inspect SRS requirement references.
 
