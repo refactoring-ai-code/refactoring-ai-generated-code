@@ -19,6 +19,7 @@ scope findings separately from required branch protection.
 | #9 Java pilot | `pilot-checks`, real Maven/JUnit pilot build/tests | #9 may add `.github/workflows/pilot-checks.yml`; no Python environment dependency is invented |
 | #11 CIR/API contracts | `contract-checks`, actual schema/fixture validation | #11 may add `.github/workflows/contract-checks.yml` so early contracts need not wait for #10 |
 | #10 environment | backend-checks and frontend-checks | #10 supplies real pinned packages, lockfiles, test commands and application CI |
+| #14 Java language adapter | backend-checks builds the JavaParser helper (JDK 21, checksum-verified Maven 3.9.11) and runs `tests/language_adapters` with the Monaco cross-check | F01-GOV adds the workflow steps; #14 supplies the adapter, helper and tests within its allowed paths |
 | #22, #30, #31, #34, #35 mixed delivery / E2E | backend-checks and frontend-checks | Actual app checks from #10; mixed/E2E task evidence is also reviewed |
 | Any PR changing backend or frontend | Adds corresponding check based on actual changed paths | A frontend task label cannot hide backend code |
 | Schema paths / contract tests | Adds contract-checks | Real contract tests; no fake green command |

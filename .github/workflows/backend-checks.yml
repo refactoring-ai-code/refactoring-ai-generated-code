@@ -4,11 +4,13 @@ on:
     branches: [main]
     paths:
       - 'backend/**'
+      - 'tests/language_adapters/**'
       - '.github/workflows/backend-checks.yml'
   push:
     branches: [main]
     paths:
       - 'backend/**'
+      - 'tests/language_adapters/**'
       - '.github/workflows/backend-checks.yml'
 permissions:
   contents: read
@@ -19,7 +21,7 @@ jobs:
   backend-checks:
     name: backend-checks
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -35,3 +37,52 @@ jobs:
         run: uv run --project backend ruff check backend/app backend/tests
       - name: Test backend health surface
         run: uv run --project backend python -m pytest backend/tests
+      # F04-JAVA (#14) language adapters: JDK 21 + pinned Maven build the JavaParser
+      # helper; Node runs the frontend Monaco coordinate cross-check. Skipped only on
+      # revisions that do not contain the adapter sources yet.
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        if: hashFiles('backend/language_adapters/java/helper/pom.xml') != ''
+        with:
+          distribution: temurin
+          java-version: '21.0.4+7.0.LTS'
+      - name: Install pinned and checksum-verified Maven
+        if: hashFiles('backend/language_adapters/java/helper/pom.xml') != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          archive="$RUNNER_TEMP/apache-maven-3.9.11-bin.tar.gz"
+          curl --fail --silent --show-error --location --retry 2 --max-time 120 \
+            https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.11/apache-maven-3.9.11-bin.tar.gz \
+            --output "$archive" || \
+          curl --fail --silent --show-error --location --retry 2 --max-time 120 \
+            https://archive.apache.org/dist/maven/maven-3/3.9.11/binaries/apache-maven-3.9.11-bin.tar.gz \
+            --output "$archive"
+          printf '%s  %s\n' \
+            'bcfe4fe305c962ace56ac7b5fc7a08b87d5abd8b7e89027ab251069faebee516b0ded8961445d6d91ec1985dfe30f8153268843c89aa392733d1a3ec956c9978' \
+            "$archive" | sha512sum --check --strict
+          tar -xzf "$archive" -C "$RUNNER_TEMP"
+          echo "$RUNNER_TEMP/apache-maven-3.9.11/bin" >> "$GITHUB_PATH"
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        if: hashFiles('backend/language_adapters/java/helper/pom.xml') != ''
+        with:
+          node-version: '24.22.2'
+      - name: Lint, build and test language adapters
+        shell: bash
+        run: |
+          set -euo pipefail
+          sources=0; tests=0
+          [ -d backend/language_adapters ] && sources=1
+          [ -d tests/language_adapters ] && tests=1
+          if [ "$sources" != "$tests" ]; then
+            echo "Language adapter sources and tests must be present together" >&2
+            exit 1
+          fi
+          if [ "$sources" = 0 ]; then
+            echo "No language adapter sources on this revision"
+            exit 0
+          fi
+          uv run --project backend ruff check --config backend/pyproject.toml \
+            backend/language_adapters tests/language_adapters
+          mvn -B -q -DskipTests -f backend/language_adapters/java/helper/pom.xml package
+          uv run --project backend python -m pytest -c backend/pyproject.toml --rootdir . \
+            tests/language_adapters -ra
