@@ -360,7 +360,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "ASSIGNED",
+      "actual_status": "VERIFIED_COMPLETE",
       "issue_number": 14,
       "allowed_paths": [
         "backend/language_adapters/",
@@ -403,7 +403,7 @@
       ],
       "kind": "code",
       "priority": "P0",
-      "actual_status": "NOT STARTED",
+      "actual_status": "ASSIGNED",
       "issue_number": 15,
       "allowed_paths": [
         "backend/analyzers/",
@@ -1615,16 +1615,16 @@
       "tahaugurtoyran"
     ],
     "initial_owner": "cakarburkayy",
-    "active_owner": "Yaman-A-E",
-    "active_task_plan_id": "F04-JAVA",
-    "last_confirmed_task_id": "F03-INPUT",
-    "last_confirmed_commit": "dcef98f14655fe8520da640d2282d9acd0f9cce2",
-    "rotation_index": 2,
+    "active_owner": "ismail-cevik",
+    "active_task_plan_id": "F05-QUALITY",
+    "last_confirmed_task_id": "F04-JAVA",
+    "last_confirmed_commit": "2c3d35a70b2c94e12fe172392a6098dc0ab520d5",
+    "rotation_index": 3,
     "handoff_confirmed": false,
-    "next_owner_if_accepted": "ismail-cevik",
-    "last_accepted_handoff_key": "F03-INPUT:82bb4dbcc5f8a435b849d01ab18a3810c5e2534f",
+    "next_owner_if_accepted": "tahaugurtoyran",
+    "last_accepted_handoff_key": "F04-JAVA:96009c01f9882b4a554ea44d1837c3e3f05179ac",
     "initialized_under": "PROJECT_GENESIS_V2_2026-10-26",
-    "note": "2026-11-26: F03-INPUT #13 implementation PR #63 merged to main; independent current-head review and applicable hosted checks verified. Acceptance and handoff authorized in orchestration request. Rotation advances exactly once from 1 to 2; F04-JAVA #14 assigned to Yaman-A-E, prerequisites #11 and #13 accepted. handoff_confirmed=false applies to F04-JAVA. Next conditional owner: ismail-cevik."
+    "note": "2026-11-27: F04-JAVA #14 implementation PR #67 merged to main at 2c3d35a from head 96009c0; all hosted PR and merge checks passed, and backend-checks ran the 27 language adapter tests after governance PR #66. No independent GitHub review was recorded on PR #67; acceptance was explicitly instructed by the active developer and this deviation is recorded in docs/PROJECT_STATUS.md. Rotation advances exactly once from 2 to 3; F05-QUALITY #15 (next ready task in plan order, prerequisite #14) assigned to ismail-cevik. handoff_confirmed=false applies to F05-QUALITY. Next conditional owner: tahaugurtoyran."
   },
   "assignment_migration": {
     "status": "PARTIAL",

@@ -124,6 +124,29 @@
         "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45693728248"
       ]
     },
+    "14": {
+      "pr": 67,
+      "head_sha": "96009c01f9882b4a554ea44d1837c3e3f05179ac",
+      "ci_sha": "2c3d35a70b2c94e12fe172392a6098dc0ab520d5",
+      "evidence": [
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/14",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/67",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/66",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/2c3d35a70b2c94e12fe172392a6098dc0ab520d5",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/96009c01f9882b4a554ea44d1837c3e3f05179ac/checks",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/2c3d35a70b2c94e12fe172392a6098dc0ab520d5/checks",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/blob/2c3d35a70b2c94e12fe172392a6098dc0ab520d5/docs/F04-JAVA.md",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916669843",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916669997",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916669855",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916669915",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916669893",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916724832",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916724927",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916724865",
+        "https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916724897"
+      ]
+    },
     "21": {
       "pr": 57,
       "head_sha": "a6fd50fdd03672573e7a9a13b22cc188926c9905",

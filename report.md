@@ -1,60 +1,56 @@
-# Project Genesis v3.0 — Faz 1 yönetişim geçişi
+# Project Genesis — F04-JAVA teslim ve kabul raporu
 
 | Alan | Kayıt |
 |---|---|
-| Görev | GENESIS-V3-PHASE1 / F01-GOV (#1), korumalı yönetişim hazırlığı |
-| Durum | `LOCAL_VERIFIED` (yönetişim) · `PENDING_PUSH_CONFIRMATION` · GitHub etkinleştirmesi `BLOCKED` |
-| Kaynak | Kanonik `main` · `2f4eabd71b533519098dfee0817d933dbc23d148` |
-| Yerel dal | `chore/1-genesis-v3-phase1` |
-| Geliştirici | Burkay Çakar, yerel Windows kullanıcısı `laptop-1ebli599\burkay`. Bu işlemde GitHub hesabıyla kimlik doğrulanmadı. |
-| Ortam | Windows 11 26H2, derleme 26300.9711 · PowerShell 7.6.5 · Git for Windows 2.56.0.windows.4 · Python 3.14.5 |
-| Aktif ürün görevi | Alperen Enes Yaman (`Yaman-A-E`) / F02-CONTRACT / #11. Faz 1 bir rotasyon turu kullanmaz. |
+| Görev | F04-JAVA / [#14](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/14): Language Router, Java sembol adaptörü ve yetenek manifesti (FR-008, FR-010, FR-011) |
+| Geliştirici | Alperen Enes Yaman (`Yaman-A-E`), rotasyon indeksi 2 |
+| Önkoşullar | F02-CONTRACT #11 ve F03-INPUT #13; ikisi de `completed` ve kabul kaydında mevcut |
+| Uygulama PR'ı | [#67](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/67). Uygulama commit'i `cf34d198a1753e84629df34cf5711b5989178c89`, son HEAD `96009c01f9882b4a554ea44d1837c3e3f05179ac` (yalnızca `main` birleştirmesi) |
+| Merge commit'i | `2c3d35a70b2c94e12fe172392a6098dc0ab520d5` |
+| CI bağlantısı | Yönetişim PR'ı [#66](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/pull/66), merge `82f082b3969950de0d9d7c188184e9ee24a9b41e` |
+| Teknik rapor | [docs/F04-JAVA.md @ 2c3d35a](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/blob/2c3d35a70b2c94e12fe172392a6098dc0ab520d5/docs/F04-JAVA.md) |
+| Durum | `MERGED` · `HOSTED_VERIFIED` · bağımsız inceleme **yok** (aşağıya bakın) · kabul geliştiricinin açık talimatıyla kaydedildi |
+| Sıradaki | F05-QUALITY / [#15](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/issues/15), İsmail Çevik (`ismail-cevik`), rotasyon indeksi 3 |
 
-Temiz, tek worktree'deki `main`, `origin/main` ve doğrudan GitHub sorguları aynı SHA'yı verdi. Bu tabandan ayrı yerel dal açıldı. Eski kabul raporu kaynak commit'te korunur. [Kaynak commit](https://github.com/caferkilinc/refactoring-ai-generated-code/commit/2f4eabd71b533519098dfee0817d933dbc23d148) · [Önceki rapor](https://github.com/caferkilinc/refactoring-ai-generated-code/blob/2f4eabd71b533519098dfee0817d933dbc23d148/report.md)
+Önceki rapor (Genesis v3 Faz 1) değişmeden korunur: [report.md @ 2c3d35a](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/blob/2c3d35a70b2c94e12fe172392a6098dc0ab520d5/report.md).
 
-## Yetki ve kontrol değişiklikleri
+## Teslim edilenler
 
-| Tür ve konum | Eski kural → Faz 1 | Güvenlik, test ve uyumluluk |
+| Bileşen | Konum | Davranış |
 |---|---|---|
-| İnsan iş akışı · `AGENTS.md`, el değiştirme becerisi, katkı ve ekip kılavuzları, PR/issue şablonları | Dış orkestratör yetkilendirir ve her olağan PR Burkay'ın onayını ister → güvenilen kayıt tek aktif görev/sahibi belirler, aktif geliştirici sınırlandırılmış yürütmeyi ve gözden geçirdiği revizyonun yayımlanmasını açıkça yetkilendirir. | Sınırlı görev sözleşmesi, tek uygulama sahibi, bağımsız kabul ve korumalı işlerde ayrı sahip kararı sürer. Yerel belge bağlantıları denetlendi. |
-| İnsan iş akışı · v2.1 protokolü, ADR 0004/0006, SRS §9 ve son onay, mimarinin rotasyon bölümü, tarihli durum/yol haritası | Dış orkestrasyon, tek onay yetkisi ve sonraki prompt derleme kilidi → etkinleştirmeden sonra kanonik v3 protokolü. Codex, bağımsız kabulden sonra doğrulanmış kaynaklarla hazırlık promptu taslağı üretebilir. | Tarihsel kayıtlar ile ürün SRS/mimari metinleri korundu. Sahip, etkinleştirmede bu metinlerdeki eski yürütme hükümlerinin v3 ile uzlaştırılmasını açıkça onaylamalı. Faz 1 prompt üretmedi. |
-| Makine · `gate.py`, `dependency-gate.yml` | Her olağan PR için SHA'ya bağlı sahip yorumu → doğrulanmış GitHub yorum yazarı, aktif geliştirici ve PR yazarı eşleşir. Onay tam görev, kanonik repo, dal, kaynak SHA ve `merge` kapsamına bağlıdır. | Fork, yanlış geliştirici/görev/revizyon/kapsam ve eksik onay reddedilir. Korunan yollar, yeniden adlandırmanın iki tarafı ve iş akışı değişiklikleri ayrı sahip onayı gerektirir. Görev kapsamı, yerel bağımlılık kayıtları, canlı bağımlılık grafı, güvenilen taban ve zorunlu CI kontrolleri sürer. Kodla ifade edilmeyen korumalı niyeti insan incelemesi değerlendirir. |
-| Makine · kabul kaydı ve `gate.py --mode handoff` | Operasyonel kabul dış orkestratöre bağlı → birleştirme kaydını, CI/bağımlılıkları ve `main` soyunu denetleyen salt okunur öneri. | Kabul/rotasyon yazımı yok. `plan_id:head_sha` tekrarında ikinci ilerleme yok. #44'ün sahip onayı ve #45'in ADR 0006 istisnası tarihsel doğrulamada korunuyor. |
-| GitHub · `main` koruma ayarları, CODEOWNERS, gerekli iş adları | PR yazarının yorumu, GitHub bağımsız PR incelemesinden ayrı kanıt. | GitHub izinleri, CODEOWNERS ve önerilen kural dosyası değişmedi. Uygulanan kurallar ve gerçek hosted koşular yerel testten bağımsız denetlenmeli. |
+| Dil yönlendirici | `backend/language_adapters/router.py` | F03 manifestindeki her dosyaya açık bir durum verir: `ROUTED`, `UNSUPPORTED_LANGUAGE` veya `UNKNOWN_LANGUAGE`. Bileşen = (build kökü, dil). Kullanıcının dil tercihi yalnızca ipucudur ve tespit edilen dili değiştirmez. |
+| Java yardımcısı | `backend/language_adapters/java/helper/` | Java 21/Maven ile `javaparser-symbol-solver-core` 3.28.2. JRE yansıma ile, proje tipleri paket köklerinden çözülür. Yüklenen kod derlenmez, yüklenmez, çalıştırılmaz. `Locale.ROOT` ile çalışır: Türkçe locale'de JavaParser `int` tipini `ınt` üretiyordu. |
+| Java adaptörü | `backend/language_adapters/java/adapter.py` | Overload'a tam bağlı `Symbol`, `SourceLocation`, `DependencyEdge` (`CALL`) ve `Evidence` kayıtları. Belirsiz overload, eksik bağımlılık ve ayrıştırma hatası açık durum ve nedenle kalır; nedenlerde ham kaynak kod yoktur. |
+| Koordinatlar | `backend/language_adapters/coordinates.py` | JavaParser UTF-16 (bitiş dahil) → CIR Unicode scalar (bitiş hariç) → Monaco UTF-16. CRLF, tab ve astral karakterler doğru işlenir. Standalone CR veya geçersiz UTF-8 için koordinat tahmin edilmez. |
+| Yetenek manifesti | `backend/language_adapters/capabilities.py` | Dokuz bağımsız kayıt. `parse`, `symbol`, `dependency` yalnızca çalıştırma kanıtıyla `SUPPORTED`; güven değeri gözlenen çözümleme oranıdır. `quality`, `build`, `test`, `coverage`, `safe_patch`, `security` gerekçeli `NOT_IMPLEMENTED`. |
+| Giriş noktası | `backend/language_adapters/analysis.py` | V0'ı `SourceSnapshots.workspace` üzerinden okur, her dosyanın SHA-256'sını manifestle yeniden doğrular, bundle'ı `validate_bundle` ile doğrular. |
 
-Durumlar ayrı değerlendirilir. `DEVELOPER_APPROVED` onay kanıtını, `LOCAL_VERIFIED` yerel sonuçları, `HOSTED_VERIFIED` zorunlu GitHub kontrolleri ve incelemelerini, `MERGED` GitHub birleştirmesi ve Git soyunu, `HANDOFF_ACCEPTED` ise bağımsız incelemeden sonra güvenilen `main` üzerindeki kabul kaydını ifade eder.
+## Kabul ölçütleri
 
-## Canlı durum ve açık PR uyumluluğu
-
-- F00-PLAN (#8, PR #44) ve F00-V0 (#9, PR #45) tamamlandı. Kabul kayıtları ve özgün CI/onay kanıtları salt okunur GitHub API sorgularıyla yeniden doğrulandı. Her iki merge commit'i kaynak `main`in atası. #9 yeniden işlendiğinde `ALREADY_ACCEPTED`, `advance: false` döndü. [PR #44](https://github.com/caferkilinc/refactoring-ai-generated-code/pull/44) · [PR #45](https://github.com/caferkilinc/refactoring-ai-generated-code/pull/45)
-- #11 açık. Güvenilen kayıt Alperen'i aktif geliştirici olarak belirliyor. Canlı önkoşul #8. Rotasyon sırası Burkay → Cafer → Alperen → İsmail → Taha ve güncel indeks 2. [Issue #11](https://github.com/caferkilinc/refactoring-ai-generated-code/issues/11)
-- #43, `22fc78218fd3c43b727e7f051117646af70f3916`, açık ve iki UML görselleştirme dosyasını değiştiriyor. #48, `2f0d21e9c289abd783855c6d4687b38c388bcc8b`, açık ve korunan SRS, v2.1 protokolü ve dondurulmuş pilot dosyalarını da değiştiriyor. İncelenen dosya listeleri Faz 1 dosyalarıyla kesişmiyor. Yeni politika bu açık PR'lara görev, rotasyon veya kapsam istisnası vermez. [PR #43](https://github.com/caferkilinc/refactoring-ai-generated-code/pull/43) · [PR #48](https://github.com/caferkilinc/refactoring-ai-generated-code/pull/48)
+| #14 ölçütü | Kanıt | Sonuç |
+|---|---|---|
+| Overload'lar doğru sembollere ve Monaco konumlarına eşlenir | Dosyalar arası, alan başlatıcısı ve `this(...)` çağrıları; CRLF, tab, emoji ve astral tanımlayıcı; `frontend/src/coordinates.ts` ile çapraz kontrol | PASS |
+| Bilinmeyen ve karışık dilli dosyalar sessizce Java olarak ayrıştırılmaz | Yardımcıya yalnızca `.java` dosyaları gider; `Snippet.java.txt`, `.py`, `.ts` ve build dosyaları açık durumla raporlanır | PASS |
+| Belirsiz referanslar belirsizliğini korur | `pick(null)` → `AMBIGUOUS` + iki aday imza; `Lib.call()` → `MISSING_DEPENDENCY`; çağrı konumu korunur | PASS |
+| Yetenekler analizi `safe_patch`ten ayırır | `require_capability` parse/symbol/dependency için geçer; safe_patch/build/test için `UNAVAILABLE_CAPABILITY` verir | PASS |
 
 ## Doğrulama
 
-| Komut / kanıt | Sonuç |
-|---|---|
-| `git status --porcelain=v1 --branch --ignored=matching -uall`, `git rev-parse`, `git remote -v`, `git worktree list --porcelain`, `git config --show-origin`, `git ls-remote --exit-code origin refs/heads/main`, GitHub ref API | PASS · Kimlik, başlangıç temizliği, upstream, tek worktree, yerel `core.autocrlf=input` ve canlı kaynak SHA doğrulandı. Ek fetch veya entegrasyon gerekmiyordu. |
-| `python -B -m unittest discover -s tests/governance -v` | PASS · 123 test. Geçerli olağan onay, eksik/yabancı/eski/yanlış görev onayı, eksik/başarısız CI, izinsiz korumalı değişiklik, eski kabul ve tekrar devri kapsandı. |
-| `python -B scripts/governance/check_docs.py`, `python -B scripts/governance/security_check.py`, `git diff --check` | PASS · Belge bağlantıları, depo hijyeni ve diff. |
-| Beceri frontmatter ve yeni dosyalarda satır sonu/boşluk kontrolü | PASS · Yerel Python kontrolleri. Standart beceri doğrulayıcısı, PyYAML bulunmadığı için NOT_RUN. |
-| `git ls-tree`, `git hash-object --no-filters`, `git ls-files --eol` ve korunan yollarda `git status` | PASS · 45 korunan dosya kaynak Git blob'uyla byte düzeyinde aynı. SRS, mimari, güvenlik, tarihsel kararlar, görev planı, kabul, CODEOWNERS, önerilen koruma ve araştırma dosyaları dahil. |
-| Canlı salt okunur `verify_acceptance` / `propose_handoff`, `git merge-base --is-ancestor` | PASS · #8/#9 tarihsel kabul ve kaynak soy doğrulaması. #9 tekrarında ilerleme yok. |
-| `python -B experiments/java-pilot/verify_integrity.py` | FAIL · Faz 1 düzenlemelerinden önce de `v0-source.json` SHA-256 uyuşmazlığı vardı. Manifest yan dosyası `1650a915ea6516e52ac27c1a4c98a11d0ddd62155f41ec6a21835b0195311376`, dosyanın gerçek özeti `0ca386a2a438162a5c6ce9d63100411e303016f674787be7a462da9d18d079c9`. Korunan dosyalar değişmedi. |
-| Faz 1 GitHub Actions ve yeni kural denemeleri | NOT_RUN · Yerel dala ait hosted koşu yok. |
+| Kontrol | Ortam | Sonuç |
+|---|---|---|
+| `tests/language_adapters` (27 test) | Hosted Linux, PR HEAD [run 45916669843](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916669843) ve merge [run 45916724832](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/actions/runs/45916724832) | PASS · 27 passed, 0 skipped |
+| `backend-checks`, `governance-tests`, `documentation-checks`, `security-checks`, `pilot-checks`, `application-stack-checks`, `task-dependency-audit` | Hosted, PR HEAD ve merge commit'i | PASS ([PR kontrolleri](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/96009c01f9882b4a554ea44d1837c3e3f05179ac/checks) · [merge kontrolleri](https://github.com/refactoring-ai-code/refactoring-ai-generated-code/commit/2c3d35a70b2c94e12fe172392a6098dc0ab520d5/checks)) |
+| Adaptör testleri, ruff, sözleşme kontrolleri (55 test, export güncel), pilot `verify_integrity.py` ×2 ve `reproduce.py` (10/10 JUnit) | Yerel Windows 11, Temurin 21.0.13.1, Maven 3.9.11 | PASS |
+| `pytest backend/tests` 38/39, `governance-tests` 81/83 | Yerel Windows | Ters eğik çizgili yol testi ve iki symlink testi, değiştirilmemiş `main` (`eb0a6d3`) üzerinde de Windows'ta başarısız. F04 ile ilgisiz; hosted Linux'ta geçiyor. |
 
-## GitHub etkinleştirme ve yayın kapısı
+V0, Java pilotu ve sabit test dosyalarının SHA-256 değerleri değişmedi. `experiments/`, `tests/fixtures/` ve korunan dosyalara dokunulmadı. Merge edilen F04 içeriği, incelemeye sunulan `cf34d19` ile birebir aynı.
 
-Herkese açık `GET /branches/main` yanıtı `protected: false` ve durum kontrolü listesini boş gösterdi. `GET /rules/branches/main` ve `GET /rulesets` boş döndü. Ayrıntılı klasik koruma uç noktası HTTP 401 verdi. Bu oturumda GitHub yönetici yetkisi doğrulanmadı ve hiçbir ayar değiştirilmedi. [Dal API kaydı](https://api.github.com/repos/caferkilinc/refactoring-ai-generated-code/branches/main)
+## Sapmalar ve açık noktalar
 
-Yetkili yönetici, `main` için etkin bir PR koruma kuralı oluşturmalı. [Önerilen koruma dosyasındaki](.github/branch-protection.proposed.json) beş kontrolü zorunlu yapmalı (`governance-tests`, `documentation-checks`, `security-checks`, `dependency-gate`, `merge-readiness`). GitHub Actions kaynağını doğrulamalı, dalın güncel olmasını, bir bağımsız CODEOWNER incelemesini, eski incelemelerin düşmesini, görüşmelerin çözülmesini ve yönetici dahil kuralların uygulanmasını zorunlu tutmalı. Force push ve dal silme kapalı olmalı. Uygulanabilir ek iş kontrolleri görev kapısında zorunlu kalır. [GitHub koruma ayarları](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
+- **Bağımsız inceleme yok.** #14 İsmail'i bağımsız incelemeci olarak belirtiyor; PR #67 GitHub incelemesi olmadan merge edildi. `main` koruması onay istemediği için GitHub buna izin verdi. Kabul, aktif geliştiricinin açık talimatıyla kaydedildi. `96009c0` için merge sonrası bir inceleme önerilir. Bu kayıt bağımsız inceleme iddia etmez.
+- **Sınırlamalar.** Yalnızca `CALL` kenarları üretilir. Metot referansları ve yerel değişkenler modellenmez. Üçüncü taraf kütüphaneler `MISSING_DEPENDENCY` olarak kalır. Ayrıntılar teknik raporda.
+- Kalite ölçümü (F05), sandbox build/test/coverage (F06), güvenlik taraması (F07A) ve patch (F10/F11) kendi görevlerine aittir.
 
-Korumalı geçiş için Burkay'ın açık ve kayda alınmış sahip kararı, ayrıca yayın kapsamına ilişkin geliştirici onayı gerekir. Canlı v2 kapısı Faz 1 dalını yetkilendirmez. #1 aktif ürün görevi değildir ve `AGENTS.md` ile beceri mevcut #1 yol listesinde yoktur. Güvenilen tabanda, ayrı onaylı geçiş yolu repo, #1, dal, geliştirici, kesin revizyon ve bu iki yol dahil değişiklik kapsamını sınırlamalı. Faz 1 PR'ının kendi kodu yetki kaynağı olamaz. Uygun güvenilen geçiş yolu yoksa birleşme bloke kalır. Etkinleştirmeden sonra yöneticinin gerçek PR'da olumlu/olumsuz onay ve zorunlu CI denemelerini doğrulaması gerekir.
+## Devir
 
-## Dosyalar, geri dönüş ve sonraki faz
-
-- Yetki ve testler · `scripts/governance/gate.py`, `tests/governance/test_codex_authority.py`, `tests/governance/test_audit_regressions.py`
-- GitHub şablonları ve kapı · `.github/ISSUE_TEMPLATE/task.yml`, `.github/PULL_REQUEST_TEMPLATE.md`, `.github/workflows/dependency-gate.yml`
-- Protokol ve çalışma talimatları · `docs/governance/PROJECT_GENESIS_CODEX_NATIVE_PROTOCOL_V3.md`, `AGENTS.md`, `.agents/skills/development-handoff/SKILL.md`, `CONTRIBUTING.md`, `README.md`, `docs/TEAM_WORKFLOW.md`, `docs/DEPENDENCY_MANAGEMENT.md`, `docs/DEVELOPMENT_ROADMAP.md`, `report.md`
-
-Yerel değişiklikleri inceleme dalında tutarak önceki güvenilen `main` kullanılabilir. Yayımlanmış bir geçişin geri alınması ayrı sahip yetkili, incelenmiş bir revert PR'ı ve aynı CI kontrollerini gerektirir. Kabul kayıtları ve rotasyon geçmişi korunur. Faz 2, ayrıca yetkilendirildiğinde görev sözleşmesi ile doğrulama kanıtı akışını tamamlamalı. Otomatik yayımlama, kabul yazımı veya sonraki görev promptu bu fazda çalıştırılmadı.
+Rotasyon bir kez 2 → 3 ilerledi; anahtar `F04-JAVA:96009c01f9882b4a554ea44d1837c3e3f05179ac`. Plan sırasındaki ilk hazır görev F05-QUALITY / #15. Tek önkoşulu #14; kapsamı, kabul ölçütleri ve izinli yolları değiştirilmedi. Sorumlusu İsmail Çevik (`ismail-cevik`). Kabulden sonraki koşullu sorumlu Taha Uğur Toyran (`tahaugurtoyran`).
