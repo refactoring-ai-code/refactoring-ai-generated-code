@@ -19,11 +19,12 @@ from pathlib import Path
 
 import rfc8785
 
+from backend.analyzers.quality.normalize import normalize_quality
+from backend.analyzers.quality.runner import QualityAnalyzer
 from backend.core.schemas.models import ContractBundle, Scope
 from backend.core.schemas.validation import ContractViolation, validate_bundle
 from backend.language_adapters.capabilities import CapabilityState, capability_records, ratio
 from backend.language_adapters.java.adapter import (
-    ADAPTER_ID,
     DETERMINISTIC_CONFIDENCE,
     ComponentCounts,
     JavaRecordBuilder,
@@ -71,7 +72,8 @@ def read_verified_sources(root: Path, manifest: Mapping) -> dict[str, bytes]:
 
 def analyze_snapshot(root: Path, manifest: Mapping, manifest_sha256: str, scope: Scope, *,
                      selected_language: str | None = None, adapter: JavaSymbolAdapter | None = None,
-                     recorded_at: str | None = None) -> AnalysisResult:
+                     recorded_at: str | None = None,
+                     _quality_analyzer: QualityAnalyzer | None = None) -> AnalysisResult:
     if hashlib.sha256(rfc8785.dumps(dict(manifest))).hexdigest() != manifest_sha256:
         raise SnapshotIntegrityError("manifest bytes differ from the recorded manifest SHA-256")
     if scope.baseline_sha256 != manifest_sha256:
@@ -91,7 +93,7 @@ def analyze_snapshot(root: Path, manifest: Mapping, manifest_sha256: str, scope:
     manifest_artifact = {"id": _identifier("artifact", "v0-manifest", manifest_sha256),
                          "sha256": manifest_sha256, "media_type": "application/json",
                          "redaction": "UNREVIEWED"}
-    artifacts = [manifest_artifact]
+    artifacts = {manifest_artifact["id"]: manifest_artifact}
     records: list[dict] = []
     component_reports = []
 
@@ -103,56 +105,81 @@ def analyze_snapshot(root: Path, manifest: Mapping, manifest_sha256: str, scope:
         output_artifact = {"id": _identifier("artifact", "java-helper-output", output_sha256),
                            "sha256": output_sha256,
                            "media_type": "application/json", "redaction": "UNREVIEWED"}
-        artifacts.append(output_artifact)
+        artifacts[output_artifact["id"]] = output_artifact
         builder = JavaRecordBuilder(base=base, identifier=_identifier,
                                     evidence_tool=evidence_tool(run.data),
                                     artifact_id=output_artifact["id"], files=files, sources=sources)
         builder.index_run(run.data)
 
     for component in plan.components:
-        if component.language == "JAVA" and builder is not None:
+        is_java = component.language == "JAVA"
+        states = {}
+        reported_tool = None
+        reported_toolchain = []
+        evidence_ids = []
+        details = component.as_dict()
+        if is_java and builder is not None:
             counts = ComponentCounts()
             builder.add_component(run.data, component.paths, counts)
             run_evidence = _identifier("evidence", "java-run", component.component_id)
+            reported_tool = evidence_tool(run.data)
+            reported_toolchain = toolchain(run.data)
+            evidence_ids = [run_evidence]
             records.append({
                 **base, "kind": "Evidence", "id": run_evidence,
                 "producer_kind": "DETERMINISTIC_TOOL", "actor_id": None,
-                "tool": evidence_tool(run.data), "rule_id": None, "model": None,
+                "tool": reported_tool, "rule_id": None, "model": None,
                 "artifact_id": builder.artifact_id, "location_ids": [], "symbol_ids": [],
-                "verification": "VERIFIED",
-                "confidence": DETERMINISTIC_CONFIDENCE,
+                "verification": "VERIFIED", "confidence": DETERMINISTIC_CONFIDENCE,
                 "redaction": "UNREVIEWED",
             })
-            states = _java_states(counts)
-            records += capability_records(
-                record_base=base, identifier=_identifier, language="JAVA",
-                component_id=component.component_id, adapter_id=ADAPTER_ID, states=states,
-                tool=evidence_tool(run.data), toolchain=toolchain(run.data),
-                evidence_ids=[run_evidence])
-            component_reports.append({**component.as_dict(), "run_status": run.status,
-                                      "counts": counts.__dict__})
+            states.update(_java_states(counts))
+            details.update(run_status=run.status, counts=counts.__dict__)
         else:
-            states = {}
             reason = None
-            if component.language == "JAVA":
+            if is_java:
                 reason = (run.reason if run else None) or "Java analysis did not run"
                 unavailable = CapabilityState("UNAVAILABLE", reason, None,
                                               "toolchain unavailable; nothing was measured")
-                states = {"parse": unavailable, "symbol": unavailable, "dependency": unavailable}
-            records += capability_records(
-                record_base=base, identifier=_identifier, language=component.language,
-                component_id=component.component_id,
-                adapter_id=component.adapter_id or f"adapter:{component.language.lower()}-pending",
-                states=states, tool=None, toolchain=[], evidence_ids=[])
-            java_status = run.status if run and component.language == "JAVA" else "NOT_RUN"
-            component_reports.append({**component.as_dict(), "run_status": java_status,
-                                      "reason": reason})
+                states.update(parse=unavailable, symbol=unavailable, dependency=unavailable)
+            details.update(run_status=run.status if run and is_java else "NOT_RUN", reason=reason)
+
+        proofs = {}
+        if is_java and _quality_analyzer is not None:
+            quality = normalize_quality(
+                _quality_analyzer.run(root, component.paths), base=base, identifier=_identifier,
+                component=component.component_id, paths=component.paths,
+                files=files, sources=sources,
+            )
+            records.extend(quality.records)
+            artifacts.update((artifact["id"], artifact) for artifact in quality.artifacts)
+            details["quality"] = quality.summaries
+            if quality.supported:
+                states["quality"] = CapabilityState(
+                    "SUPPORTED", confidence=DETERMINISTIC_CONFIDENCE["value"],
+                    limitations=("PMD and CPD scan manifest-selected Java files per component",),
+                )
+                proofs["quality"] = (quality.tool, quality.toolchain, quality.evidence_ids)
+            else:
+                states["quality"] = CapabilityState(
+                    "UNAVAILABLE", "PMD and CPD did not both produce verified reports",
+                    confidence_reason="quality scan did not complete",
+                )
+        records += capability_records(
+            record_base=base, identifier=_identifier, language=component.language,
+            component_id=component.component_id,
+            adapter_id=component.adapter_id or f"adapter:{component.language.lower()}-pending",
+            states=states, tool=reported_tool, toolchain=reported_toolchain,
+            evidence_ids=evidence_ids, proofs=proofs,
+        )
+        component_reports.append(details)
     if builder is not None:
         records = builder.records + records
 
     payload = {"schema_version": "1.0.0", "mode": "INTERCHANGE",
                "scope": scope.model_dump(mode="json"), "files": list(files.values()),
-               "artifacts": artifacts, "test_suites": [], "attempts": [], "records": records}
+               "artifacts": list(artifacts.values()), "test_suites": [], "attempts": [],
+               "records": records}
     # A snapshot without any recognised source language has no CIR record to report;
     # the routing report still lists every file and why it was not parsed.
     bundle = validate_bundle(payload) if records else None
@@ -193,7 +220,8 @@ def _java_states(counts: ComponentCounts) -> dict[str, CapabilityState]:
 
 def analyze_version(snapshots, actor_id: str, version_id: str, scope: Scope, *,
                     adapter: JavaSymbolAdapter | None = None,
-                    recorded_at: str | None = None) -> AnalysisResult:
+                    recorded_at: str | None = None,
+                    quality_analyzer: QualityAnalyzer | None = None) -> AnalysisResult:
     """Analyse an owner's V0 through a verified F03 derivative copy."""
     if scope.version_id != version_id:
         raise ContractViolation("SCOPE_MISMATCH", "version_id")
@@ -206,4 +234,4 @@ def analyze_version(snapshots, actor_id: str, version_id: str, scope: Scope, *,
         return analyze_snapshot(
             derivative.path, described["manifest"], described["manifest_sha256"], scope,
             selected_language=described["selected_language"], adapter=adapter,
-            recorded_at=recorded_at)
+            recorded_at=recorded_at, _quality_analyzer=quality_analyzer or QualityAnalyzer())

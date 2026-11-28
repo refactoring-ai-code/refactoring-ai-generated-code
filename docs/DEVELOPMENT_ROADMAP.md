@@ -1,12 +1,12 @@
 # Genesis v2.0 transition and mandatory release scope
 
-> **Live-state precedence:** This roadmap preserves dated historical planning snapshots. As of `main` `cb145cd66bde176a0ee465de8e2074a181324ab8` (2026-11-27), the native graph is 34 tasks / 69 edges; 9 tasks are accepted (F00-PLAN, F00-V0, F01-GOV, F01-ENV, F02-CONTRACT, F02-STATE, F03-INPUT, F08-UI, F04-JAVA), and İsmail Çevik is the active owner for F05-QUALITY #15. Always re-fetch current `main`, registry, acceptance and the active issue before a new task. Approved SRS is v0.4.1 ([ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md)). Follow the [Codex-native protocol and activation conditions](governance/PROJECT_GENESIS_CODEX_NATIVE_PROTOCOL_V3.md) for execution governance. Dated approval and assignment statements below record their historical policy and state.
+> **Live-state precedence:** This roadmap preserves dated historical planning snapshots. As of the F05-QUALITY implementation (2026-11-28), the native graph is 34 tasks / 69 edges; 9 tasks are accepted (F00-PLAN, F00-V0, F01-GOV, F01-ENV, F02-CONTRACT, F02-STATE, F03-INPUT, F08-UI, F04-JAVA), and İsmail Çevik is the active owner for F05-QUALITY #15. Always re-fetch current `main`, registry, acceptance and the active issue before a new task. Approved SRS is v0.4.1 ([ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md)). Follow the [Codex-native protocol and activation conditions](governance/PROJECT_GENESIS_CODEX_NATIVE_PROTOCOL_V3.md) for execution governance. Dated approval and assignment statements below record their historical policy and state.
 
 Owner decision (2026-10-27): 31 existing technical issues and 54 original dependencies are retained, with three new unassigned P0 issues (#40–#42) and a staged 34-task / 69-edge dependency graph, but fixed implementation assignments are removed. Java, Python, JavaScript, TypeScript, Qwen3-Coder 30B-A3B, mixed projects and evidence-linked HTML/PDF are all first-delivery **P0**. Historical estimates below are not current staffing commitments; the single active developer follows Burkay → Cafer → Alperen Enes Yaman → İsmail → Taha Uğur Toyran. PR #38 is pre-Genesis bootstrap and was merged to `main` on Burkay Çakar's explicit approval (`5754ed6eeaeef0cce9bc46264c8baeddfb62f88c`). The former sole-approver rule was retired by [ADR 0007](DECISIONS/0007-local-llm-and-approval-authority.md) on 2026-11-25; pull requests follow the GitHub development workflow. See [TR SRS](SRS.md) and [EN SRS](SRS_EN.md).
 
 # Development Roadmap — PROJECT GENESIS v2.0
 
-**Status:** Owner-approved implementation roadmap; sequential execution IN_PROGRESS, native 34-task/69-edge graph VERIFIED, 9 of 34 tasks accepted; current task F05-QUALITY / #15 assigned to İsmail Çevik. **Original planning date:** 2026-10-27. **Delivery target:** 2027-01-01, exact time UNKNOWN.
+**Status:** Owner-approved implementation roadmap; sequential execution IN_PROGRESS, native 34-task/69-edge graph VERIFIED, 9 of 34 tasks accepted; F05-QUALITY / #15 implementation delivered by İsmail Çevik with a separate acceptance record pending after integration. **Original planning date:** 2026-10-27. **Delivery target:** 2027-01-01, exact time UNKNOWN.
 
 ## Authority and ordering
 
@@ -41,7 +41,7 @@ Only ONE active implementation developer at a time: Burkay → Cafer → Alperen
 | F02-STATE | #12 | P0 | Implement metadata, state machine, queue and idempotency | F02-CONTRACT, F01-ENV | VERIFIED_COMPLETE (PR #60) |
 | F03-INPUT | #13 | P0 | Implement safe upload, consent and immutable artefacts | F02-STATE | VERIFIED_COMPLETE (PR #63) |
 | F04-JAVA | #14 | P0 | Implement Language Router and Java symbol adapter | F02-CONTRACT, F03-INPUT | VERIFIED_COMPLETE (PR #67) |
-| F05-QUALITY | #15 | P0 | Normalize real quality findings and comparable metrics | F04-JAVA | ASSIGNED — İsmail Çevik |
+| F05-QUALITY | #15 | P0 | Normalize real quality findings and comparable metrics | F04-JAVA | IMPLEMENTED — acceptance record pending after integration |
 | F06-SANDBOX | #16 | P0 | Build isolated worker execution with resource limits | F01-ENV, F03-INPUT | NOT STARTED |
 | F06-TESTS | #17 | P0 | Freeze baseline tests and parse build/test/coverage evidence | F00-V0, F04-JAVA, F06-SANDBOX | NOT STARTED |
 | F07A-SCAN | #18 | P0 | Integrate deterministic security scans and redaction | F05-QUALITY, F03-INPUT | NOT STARTED |
@@ -91,7 +91,7 @@ Every milestone requires actual task output, focused and integration verificatio
 5. New #40–#42 issues and all 69 native dependency edges have been synchronized and audited. Any new graph change must be separately authorized and verified; do not delete live dependencies merely to simplify planning.
 6. New mandatory P0 scope may exceed the remaining capacity; schedule feasibility must be reassessed, not disguised by inaccurate progress percentages.
 
-**Current authorized development (at `main` cb145cd66bde176a0ee465de8e2074a181324ab8):** İsmail Çevik / F05-QUALITY / Issue #15; conditional next owner Taha Uğur Toyran after accepted handoff. The accepted tasks (#1, #8–#14, #21) remain historical evidence, not new assignments. Recheck GitHub on every resumed turn.
+**Current authorized development:** İsmail Çevik / F05-QUALITY / Issue #15, implementation delivered and acceptance record pending after integration; conditional next owner Taha Uğur Toyran after accepted handoff. The accepted tasks (#1, #8–#14, #21) remain historical evidence, not new assignments. Recheck GitHub on every resumed turn.
 
 ## Final planning acceptance (2026-10-27)
 > **Historical snapshot (2026-10-27):** The following acceptance paragraph records decisions at that date. Statements that the 69-edge graph is pending or Burkay remains active are superseded by the live-state note at the top and subsequent accepted handoffs.
