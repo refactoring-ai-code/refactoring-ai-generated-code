@@ -60,5 +60,5 @@ feature change keeps workflows and the acceptance registry out of scope.
 ## Continuity
 
 The feature branch is `feature/15-f05-quality`. Integration and the separate
-acceptance record are pending. İsmail Çevik retains task ownership. Taha Uğur
+acceptance record are pending. The dependency audit rejected the README status update under F05 scope, so the README update is deferred to the separate governance acceptance record. İsmail Çevik retains task ownership. Taha Uğur
 Toyran (@tahaugurtoyran) is the next conditional owner after acceptance.
