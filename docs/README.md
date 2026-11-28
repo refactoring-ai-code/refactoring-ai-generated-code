@@ -9,6 +9,7 @@
 - [Setup report and activation](SETUP_REPORT.md)
 - [Operational audit and corrective actions](OPERATIONAL_AUDIT.md)
 - [F04-JAVA language router and Java symbol adapter](F04-JAVA.md)
+- [F05-QUALITY PMD and CPD evidence and metrics](F05-QUALITY.md)
 - [Decisions](DECISIONS/0001-scope-and-governance.md)
 
 The public documentation describes the approved technical plan without publishing the private academic DOCX or sensitive source material.

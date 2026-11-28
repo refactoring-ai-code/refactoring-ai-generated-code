@@ -5,7 +5,7 @@
 > `.github/task-plan.json`, `.github/acceptance.json` and
 > live issue/PR evidence to determine the current task and owner.
 > F00-PLAN, F00-V0, F01-GOV, F01-ENV, F02-CONTRACT, F02-STATE, F03-INPUT, F08-UI and F04-JAVA are accepted (9 of 34).
-> F04-JAVA / #14 is verified complete (PR #67, merge `2c3d35a`). İsmail Çevik is assigned F05-QUALITY / #15;
+> F04-JAVA / #14 is verified complete (PR #67, merge `2c3d35a`). İsmail Çevik owns the F05-QUALITY / #15 implementation, with a separate acceptance record pending after integration;
 > the conditional next owner is Taha Uğur Toyran.
 > PR #38 and #39 were merged; the 34-task / 69-edge graph was
 > verified. The Turkish and English SRS v0.4.0 were approved on 2026-10-27 and amended to v0.4.1 by ADR 0007.
@@ -457,3 +457,11 @@ frozen pilot input or rotation. The active task remains F05-QUALITY / #15 for İ
 - Governance CI and issue graph sync no longer trigger on retired bootstrap
   branches. The verification skill records that PR #48 resolved the former pilot
   manifest mismatch.
+
+## 2026-11-28 — F05-QUALITY implementation
+
+F05-QUALITY / #15 adds pinned PMD and CPD scans of verified Java V0 copies,
+source-linked findings, XML evidence and comparable quality metrics. See the
+[technical guide](F05-QUALITY.md) and [task report](../report.md) for scope and
+verification. The accepted task count remains nine until the separate
+acceptance record is integrated. İsmail Çevik retains active ownership.

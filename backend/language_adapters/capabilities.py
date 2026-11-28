@@ -15,7 +15,7 @@ from backend.core.schemas.models import CAPABILITIES
 
 # Why each dimension is outside F04-JAVA. Kept as data so reports and tests share it.
 NOT_IN_F04 = {
-    "quality": "quality measurement is delivered by F05-QUALITY (#15); not claimed by F04-JAVA",
+    "quality": "quality measurement requires analyze_version and verified PMD/CPD execution",
     "build": "build requires the isolated sandbox (F06-SANDBOX #16); F04 never compiles uploads",
     "test": "test execution requires the isolated sandbox (F06-SANDBOX #16); not run by F04",
     "coverage": "coverage requires sandboxed test execution (F06-SANDBOX #16); not run by F04",
@@ -67,12 +67,16 @@ def capability_records(
     tool: Mapping | None,
     toolchain: Sequence[Mapping],
     evidence_ids: Sequence[str],
+    proofs: Mapping[str, tuple[Mapping, Sequence[Mapping], Sequence[str]]] | None = None,
 ) -> list[dict]:
     """Build nine Capability records plus their LanguageAdapterCapabilities declaration."""
     records = []
     for name in CAPABILITIES:
         state = states.get(name) or not_implemented(name, language)
         supported = state.status == "SUPPORTED"
+        observed_tool, observed_chain, observed_evidence = (proofs or {}).get(
+            name, (tool, toolchain, evidence_ids),
+        )
         records.append({
             **record_base,
             "kind": "Capability",
@@ -82,9 +86,9 @@ def capability_records(
             "capability": name,
             "status": state.status,
             "confidence": state.confidence_record(),
-            "tool": dict(tool) if supported and tool else None,
-            "toolchain": [dict(item) for item in toolchain] if supported else [],
-            "evidence_ids": list(evidence_ids) if supported else [],
+            "tool": dict(observed_tool) if supported and observed_tool else None,
+            "toolchain": [dict(item) for item in observed_chain] if supported else [],
+            "evidence_ids": list(observed_evidence) if supported else [],
             "limitations": list(state.limitations),
             "reason": None if supported else state.reason,
         })

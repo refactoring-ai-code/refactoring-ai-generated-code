@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ruleset name="Genesis Java quality v1"
+         xmlns="http://pmd.sourceforge.net/ruleset/2.0.0">
+    <description>F05 Java quality rules for reproducible baseline measurement.</description>
+    <rule ref="category/java/design.xml/CyclomaticComplexity"/>
+    <rule ref="category/java/bestpractices.xml/UnusedLocalVariable"/>
+    <rule ref="category/java/errorprone.xml/EmptyCatchBlock"/>
+    <rule ref="category/java/codestyle.xml/ClassNamingConventions"/>
+</ruleset>
